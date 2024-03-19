@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import GoogleStrategy from 'passport-google-oauth20';
-import Url from "../models/urlModel.js";
+
 
 const oAuthRouter = express.Router();
 
@@ -45,16 +45,16 @@ oAuthRouter.get('/auth/google/callback',
             req.session.userId = req.user.id;
 
             // Aqui lo que hago es que si no se encuentra ninguna Url asociada a la id del usuario, se crea una default de google
-            const existente = await Url.findOne({ where: { userId: req.user.id } });
-            if (existente == null) {
-                const shortUrl = nanoid(8);
-                await Url.create({
-                    userId: req.user.id,
-                    origUrl: 'https://www.google.com/webhp?hl=es&sa=X&ved=0ahUKEwi4tpOv4MiDAxWxdqQEHa6hBB8QPAgJ',
-                    shortUrl: shortUrl,
-                    clicks: 0
-                });
-            }
+            // const existente = await Url.findOne({ where: { userId: req.user.id } });
+            // if (existente == null) {
+            //     const shortUrl = nanoid(8);
+            //     await Url.create({
+            //         userId: req.user.id,
+            //         origUrl: 'https://www.google.com/webhp?hl=es&sa=X&ved=0ahUKEwi4tpOv4MiDAxWxdqQEHa6hBB8QPAgJ',
+            //         shortUrl: shortUrl,
+            //         clicks: 0
+            //     });
+            // }
             return res.redirect('/success');
         } catch (error) {
             console.error(error);

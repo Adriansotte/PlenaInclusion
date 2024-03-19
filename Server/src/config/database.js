@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const db = new Sequelize('acortador', 'root', '', {
+const db = new Sequelize('tfg_plena_inclusion', 'root', '', {
     host: "localhost",
     dialect: "mysql",
 });
