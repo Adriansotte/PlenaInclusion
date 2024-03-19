@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Lista de URLs Acortadas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Lista de URLs Acortadas</h1>
+
+        <table class="table table-bordered mt-4">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>ID de usuario</th>
+                    <th>URL Original</th>
+                    <th>URL Acortada</th>
+                    <th>Clicks</th>
+                    <th>Fecha Creación</th>
+                    <th>Fecha Modificación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (const url of userUrls) { %>
+                    <tr>
+                        <td><%= url.id %></td>
+                        <td><%= url.userId %></td>
+                        <td><%= url.origUrl %></td>
+                        <td>
+                            <a href="/incrementar/<%= url.id %>"><%= url.shortUrl %></a>
+                        </td>
+                        <td><%= url.clicks %></td>
+                        <td><%= url.createdAt %></td>
+                        <td><%= url.updatedAt %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
