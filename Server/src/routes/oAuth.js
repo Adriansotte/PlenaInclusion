@@ -2,7 +2,6 @@ import express from "express";
 import passport from "passport";
 import GoogleStrategy from 'passport-google-oauth20';
 
-
 const oAuthRouter = express.Router();
 
 var userProfile;
@@ -20,14 +19,16 @@ passport.deserializeUser(function (obj, cb) {
     cb(null, obj);
 });
 
-/*  Google AUTH  */
-// Estas son mis credenciales de google para hacer la autoenticacion
-const GOOGLE_CLIENT_ID = '531131175800-89gmdtfbv13g0tmss46pjb3b8tltt1on.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
+/* Google AUTH */
+// Configura las credenciales de Google manualmente
+const GOOGLE_CLIENT_ID = '681862709269-q0qtq3v8lu54mvl9kge3qi5enrnnevqq.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = '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';
+const GOOGLE_CALLBACK_URL = 'http://localhost:3000/auth/google/callback';
+
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: GOOGLE_CALLBACK_URL
 },
     function (accessToken, refreshToken, profile, done) {
         userProfile = profile;

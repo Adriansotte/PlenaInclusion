@@ -12,7 +12,7 @@ export class PruebaService {
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/getUsers`);
+    return this.http.get<any>(`${this.apiUrl}/auth/google`);
   }
 
   addUser(): Observable<any> {
