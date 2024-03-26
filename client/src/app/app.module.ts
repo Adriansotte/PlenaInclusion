@@ -5,11 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PruebaComponent } from './components/loginGoogle/prueba/prueba.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PruebaComponent
+    PruebaComponent,
+    ErrorPageComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ export const GetUsers = async (req, res) => {
 export const AddUser = async (req, res) => {
     try {
         const newUser = await User.create({
-            email: "ADrian@gmail.com",
+            email: "ADrian@gmail.comasdasd",
             userName: "Adrian"
         });
         res.json(newUser);

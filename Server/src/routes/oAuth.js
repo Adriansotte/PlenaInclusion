@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
 import GoogleStrategy from 'passport-google-oauth20';
+import User from "../models/userModel.js";
 
 const oAuthRouter = express.Router();
 
@@ -8,8 +9,17 @@ var userProfile;
 
 oAuthRouter.use(passport.initialize());
 oAuthRouter.use(passport.session());
-oAuthRouter.get('/success', (req, res) => res.render('success', { user: userProfile }));
-oAuthRouter.get('/error', (req, res) => res.send("error logging in"));
+
+// Redirige al usuario a la página deseada después de la autenticación
+oAuthRouter.get('/success', (req, res) => {
+    res.redirect('http://localhost:4200/home');
+});
+
+// Maneja los errores de autenticación
+oAuthRouter.get('/error', (req, res) => {
+    // Aquí puedes personalizar el manejo de errores, por ejemplo, mostrando un mensaje de error al usuario
+    res.redirect('/error');
+});
 
 passport.serializeUser(function (user, cb) {
     cb(null, user);
@@ -36,30 +46,31 @@ passport.use(new GoogleStrategy({
     }
 ));
 
+// Ruta para iniciar la autenticación con Google
 oAuthRouter.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 
+// Ruta de retorno después de la autenticación con Google
 oAuthRouter.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/error' }),
     async function (req, res) {
         try {
+            // Verifica si el usuario ya existe en la base de datos
+            const existingUser = await User.findOne({ where: {email: userProfile.emails[0].value }});
+            // Si el usuario no existe, crea un nuevo usuario
+            if (!existingUser) {
+                const newUser = await User.create({
+                    email: userProfile.emails[0].value,
+                    userName: userProfile.displayName
+                });
+                console.log('Nuevo usuario creado:', newUser);
+            }
             req.session.userId = req.user.id;
 
-            // Aqui lo que hago es que si no se encuentra ninguna Url asociada a la id del usuario, se crea una default de google
-            // const existente = await Url.findOne({ where: { userId: req.user.id } });
-            // if (existente == null) {
-            //     const shortUrl = nanoid(8);
-            //     await Url.create({
-            //         userId: req.user.id,
-            //         origUrl: 'https://www.google.com/webhp?hl=es&sa=X&ved=0ahUKEwi4tpOv4MiDAxWxdqQEHa6hBB8QPAgJ',
-            //         shortUrl: shortUrl,
-            //         clicks: 0
-            //     });
-            // }
             return res.redirect('/success');
         } catch (error) {
             console.error(error);
-            return res.redirect('/error');
+            return res.redirect('/error'); // Redirige al usuario a la página de error en caso de error
         }
     });
 

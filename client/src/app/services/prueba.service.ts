@@ -1,23 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PruebaService {
 
-  private apiUrl = 'http://localhost:3000'; // URL del servidor Express
+  private apiUrl = 'http://localhost:3000/auth/google';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  getUsers(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/auth/google`);
+  authenticateWithGoogle(): void {
+    console.log("Entra al servicio");
+    this.http.get<any>(this.apiUrl).pipe(
+      map((response: any) => {
+        console.log("Me ha llegado una respuesta")
+        if (response && response.status === 200) {
+          console.log("Autenticación exitosa:", response);
+        } else {
+          throw new Error('Error de autenticación');
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error("Error al autenticar con Google:", error);
+        return throwError(error);
+      })
+    ).subscribe();
   }
 
-  addUser(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/addUser`);
+  getData(): boolean {
+    const peticion = this.http.get<any>("http://localhost:3000/auth/google");
+    let comprobacion = true;
+    if(peticion) !comprobacion; 
+    return comprobacion;
   }
 
-  // Puedes agregar más métodos según las necesidades de tu aplicación
 }
