@@ -1,3 +1,115 @@
+<!doctype html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body class="vh-100 bg-img">
+    <nav class="navbar navbar-expand-lg bg-transparent">
+        <div class="container-fluid">
+            <div class="col-8 ps-5">
+                <a class="navbar-brand" href="#">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4MVJZ2MwDhZ44wE9Yw12gjEPfA2DPN-LEUOy3yhB9A&s"
+                        alt="Bootstrap" width="auto" height="50">
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Contact</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid p-0 m-0">
+        <div class="row-fluid d-flex justify-content-end h-100">
+
+            <div class="col-md-6 h-100 d-flex justify-content-center">
+
+                <div class="card w-50 mt-5">
+
+                    <form class="row g-3 needs-validation m-0 p-0 h-100 d-block" novalidate>
+                        <!-- <form [formGroup]="loginForm" class="row g-3 needs-validation m-0 p-0 h-100 d-block" novalidate> -->
+                        <div class="row d-block mx-0 px-0 py-3 d-flex justify-content-center">
+
+                            <div class="col-fluid my-1 ">
+                                <label for="User" class="form-label">User</label>
+                                <input formControlName="email" type="text" class="form-control" id="usuario">
+                                <!-- <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                    <div *ngIf="email.errors?.['required']">Email is required.
+                                    </div>
+                                    <div *ngIf="email.errors?.['email']">Email is not valid.
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="col-fluid  my-1">
+                                <label for="Password" class="form-label">Password</label>
+                                <input formControlName="password" type="password" class="form-control" id="usuario"
+                                    placeholder="**********">
+                                <!-- <div *ngIf="password && (password.dirty || password.touched)" class="text-danger">
+                                    <div *ngIf="this.password.errors?.['required']">Password is required.
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="col-fluid my-1">
+                                <div class="form-check">
+                                    <!-- <input formControlName="rememberPass" class="check-input" type="checkbox"> -->
+                                    <input formControlName="rememberPass" class="form-check-input" type="checkbox">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Remember password
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-fluid my-1">
+                                <a href="#" class="card-link ms-2">Forget my password</a>
+                            </div>
+                            <div class="col-fluid mt-2 d-flex justify-content-center">
+                                <!-- <button class="button" type="submit" routerLink="/dashboard">Sign in</button> -->
+                                <!-- <button class="button" type="submit" (click)="login()">Sign in</button> -->
+                                <button class="button" type="submit">Sign in</button>
+                            </div>
+                            <div class="col-fluid my-1 text-center">
+                                <a href="/register" class="card-link ms-2">Sign Up</a>
+                            </div>
+                            <div class="col-fluid my-1 text-center">
+                                <a href="http://localhost:3000/auth/google" class="btn btn-primary">Sign in with
+                                    Google</a>
+
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
 <button (click)="registrarConGoogle()">Agregar usuario</button>
 <button (click)="recogerDatos()">Agregar usuario</button>

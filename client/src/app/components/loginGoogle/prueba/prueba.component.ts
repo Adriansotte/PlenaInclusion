@@ -15,7 +15,7 @@ export class PruebaComponent {
   }
 
   recogerDatos() : void{
-    console.log(  this.pruebaService.getData());
+    console.log(this.pruebaService.getData());
   }
 
 

@@ -10,14 +10,13 @@ var userProfile;
 oAuthRouter.use(passport.initialize());
 oAuthRouter.use(passport.session());
 
-// Redirige al usuario a la página deseada después de la autenticación
+// Redirige al usuario a la página después de la autenticación
 oAuthRouter.get('/success', (req, res) => {
     res.redirect('http://localhost:4200/home');
 });
 
-// Maneja los errores de autenticación
+// Maneja los errores de autenticacion
 oAuthRouter.get('/error', (req, res) => {
-    // Aquí puedes personalizar el manejo de errores, por ejemplo, mostrando un mensaje de error al usuario
     res.redirect('/error');
 });
 
@@ -55,9 +54,7 @@ oAuthRouter.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/error' }),
     async function (req, res) {
         try {
-            // Verifica si el usuario ya existe en la base de datos
             const existingUser = await User.findOne({ where: {email: userProfile.emails[0].value }});
-            // Si el usuario no existe, crea un nuevo usuario
             if (!existingUser) {
                 const newUser = await User.create({
                     email: userProfile.emails[0].value,
@@ -70,7 +67,7 @@ oAuthRouter.get('/auth/google/callback',
             return res.redirect('/success');
         } catch (error) {
             console.error(error);
-            return res.redirect('/error'); // Redirige al usuario a la página de error en caso de error
+            return res.redirect('/error');
         }
     });
 
