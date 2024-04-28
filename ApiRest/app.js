@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const defineRelations = require("./src/models/relations");
 const app = express();
 
 // Conexion a la base de datos
@@ -15,10 +16,11 @@ app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
 
+defineRelations();
 
 /**
  * Aqui invocamos las rutas
- */
+*/
 app.use("/api", require("./src/routes"));
 
 
