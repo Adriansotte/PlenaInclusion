@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const db = require("../config/config.js");
 
-const ActivityModel = db.define('Activity', {
-    ID_activity: {
+const TypeModel = db.define('Type', {
+    ID_type: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
@@ -14,19 +14,18 @@ const ActivityModel = db.define('Activity', {
     Description: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    Photo: {
-        type: DataTypes.STRING
-    },
-    // Agregar programa (posibilidad de N,N)
+    }
 }, {
     freezeTableName: true,
     timestamps: false,
-    tableName: 'Activity'
+    tableName: 'Type'
 });
+
 
 (async () => {
     await db.sync();
 })();
 
-module.exports = ActivityModel;
+
+module.exports = TypeModel;
+

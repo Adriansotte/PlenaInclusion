@@ -5,11 +5,6 @@ const db = require("../config/config.js");
 
 
 const UserModel = db.define('User', {
-    // ID_usuario: {
-    //     type: DataTypes.INTEGER,
-    //     primaryKey: true,
-    //     autoIncrement: true
-    // },
     ID_user: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,

@@ -17,6 +17,10 @@ const ScheduleModel = db.define('Schedule', {
         type: DataTypes.UUID,
         allowNull: false
     },
+    ID_Type: {
+        type: DataTypes.UUID,
+        allowNull: false
+    },
     Address: {
         type: DataTypes.STRING,
         allowNull: false
@@ -44,12 +48,13 @@ const ScheduleModel = db.define('Schedule', {
     FinishDate: {
         type: DataTypes.DATEONLY,
         allowNull: false
-    }
+    },
 }, {
     freezeTableName: true,
     timestamps: false,
     tableName: 'Schedule'
 });
+
 
 (async () => {
     await db.sync();

@@ -6,7 +6,7 @@ const app = express();
 
 // Conexion a la base de datos
 const sequelize = require('./src/config/config');
-const userRoutes = require("./src/routes/users");
+// const userRoutes = require("./src/routes/users");
 
 app.use(cors());
 

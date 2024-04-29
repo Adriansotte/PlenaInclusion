@@ -1,10 +1,5 @@
 const { DataTypes } = require('sequelize');
 const db = require("../config/config.js");
-const UserModel = require("./userModel.js");
-const ScheduleModel = require("./scheduleModel.js");
-
-// console.log(UserModel);
-
 
 const User_ScheduleModel = db.define('UserSchedule', {
     ID: {
