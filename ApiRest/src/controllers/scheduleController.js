@@ -10,6 +10,14 @@ async function getAllSchedules(req, res) {
     }
 }
 
+const postSchedule = async (req, res) => {
+    const { body } = req;
+    console.log(body);
+    const data = await ScheduleModel.create(body);
+    res.send(data);
+}
+
 module.exports = {
-    getAllSchedules: getAllSchedules
+    getAllSchedules: getAllSchedules,
+    postSchedule: postSchedule
 };

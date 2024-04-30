@@ -17,8 +17,7 @@ const ActivityModel = db.define('Activity', {
     },
     Photo: {
         type: DataTypes.STRING
-    },
-    // Agregar programa (posibilidad de N,N)
+    }
 }, {
     freezeTableName: true,
     timestamps: false,

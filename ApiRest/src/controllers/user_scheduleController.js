@@ -10,6 +10,14 @@ async function getAllUser_Schedules(req, res) {
     }
 }
 
+const postUser_Schedule = async (req, res) => {
+    const { body } = req;
+    console.log(body);
+    const data = await User_ScheduleModel.create(body);
+    res.send(data);
+}
+
 module.exports = {
-    getAllUser_Schedules: getAllUser_Schedules
+    getAllUser_Schedules: getAllUser_Schedules,
+    postUser_Schedule: postUser_Schedule
 };
