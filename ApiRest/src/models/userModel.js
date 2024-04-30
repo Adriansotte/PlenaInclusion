@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize');
 const db = require("../config/config.js");
-// const User_ScheduleModel = require("./user_scheduleModel.js"); // Importa el modelo de la tabla de unión
-// const ScheduleModel = require("./scheduleModel.js"); // Importa el modelo de horario
 
 
 const UserModel = db.define('User', {
