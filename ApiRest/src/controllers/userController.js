@@ -10,6 +10,19 @@ async function getAllUsers(req, res) {
     }
 }
 
+const getUser = async (req, res) => {
+
+}
+
+const postUser = async (req, res) => {
+    const { body } = req;
+    console.log(body);
+    const data = await UserModel.create(body);
+    res.send( data );
+}
+
 module.exports = {
-    getAllUsers: getAllUsers
+    getAllUsers: getAllUsers,
+    getUser: getUser,
+    postUser: postUser
 };

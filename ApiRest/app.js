@@ -10,6 +10,11 @@ const sequelize = require('./src/config/config');
 
 app.use(cors());
 
+app.use(express.json());
+
+// Para sacar los archivos staticos
+app.use(express.static("src/storage"));
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
