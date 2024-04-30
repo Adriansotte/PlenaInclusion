@@ -15,7 +15,8 @@ const validatorCreateUser = [
             // Si el valor no es null, debe ser una cadena de hasta 10 caracteres
             return typeof value === 'string' && value.length <= 10;
         }
-        return true; // Si es null, la validación pasa
+         // Si es null, la validación pasa
+        return true;
     }).withMessage('DNI_tutor debe ser una cadena de hasta 10 caracteres si se proporciona'),
     check("Adress").exists().notEmpty().isString(),
     check("Phone").exists().notEmpty().isString(),

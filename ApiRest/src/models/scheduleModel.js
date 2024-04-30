@@ -1,11 +1,5 @@
 const { DataTypes } = require('sequelize');
 const db = require("../config/config.js");
-// const ActivityModel = require("./activityModel");
-// const User_ScheduleModel = require("./user_scheduleModel"); // Importa el modelo de la tabla de unión
-// const UserModel = require("./userModel"); // Importa el modelo de usuario
-
-//console.log("Hola" + UserModel);
-
 
 const ScheduleModel = db.define('Schedule', {
     ID_Schedule: {
@@ -55,15 +49,10 @@ const ScheduleModel = db.define('Schedule', {
     tableName: 'Schedule'
 });
 
-
 (async () => {
     await db.sync();
 })();
 
-// // Definir la relación con la tabla de actividad
-// ScheduleModel.belongsTo(ActivityModel, { foreignKey: 'ID_Activity', onDelete: 'CASCADE' });
-// // Esta es la relacion N,N
-// ScheduleModel.belongsToMany(UserModel, { through: User_ScheduleModel });
 
 module.exports = ScheduleModel;
 

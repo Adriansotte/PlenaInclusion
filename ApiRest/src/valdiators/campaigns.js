@@ -1,0 +1,19 @@
+const { check } = require("express-validator");
+const validateResults = require("../utils/handleValidator");
+
+const validatorCreateCampaign = [
+    check("Name").exists().notEmpty().isString(),
+    check("Description").exists().notEmpty().isString(),
+    check("StartDate").exists().notEmpty().isDate(),
+    check("FinishDate").exists().notEmpty().isDate()
+        .custom((value, { req }) => {
+            const startDate = new Date(req.body.StartDate);
+            const finishDate = new Date(value);
+            return finishDate >= startDate;
+        }).withMessage("La fecha de finalización debe ser posterior o igual a la fecha de inicio"), // Cambiar el mensaje para incluir "o igual"
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+module.exports = { validatorCreateCampaign };

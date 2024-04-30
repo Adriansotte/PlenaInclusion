@@ -10,6 +10,14 @@ async function getAllTypes(req, res) {
     }
 }
 
+const postType = async (req, res) => {
+    const { body } = req;
+    console.log(body);
+    const data = await TypeModel.create(body);
+    res.send(data);
+}
+
 module.exports = {
-    getAllTypes: getAllTypes
+    getAllTypes: getAllTypes,
+    postType: postType
 };

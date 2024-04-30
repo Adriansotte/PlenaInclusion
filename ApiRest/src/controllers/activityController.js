@@ -10,6 +10,14 @@ async function getAllActivities(req, res) {
     }
 }
 
+const postActivity = async (req, res) => {
+    const { body } = req;
+    console.log(body);
+    const data = await ActivityModel.create(body);
+    res.send( data );
+}
+
 module.exports = {
-    getAllActivities: getAllActivities
+    getAllActivities: getAllActivities,
+    postActivity: postActivity
 };
