@@ -10,6 +10,14 @@ async function getAllCampaign_Schedules(req, res) {
     }
 }
 
+const postCampaignSchedule = async (req, res) => {
+    const { body } = req;
+    console.log(body);
+    const data = await Campaign_ScheduleModel.create(body);
+    res.send(data);
+}
+
 module.exports = {
-    getAllCampaign_Schedules: getAllCampaign_Schedules
+    getAllCampaign_Schedules: getAllCampaign_Schedules,
+    postCampaignSchedule: postCampaignSchedule
 };

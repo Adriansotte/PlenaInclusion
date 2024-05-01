@@ -9,7 +9,7 @@ const User_ScheduleModel = db.define('UserSchedule', {
     },
     AttendanceDate: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: false,
     },
     Comment: {
         type: DataTypes.STRING
@@ -20,17 +20,20 @@ const User_ScheduleModel = db.define('UserSchedule', {
     UserIDUser: {
         type: DataTypes.UUID,
         allowNull: false,
-        unique: false
     },
     ScheduleIDSchedule: {
         type: DataTypes.UUID,
         allowNull: false,
-        unique: false
     }
 }, {
     freezeTableName: true,
     timestamps: false,
-    tableName: 'UserSchedule'
+    tableName: 'UserSchedule',
+    uniqueKeys: {
+        UserSchedule_AttendanceDate_UserIDUser_ScheduleIDSchedule_unique: {
+            fields: ['UserIDUser', 'ScheduleIDSchedule', 'AttendanceDate']
+        }
+    }
 });
 
 (async () => {
