@@ -10,7 +10,12 @@ const Campaign_ScheduleModel = db.define('Campaign_Schedule', {
 }, {
     freezeTableName: true,
     timestamps: false,
-    tableName: 'Campaign_Schedule'
+    tableName: 'Campaign_Schedule',
+    uniqueKeys: {
+        Campaign_Schedule_CampaignIDCampaign_ScheduleIDSchedule_unique: {
+            fields: ['CampaignIDCampaign', 'ScheduleIDSchedule', 'ID']
+        }
+    }
 });
 
 (async () => {

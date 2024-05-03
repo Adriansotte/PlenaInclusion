@@ -25,4 +25,11 @@ const validatorCreateUser = [
     }
 ];
 
-module.exports = { validatorCreateUser };
+const validatorGetUser = [
+    check("id").exists().notEmpty().isUUID(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+module.exports = { validatorCreateUser, validatorGetUser };
