@@ -55,8 +55,10 @@ const UserModel = db.define('User', {
     }
 }, {
     freezeTableName: true,
-    timestamps: false,
-    tableName: 'User'
+    timestamps: true,
+    tableName: 'User',
+    paranoid: true,
+    deletedAt: 'softDelete'
 });
 
 
@@ -64,8 +66,6 @@ const UserModel = db.define('User', {
     await db.sync();
 })();
 
-// Esta es la relacion N,N
-// UserModel.belongsToMany(ScheduleModel, { through: User_ScheduleModel });
 
 module.exports = UserModel;
 
