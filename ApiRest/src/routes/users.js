@@ -11,5 +11,6 @@ router.post("/", validatorCreateUser, postUser);
 //Actualizar registro
 router.put("/:id", validatorGetUser, validatorCreateUser, updateUser);
 //Borrar registro
-router.delete("/:id", deleteUser)
+router.delete("/:id", deleteUser);
+
 module.exports = router;
