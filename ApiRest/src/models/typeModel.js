@@ -17,15 +17,16 @@ const TypeModel = db.define('Type', {
     }
 }, {
     freezeTableName: true,
-    timestamps: false,
-    tableName: 'Type'
+    timestamps: true,
+    tableName: 'Type',
+    paranoid: true,
+    deletedAt: 'softDelete'
 });
 
 
 (async () => {
     await db.sync();
 })();
-
 
 module.exports = TypeModel;
 
