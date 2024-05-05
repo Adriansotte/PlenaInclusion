@@ -20,8 +20,10 @@ const ActivityModel = db.define('Activity', {
     }
 }, {
     freezeTableName: true,
-    timestamps: false,
-    tableName: 'Activity'
+    timestamps: true,
+    tableName: 'Activity',
+    paranoid: true,
+    deletedAt: 'softDelete'
 });
 
 (async () => {

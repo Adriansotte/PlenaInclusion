@@ -10,4 +10,11 @@ const validatorCreateActivity = [
     }
 ];
 
-module.exports = { validatorCreateActivity };
+const validatorGetActivity = [
+    check("id").exists().notEmpty().isUUID(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+module.exports = { validatorCreateActivity, validatorGetActivity };

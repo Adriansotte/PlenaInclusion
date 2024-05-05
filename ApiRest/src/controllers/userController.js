@@ -1,6 +1,6 @@
 const UserModel = require('../models/userModel');
 const { handleHttpError } = require('../utils/handleError');
-const { matchedData } = require("express-validator")
+const { matchedData } = require("express-validator");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -16,11 +16,9 @@ const getUser = async (req, res) => {
         req = matchedData(req);
         const { id } = req;
         const user = await UserModel.findByPk(id);
-        console.log(user)
         res.json(user);
-
     } catch (error) {
-        console.error('Error al obtener todos los actividades:', error);
+        console.error('Error al obtener todos los usuarios:', error);
         handleHttpError(res, "ERROR_GET_USER")
     }
 }
@@ -70,10 +68,6 @@ const deleteUser = async (req, res) => {
         handleHttpError(res, "ERROR_DELETE_USER");
     }
 };
-
-
-
-
 
 module.exports = {
     getAllUsers: getAllUsers,

@@ -27,4 +27,11 @@ const validatorCreateSchedule = [
     }
 ];
 
-module.exports = { validatorCreateSchedule };
+const validatorGetSchedule = [
+    check("id").exists().notEmpty().isUUID(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+module.exports = { validatorCreateSchedule, validatorGetSchedule };

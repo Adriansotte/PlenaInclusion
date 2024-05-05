@@ -9,4 +9,11 @@ const validatorCreateType = [
     }
 ];
 
-module.exports = { validatorCreateType };
+const validatorGetType = [
+    check("id").exists().notEmpty().isUUID(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+module.exports = { validatorCreateType, validatorGetType };

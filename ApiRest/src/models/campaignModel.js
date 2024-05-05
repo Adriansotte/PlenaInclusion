@@ -25,8 +25,10 @@ const CampaignModel = db.define('Campaign', {
     },
 }, {
     freezeTableName: true,
-    timestamps: false,
-    tableName: 'Campaign'
+    timestamps: true,
+    tableName: 'Campaign',
+    paranoid: true,
+    deletedAt: 'softDelete'
 });
 
 

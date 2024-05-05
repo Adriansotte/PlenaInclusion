@@ -1,4 +1,6 @@
 const CampaignModel = require("../models/campaignModel");
+const { handleHttpError } = require('../utils/handleError');
+const { matchedData } = require("express-validator");
 
 async function getAllCampaigns(req, res) {
     try {
@@ -10,14 +12,68 @@ async function getAllCampaigns(req, res) {
     }
 }
 
-const postCampaign = async (req, res) => {
-    const { body } = req;
-    console.log(body);
-    const data = await CampaignModel.create(body);
-    res.send(data);
+const getCampaign = async (req, res) => {
+    try {
+        req = matchedData(req);
+        const { id } = req;
+        const campaign = await CampaignModel.findByPk(id);
+        res.json(campaign);
+    } catch (error) {
+        console.error('Error al obtener la campaña:', error);
+        handleHttpError(res, "ERROR_GET_CAMPAIGN")
+    }
 }
+
+const postCampaign = async (req, res) => {
+    try {
+        const body = matchedData(req);
+        const data = await CampaignModel.create(body);
+        res.send({ data });
+    } catch (e) {
+        handleHttpError(res, 'ERROR_POST_CAMPAIGN')
+    }
+}
+
+const updateCampaign = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const body = matchedData(req, { onlyValidData: true });
+        const campaignBeforeUpdate = await CampaignModel.findByPk(id);
+        if (!campaignBeforeUpdate) {
+            return res.status(404).send({ error: "Campaing not found" });
+        }
+        await CampaignModel.update(body, {
+            where: { ID_campaign: id }
+        });
+        const campaignAfterUpdate = await CampaignModel.findByPk(id);
+        return res.send({ data: campaignAfterUpdate });
+    } catch (error) {
+        console.error('Error al actualizar la campaña:', error);
+        handleHttpError(res, 'ERROR_UPDATE_CAMPAIGN');
+    }
+};
+
+const deleteCampaign = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const campaign = await CampaignModel.destroy({
+            where: { ID_campaign: id }
+        });
+        if (campaign === 1) {
+            res.json({ message: "Campaign deleted successfully" });
+        } else {
+            res.status(404).json({ error: "Campaign not found" });
+        }
+    } catch (error) {
+        console.error('Error al eliminar el usuario:', error);
+        handleHttpError(res, "ERROR_DELETE_USER");
+    }
+};
 
 module.exports = {
     getAllCampaigns: getAllCampaigns,
-    postCampaign: postCampaign
+    postCampaign: postCampaign,
+    deleteCampaign: deleteCampaign,
+    updateCampaign: updateCampaign,
+    getCampaign: getCampaign
 };

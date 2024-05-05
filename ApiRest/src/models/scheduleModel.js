@@ -45,14 +45,15 @@ const ScheduleModel = db.define('Schedule', {
     },
 }, {
     freezeTableName: true,
-    timestamps: false,
-    tableName: 'Schedule'
+    timestamps: true,
+    tableName: 'Schedule',
+    paranoid: true,
+    deletedAt: 'softDelete'
 });
 
 (async () => {
     await db.sync();
 })();
-
 
 module.exports = ScheduleModel;
 
