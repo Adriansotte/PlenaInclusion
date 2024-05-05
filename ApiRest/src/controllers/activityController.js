@@ -2,7 +2,7 @@ const ActivityModel = require("../models/activityModel");
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
 
-async function getAllActivities(req, res) {
+const getAllActivities = async (req, res) => {
     try {
         const activities = await ActivityModel.findAll();
         res.json(activities);
