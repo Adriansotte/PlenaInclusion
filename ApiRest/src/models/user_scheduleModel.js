@@ -29,9 +29,10 @@ const User_ScheduleModel = db.define('UserSchedule', {
     freezeTableName: true,
     timestamps: false,
     tableName: 'UserSchedule',
+    paranoid: true,
     uniqueKeys: {
         UserSchedule_AttendanceDate_UserIDUser_ScheduleIDSchedule_unique: {
-            fields: ['UserIDUser', 'ScheduleIDSchedule', 'AttendanceDate']
+            fields: ['UserIDUser', 'ScheduleIDSchedule', 'ID']
         }
     }
 });

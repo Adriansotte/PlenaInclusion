@@ -13,4 +13,25 @@ const validatorCreateUserSchedule = [
     }
 ];
 
-module.exports = { validatorCreateUserSchedule };
+const validatorGetUserId = [
+    check("userId").exists().notEmpty().isUUID(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+const validatorGetScheduleId = [
+    check("scheduleId").exists().notEmpty().isUUID(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+const validatorGetId = [
+    check("id").exists().notEmpty().isUUID(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+module.exports = { validatorCreateUserSchedule, validatorGetUserId, validatorGetScheduleId, validatorGetId };
