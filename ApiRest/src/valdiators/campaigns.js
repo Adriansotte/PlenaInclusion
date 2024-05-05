@@ -10,10 +10,17 @@ const validatorCreateCampaign = [
             const startDate = new Date(req.body.StartDate);
             const finishDate = new Date(value);
             return finishDate >= startDate;
-        }).withMessage("La fecha de finalización debe ser posterior o igual a la fecha de inicio"), // Cambiar el mensaje para incluir "o igual"
+        }).withMessage("La fecha de finalización debe ser posterior o igual a la fecha de inicio"),
     (req, res, next) => {
         return validateResults(req, res, next);
     }
 ];
 
-module.exports = { validatorCreateCampaign };
+const validatorGetCampaing = [
+    check("id").exists().notEmpty().isUUID(),
+    (req, res, next) => {
+        return validateResults(req, res, next);
+    }
+];
+
+module.exports = { validatorCreateCampaign, validatorGetCampaing };

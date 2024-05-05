@@ -61,11 +61,9 @@ const UserModel = db.define('User', {
     deletedAt: 'softDelete'
 });
 
-
 (async () => {
     await db.sync();
 })();
-
 
 module.exports = UserModel;
 

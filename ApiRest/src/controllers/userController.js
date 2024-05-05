@@ -18,7 +18,7 @@ const getUser = async (req, res) => {
         const user = await UserModel.findByPk(id);
         res.json(user);
     } catch (error) {
-        console.error('Error al obtener todos los actividades:', error);
+        console.error('Error al obtener todos los usuarios:', error);
         handleHttpError(res, "ERROR_GET_USER")
     }
 }
