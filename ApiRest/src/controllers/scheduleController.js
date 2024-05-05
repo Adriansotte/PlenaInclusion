@@ -1,10 +1,17 @@
 const ScheduleModel = require('../models/scheduleModel');
+const ActivityModel = require('../models/activityModel');
+const TypeModel = require('../models/typeModel');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
 
 async function getAllSchedules(req, res) {
     try {
-        const schedules = await ScheduleModel.findAll();
+        const schedules = await ScheduleModel.findAll({
+            include: [
+                { model: ActivityModel },
+                { model: TypeModel }
+            ]
+        });
         res.json(schedules);
     } catch (error) {
         console.error('Error al obtener todos los horarios:', error);
@@ -16,7 +23,12 @@ const getSchedule = async (req, res) => {
     try {
         req = matchedData(req);
         const { id } = req;
-        const schedule = await ScheduleModel.findByPk(id);
+        const schedule = await ScheduleModel.findByPk(id, {
+            include: [
+                { model: ActivityModel },
+                { model: TypeModel }
+            ]
+        });
         res.json(schedule);
     } catch (error) {
         console.error('Error al obtener el horario:', error);

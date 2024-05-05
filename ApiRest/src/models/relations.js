@@ -15,13 +15,14 @@ const defineRelations = () => {
     // Relación N:N entre User y Schedule a través de la tabla de unión User_Schedule
     UserModel.belongsToMany(ScheduleModel, { through: User_ScheduleModel });
     ScheduleModel.belongsToMany(UserModel, { through: User_ScheduleModel });
-    User_ScheduleModel.belongsTo(ScheduleModel, { foreignKey: 'ScheduleIDSchedule' });
-    User_ScheduleModel.belongsTo(UserModel, { foreignKey: 'UserIDUser' });
+    User_ScheduleModel.belongsTo(ScheduleModel, { foreignKey: 'ScheduleIDSchedule', onDelete: 'CASCADE' });
+    User_ScheduleModel.belongsTo(UserModel, { foreignKey: 'UserIDUser', onDelete: 'CASCADE' });
     // Relacion N:N entre Campaign y Schedule a traves de la tabla Campaign_Schedule
     CampaignModel.belongsToMany(ScheduleModel, { through: Campaign_ScheduleModel });
     ScheduleModel.belongsToMany(CampaignModel, { through: Campaign_ScheduleModel });
-    Campaign_ScheduleModel.belongsTo(ScheduleModel, { foreignKey: 'ScheduleIDSchedule' });
-    Campaign_ScheduleModel.belongsTo(CampaignModel, { foreignKey: 'CampaignIDCampaign' });
+    Campaign_ScheduleModel.belongsTo(ScheduleModel, { foreignKey: 'ScheduleIDSchedule', onDelete: 'CASCADE' });
+    Campaign_ScheduleModel.belongsTo(CampaignModel, { foreignKey: 'CampaignIDCampaign', onDelete: 'CASCADE' });
+
 }
 
 module.exports = defineRelations;
