@@ -4,7 +4,6 @@ const uploadMiddleware = require("../utils/handleStorage");
 const { createItem, getItems, getItem, deleteItem} = require("../controllers/storageController");
 const { validatorGetItem } = require("../valdiators/storages")
 
-
 // Para enviar varios archivos a la vez
 // router.post('/', uploadMiddleware.single(), (req, res) => {
 
