@@ -14,7 +14,7 @@ const UserModel = db.define('User', {
         unique: true
     },
     Rol: {
-        type: DataTypes.ENUM('Participante', 'Monitor', 'Coordinador'),
+        type: DataTypes.ENUM('Nominal', 'Monitor', 'Administrador'),
         allowNull: false
     },
     Name: {
