@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { getAllActivities, postActivity, getActivity, deleteActivity, updateActivity } = require("../controllers/activityController");
 const { validatorCreateActivity, validatorGetActivity } = require("../valdiators/activities");
+const { authMiddleware } = require("../middlewares/session")
 
-router.get("/", getAllActivities);
+
+router.get("/", authMiddleware, getAllActivities);
 
 router.get("/:id", validatorGetActivity, getActivity);
 

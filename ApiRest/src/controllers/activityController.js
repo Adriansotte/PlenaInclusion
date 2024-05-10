@@ -4,6 +4,8 @@ const { matchedData } = require("express-validator");
 
 const getAllActivities = async (req, res) => {
     try {
+        console.log("hola en el controlador de actividades")
+        const user = req.user;
         const activities = await ActivityModel.findAll();
         res.json(activities);
     } catch (error) {
