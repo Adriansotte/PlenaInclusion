@@ -48,6 +48,8 @@ const loginController = async (req, res) => {
         }
 
         const hashPassword = user.Pass;
+        console.log({ hashPassword })
+
         const check = await compare(req.body.Pass, hashPassword);
 
         if (!check) {
@@ -62,7 +64,11 @@ const loginController = async (req, res) => {
         }
 
         res.send({ data })
+
+
     } catch (error) {
+        console.log(error)
+
         handleHttpError(res, "ERROR_LOGGIN_USER")
     }
 }
