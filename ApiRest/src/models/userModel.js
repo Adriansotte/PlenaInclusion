@@ -36,7 +36,9 @@ const UserModel = db.define('User', {
     },
     Pass: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        // No se puede enviar como valor en un select, para más seguridad
+        select: false
     },
     Photo: {
         type: DataTypes.STRING
