@@ -2,15 +2,16 @@ const express = require("express");
 const router = express.Router();
 const { getAllCampaigns, postCampaign, deleteCampaign, getCampaign, updateCampaign } = require("../controllers/capaignController");
 const { validatorCreateCampaign, validatorGetCampaing } = require("../valdiators/campaigns");
+const { authMiddleware } = require("../middlewares/session")
 
-router.get("/", getAllCampaigns);
+router.get("/", authMiddleware, getAllCampaigns);
 
-router.get("/:id", validatorGetCampaing, getCampaign);
+router.get("/:id", authMiddleware, validatorGetCampaing, getCampaign);
 
-router.post("/", validatorCreateCampaign, postCampaign);
+router.post("/", authMiddleware, validatorCreateCampaign, postCampaign);
 
-router.put("/:id", validatorGetCampaing, validatorCreateCampaign, updateCampaign);
+router.put("/:id", authMiddleware, validatorGetCampaing, validatorCreateCampaign, updateCampaign);
 
-router.delete("/:id", validatorGetCampaing, deleteCampaign);
+router.delete("/:id", authMiddleware, validatorGetCampaing, deleteCampaign);
 
 module.exports = router;

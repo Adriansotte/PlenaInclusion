@@ -2,19 +2,21 @@ const express = require("express");
 const router = express.Router();
 const { getAllCampaign_Schedules, getCampaignSchedule, postCampaignSchedule, updateCampaignSchedule, deleteCampaignSchedule, getCampaignsByScheduleId, getSchedulesByCampaignId } = require("../controllers/campaign_scheduleController");
 const { validatorCreateCampaignSchedule, validatorGetCampaignSchedulesByCampaignId, validatorGetCampaignsByScheduleId, validatorGetId } = require("../valdiators/campaign_schedules")
+const { authMiddleware } = require("../middlewares/session")
 
-router.get("/", getAllCampaign_Schedules);
 
-router.get("/:id", validatorGetId, getCampaignSchedule);
+router.get("/", authMiddleware, getAllCampaign_Schedules);
 
-router.get("/campaigns/:campaignId/schedules", validatorGetCampaignSchedulesByCampaignId, getSchedulesByCampaignId);
+router.get("/:id", authMiddleware, validatorGetId, getCampaignSchedule);
 
-router.get("/schedules/:scheduleId/campaigns", validatorGetCampaignsByScheduleId, getCampaignsByScheduleId);
+router.get("/campaigns/:campaignId/schedules", authMiddleware, validatorGetCampaignSchedulesByCampaignId, getSchedulesByCampaignId);
 
-router.post("/", validatorCreateCampaignSchedule, postCampaignSchedule);
+router.get("/schedules/:scheduleId/campaigns", authMiddleware, validatorGetCampaignsByScheduleId, getCampaignsByScheduleId);
 
-router.put("/:id", validatorGetId, updateCampaignSchedule);
+router.post("/", authMiddleware, validatorCreateCampaignSchedule, postCampaignSchedule);
 
-router.delete("/:id", validatorGetId, deleteCampaignSchedule);
+router.put("/:id", authMiddleware, validatorGetId, updateCampaignSchedule);
+
+router.delete("/:id", authMiddleware, validatorGetId, deleteCampaignSchedule);
 
 module.exports = router;

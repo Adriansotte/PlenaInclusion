@@ -7,12 +7,12 @@ const { authMiddleware } = require("../middlewares/session")
 
 router.get("/", authMiddleware, getAllActivities);
 
-router.get("/:id", validatorGetActivity, getActivity);
+router.get("/:id", authMiddleware, validatorGetActivity, getActivity);
 
-router.post("/", validatorCreateActivity, postActivity);
+router.post("/", authMiddleware, validatorCreateActivity, postActivity);
 
-router.put("/:id", validatorGetActivity, validatorCreateActivity, updateActivity);
+router.put("/:id", authMiddleware, validatorGetActivity, validatorCreateActivity, updateActivity);
 
-router.delete("/:id", validatorGetActivity, deleteActivity);
+router.delete("/:id", authMiddleware, validatorGetActivity, deleteActivity);
 
 module.exports = router;

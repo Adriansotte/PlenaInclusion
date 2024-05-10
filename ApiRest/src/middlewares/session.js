@@ -9,10 +9,8 @@ const authMiddleware = async (req, res, next) => {
             handleHttpError(res, "NOT-TOKEN", 401);
             return;
         }
-        console.log("hola")
         const token = req.headers.authorization.split(' ').pop();
         const dataToken = await verifyToken(token);
-        console.log(dataToken)
 
         if (!dataToken.ID_user) {
             handleHttpError(res, "ERROR_ID_TOKEN", 401);
@@ -20,7 +18,6 @@ const authMiddleware = async (req, res, next) => {
         }
 
         const user = await UserModel.findByPk(dataToken.ID_user);
-        console.log("user", user)
         req.user = user
 
         next();
@@ -30,8 +27,5 @@ const authMiddleware = async (req, res, next) => {
         return;
     }
 }
-
-module.exports = authMiddleware;
-
 
 module.exports = { authMiddleware };
