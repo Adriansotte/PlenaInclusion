@@ -2,15 +2,17 @@ const express = require("express");
 const router = express.Router();
 const { getAllTypes, postType, getType, deleteType, updateType } = require("../controllers/typeController");
 const { validatorCreateType, validatorGetType } = require("../valdiators/types");
+const { authMiddleware } = require("../middlewares/session")
 
-router.get("/", getAllTypes);
 
-router.get("/:id", validatorGetType, getType);
+router.get("/", authMiddleware, getAllTypes);
 
-router.post("/", validatorCreateType, postType);
+router.get("/:id", authMiddleware, validatorGetType, getType);
 
-router.put("/:id", validatorGetType, validatorCreateType, updateType );
+router.post("/", authMiddleware, validatorCreateType, postType);
 
-router.delete("/:id", deleteType);
+router.put("/:id", authMiddleware, validatorGetType, validatorCreateType, updateType);
+
+router.delete("/:id", authMiddleware, deleteType);
 
 module.exports = router;

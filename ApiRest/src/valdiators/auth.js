@@ -3,7 +3,7 @@ const validateResults = require("../utils/handleValidator");
 
 const validatorRegister = [
     check("DNI").exists().notEmpty().isString(),
-    check("Rol").exists().notEmpty().isIn(['Participante', 'Monitor', 'Coordinador']),
+    check("Rol").exists().notEmpty().isIn(['Nominal', 'Monitor', 'Administrador']),
     check("Name").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
     check("Surname_1").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
     check("Surname_2").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),

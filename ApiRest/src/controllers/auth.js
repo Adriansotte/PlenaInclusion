@@ -46,10 +46,7 @@ const loginController = async (req, res) => {
             handleHttpError(res, "USER_NOT_FOUND", 404);
             return;
         }
-
         const hashPassword = user.Pass;
-        console.log({ hashPassword })
-
         const check = await compare(req.body.Pass, hashPassword);
 
         if (!check) {
@@ -62,13 +59,8 @@ const loginController = async (req, res) => {
             token: await tokenSign(user),
             user
         }
-
         res.send({ data })
-
-
     } catch (error) {
-        console.log(error)
-
         handleHttpError(res, "ERROR_LOGGIN_USER")
     }
 }
