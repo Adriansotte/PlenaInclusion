@@ -18,6 +18,10 @@ export class ThemeButtonComponent implements OnInit {
     const dropdownItems = document.querySelectorAll('.dropdown-item');
     dropdownItems.forEach(item => {
       item.addEventListener('click', () => {
+        // Remover clase activa de todos los elementos
+        dropdownItems.forEach(i => i.classList.remove('active'));
+        // Agregar clase activa al elemento clickeado
+        item.classList.add('active');
         const theme = item.getAttribute('data-theme');
         if (theme !== null) {
           this.switchTheme(theme);
