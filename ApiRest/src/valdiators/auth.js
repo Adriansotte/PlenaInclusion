@@ -20,6 +20,7 @@ const validatorRegister = [
     }).withMessage('DNI_tutor debe ser una cadena de hasta 10 caracteres si se proporciona'),
     check("Adress").exists().notEmpty().isString(),
     check("Phone").exists().notEmpty().isString(),
+    check("BirthDay").optional().notEmpty().isDate(),
     (req, res, next) => {
         return validateResults(req, res, next);
     }

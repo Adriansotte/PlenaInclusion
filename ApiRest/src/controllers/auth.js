@@ -4,8 +4,6 @@ const { tokenSign } = require("../utils/handleJwt");
 const { handleHttpError } = require("../utils/handleError");
 const UserModel = require('../models/userModel');
 
-
-
 /**
  * Este conrolador es el encargado de registrar al usuario
  * @param {*} req 
@@ -13,6 +11,19 @@ const UserModel = require('../models/userModel');
  */
 const registerController = async (req, res) => {
     try {
+        console.log("hola")
+        let formData;
+        if (req.is("multipart/form-data")) {
+            // Maneja datos de formulario multipartes
+            userData = req.body;
+        } else {
+            // Maneja datos en formato JSON
+            userData = req.body;
+        }
+        // Procesa los datos del formulario enviado desde Angular
+        // const formData = req.body;
+        console.log(formData)
+        console.log({ formData })
         req = matchedData(req);
         const Pass = await encrypt(req.Pass)
         const body = { ...req, Pass }
@@ -29,6 +40,7 @@ const registerController = async (req, res) => {
     } catch (error) {
         handleHttpError(res, "ERROR_REGISTER_USER")
     }
+
 }
 
 /**

@@ -1,1 +1,55 @@
-<p>form works!</p>
+<form (ngSubmit)="onSubmit(user)">
+    <div class="mb-3">
+        <label for="DNI" class="form-label">DNI</label>
+        <input type="text" class="form-control" id="DNI" [(ngModel)]="user.DNI" name="DNI" required>
+    </div>
+    <div class="mb-3">
+        <label for="Rol" class="form-label">Rol</label>
+        <select class="form-select" id="Rol" [(ngModel)]="user.Rol" name="Rol" required>
+            <option value="Nominal">Nominal</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Administrador">Administrador</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="Name" [(ngModel)]="user.Name" name="Name" required>
+    </div>
+    <div class="mb-3">
+        <label for="Surname_1" class="form-label">Surname 1</label>
+        <input type="text" class="form-control" id="Surname_1" [(ngModel)]="user.Surname_1" name="Surname_1" required>
+    </div>
+    <div class="mb-3">
+        <label for="Surname_2" class="form-label">Surname 2</label>
+        <input type="text" class="form-control" id="Surname_2" [(ngModel)]="user.Surname_2" name="Surname_2" required>
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="Email" [(ngModel)]="user.Email" name="Email" required>
+    </div>
+    <div class="mb-3">
+        <label for="Pass" class="form-label">Pass</label>
+        <input type="password" class="form-control" id="Pass" [(ngModel)]="user.Pass" name="Pass" required>
+    </div>
+    <div class="mb-3">
+        <label for="Photo" class="form-label">Photo</label>
+        <input type="file" class="form-control" id="Photo" [(ngModel)]="user.Photo" name="Photo">
+    </div>
+    <div class="mb-3">
+        <label for="DNI_tutor" class="form-label">DNI Tutor</label>
+        <input type="text" class="form-control" id="DNI_tutor" [(ngModel)]="user.DNI_tutor" name="DNI_tutor">
+    </div>
+    <div class="mb-3">
+        <label for="Adress" class="form-label">Adress</label>
+        <input type="text" class="form-control" id="Adress" [(ngModel)]="user.Adress" name="Adress" required>
+    </div>
+    <div class="mb-3">
+        <label for="Phone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="Phone" [(ngModel)]="user.Phone" name="Phone" required>
+    </div>
+    <div class="mb-3">
+        <label for="BirthDay" class="form-label">BirthDay</label>
+        <input type="date" class="form-control" id="BirthDay" [(ngModel)]="user.BirthDay" name="BirthDay">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
