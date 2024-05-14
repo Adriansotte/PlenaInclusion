@@ -54,6 +54,10 @@ const UserModel = db.define('User', {
     Phone: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    BirthDay: {
+        type: DataTypes.DATE,
+        allowNull: true // Ajusta esto según tus requerimientos
     }
 }, {
     freezeTableName: true,

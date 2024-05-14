@@ -4,11 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ThemeButtonComponent } from './components/shared/theme-button/theme-button.component';
+import { FormComponent } from './components/shared/form/form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ThemeButtonComponent
+    ThemeButtonComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
