@@ -13,6 +13,7 @@ const registerController = async (req, res) => {
     try {
         // Acceso a los datos del formulario
         const formData = req.body;
+        console.log(formData)
 
         // Acceso al archivo subido
         const file = req.file;

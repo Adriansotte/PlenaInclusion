@@ -10,7 +10,7 @@ const validatorRegister = [
     body("Surname_1").notEmpty().isString().isLength({ min: 3, max: 99 }),
     body("Surname_2").notEmpty().isString().isLength({ min: 3, max: 99 }),
     body("Email").notEmpty().isEmail(),
-    body("Pass").notEmpty().isString().isLength({ min: 3, max: 99 }),
+    //body("Pass").notEmpty().isString().isLength({ min: 3, max: 99 }),
     body("DNI_tutor").optional().isString().isLength({ max: 10 })
         .withMessage('DNI_tutor debe ser una cadena de hasta 10 caracteres si se proporciona'),
     body("Adress").notEmpty().isString(),

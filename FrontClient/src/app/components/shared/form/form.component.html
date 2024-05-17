@@ -35,7 +35,23 @@
         <input type="password" id="Pass" name="Pass" [(ngModel)]="user.Pass" placeholder="Ingrese la contraseña"
             required>
     </div>
-    <input type="file" name="myfile" (change)="onFileSelected($event)" accept="image/*">
+    <div>
+        <label for="DNI_tutor">DNI del Tutor:</label>
+        <input type="text" id="DNI_tutor" name="DNI_tutor" [(ngModel)]="user.DNI_tutor" placeholder="Ingrese el DNI del tutor">
+    </div>
+    <div>
+        <label for="Adress">Dirección:</label>
+        <input type="text" id="Adress" name="Adress" [(ngModel)]="user.Adress" placeholder="Ingrese la dirección" required>
+    </div>
+    <div>
+        <label for="Phone">Teléfono:</label>
+        <input type="text" id="Phone" name="Phone" [(ngModel)]="user.Phone" placeholder="Ingrese el teléfono" required>
+    </div>
+    <div>
+        <label for="BirthDay">Fecha de Nacimiento:</label>
+        <input type="date" id="BirthDay" name="BirthDay" [(ngModel)]="user.BirthDay" placeholder="Ingrese la fecha de nacimiento">
+    </div>
+    <input type="file" name="Photo" (change)="onFileSelected($event)" accept="image/*">
     <button type="submit">Enviar</button>
 
 </form>
