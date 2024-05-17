@@ -11,7 +11,7 @@
                 </span>
                 <div class="form-floating col-5">
                     <input type="text" class="form-control" id="DNI" name="DNI" [(ngModel)]="user.DNI"
-                        placeholder="Ingrese el DNI" required maxlength="9">
+                        placeholder="" required maxlength="9">
                     <label for="DNI">DNI</label>
                 </div>
             </div>
@@ -28,15 +28,12 @@
                 </span>
                 <div class="form-floating">
                     <input type="date" class="form-control" id="floatingDateInput" name="BirthDay"
-                        [(ngModel)]="user.BirthDay" placeholder="Fecha de nacimiento" required
+                        [(ngModel)]="user.BirthDay" placeholder="" required
                         (change)="validateDate()">
                     <label for="floatingDateInput">Fecha de Nacimiento</label>
                 </div>
             </div>
         </div>
-
-
-
 
         <div class="col-lg-4 col-md-12">
             <div class="form-floating">
@@ -47,9 +44,6 @@
                     <option value="Administrador">Administrador</option>
                 </select>
                 <label for="Rol" class="ms-2">Rol:</label>
-                <div class="invalid-feedback">
-                    Por favor seleccione un rol.
-                </div>
             </div>
         </div>
         <!-- TODO: sacar la informacion de los DNI de tutor mediante un EndPoint -->
@@ -57,7 +51,7 @@
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-input': isValidInput(user.Name)}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -66,20 +60,16 @@
                     </svg>
                 </span>
                 <div class="form-floating">
-                    <input type="text" id="Name" name="Name" [(ngModel)]="user.Name" placeholder="Ingrese el nombre"
-                        class="form-control" required>
-                    <label for="Name">Nombre</label>
-                    <div class="invalid-feedback">
-                        Por favor ingrese un nombre válido.
-                    </div>
+                    <input type="text" class="form-control" id="floatingNameInput" name="Name" [(ngModel)]="user.Name"
+                        placeholder="" required maxlength="30" (input)="onInputChange(user.Name)">
+                    <label for="floatingNameInput">Nombre</label>
                 </div>
             </div>
         </div>
 
-
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-input': isValidInput(user.Surname_1)}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                         <path
@@ -88,18 +78,17 @@
                 </span>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingSurname1Input" name="Surname_1"
-                        [(ngModel)]="user.Surname_1" placeholder="Ingrese el primer apellido" required>
+                        [(ngModel)]="user.Surname_1" placeholder="" required maxlength="30"
+                        (input)="onInputChange(user.Surname_1)">
                     <label for="floatingSurname1Input">Primer Apellido</label>
-                    <div class="invalid-feedback">
-                        Por favor ingrese un apellido válido.
-                    </div>
                 </div>
             </div>
         </div>
 
+
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-input': isValidInput(user.Surname_2)}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                         <path
@@ -108,11 +97,9 @@
                 </span>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingSurname2Input" name="Surname_2"
-                        [(ngModel)]="user.Surname_2" placeholder="Ingrese el segundo apellido" required>
+                        [(ngModel)]="user.Surname_2" placeholder="" required
+                        (input)="onInputChange(user.Surname_1)" maxlength="30">
                     <label for="floatingSurname2Input">Segundo Apellido</label>
-                    <div class="invalid-feedback">
-                        Por favor ingrese un apellido válido.
-                    </div>
                 </div>
             </div>
         </div>
@@ -131,7 +118,7 @@
                 </span>
                 <div class="form-floating">
                     <input type="email" class="form-control" id="floatingEmailInput" name="Email"
-                        [(ngModel)]="user.Email" placeholder="Ingrese el correo electrónico" required>
+                        [(ngModel)]="user.Email" placeholder="" required>
                     <label for="floatingEmailInput">Correo Electrónico</label>
                     <div class="invalid-feedback">
                         Por favor ingrese un correo electrónico válido.
@@ -161,7 +148,7 @@
                 </span>
                 <div class="form-floating">
                     <input type="password" class="form-control" id="floatingPasswordInput" name="Pass"
-                        [(ngModel)]="user.Pass" placeholder="Ingrese la contraseña" required>
+                        [(ngModel)]="user.Pass" placeholder="" required>
                     <label for="floatingPasswordInput">Contraseña</label>
                     <div class="invalid-feedback">
                         Por favor ingrese una contraseña válida.
@@ -182,7 +169,7 @@
                 </span>
                 <div class="form-floating">
                     <input type="password" class="form-control" id="floatingConfirmPasswordInput" name="ConfirmPass"
-                        [(ngModel)]="user.ConfirmPass" placeholder="Repite la contraseña" required>
+                        [(ngModel)]="user.ConfirmPass" placeholder="" required>
                     <label for="floatingConfirmPasswordInput">Repite la Contraseña</label>
                     <div class="invalid-feedback">
                         Por favor repita la contraseña.
@@ -202,7 +189,7 @@
                 </span>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingAddressInput" name="Adress"
-                        [(ngModel)]="user.Adress" placeholder="Ingresa tu dirección" required>
+                        [(ngModel)]="user.Adress" placeholder="" required>
                     <label for="floatingAddressInput">Dirección</label>
                     <div class="invalid-feedback">
                         Por favor ingrese una dirección válida.
@@ -222,7 +209,7 @@
                 </span>
                 <div class="form-floating">
                     <input type="tel" class="form-control" id="floatingPhoneInput" name="Phone" [(ngModel)]="user.Phone"
-                        placeholder="Ingrese el teléfono" required>
+                        placeholder="" required>
                     <label for="floatingPhoneInput">Teléfono</label>
                     <div class="invalid-feedback">
                         Por favor ingrese un número de teléfono válido.
@@ -244,7 +231,7 @@
                 </span>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingDniTutorInput" name="DNI_tutor"
-                        [(ngModel)]="user.DNI_tutor" placeholder="Ingrese el DNI del tutor" required>
+                        [(ngModel)]="user.DNI_tutor" placeholder="" required>
                     <label for="floatingDniTutorInput">DNI del Tutor</label>
                 </div>
             </div>

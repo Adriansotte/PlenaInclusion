@@ -59,5 +59,17 @@ export class FormComponent {
       this.isValidDate = true;
     }
   }
+
+
+  onInputChange(value: string) {
+    // Realizar validaciones adicionales o acciones específicas
+    console.log('El valor del campo de entrada ha cambiado:', value);
+    // Puedes agregar más lógica aquí según sea necesario
+}
+
+  isValidInput(value: string): boolean {
+    return value.trim() !== '';
+}
+
 }
 
