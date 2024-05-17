@@ -2,7 +2,7 @@
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-DNI': isDNICorrect()}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
                         <path
@@ -11,14 +11,15 @@
                 </span>
                 <div class="form-floating col-5">
                     <input type="text" class="form-control" id="DNI" name="DNI" [(ngModel)]="user.DNI"
-                        placeholder="Ingrese el DNI" required>
+                        placeholder="Ingrese el DNI" required maxlength="9">
                     <label for="DNI">DNI</label>
                 </div>
             </div>
         </div>
+
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-date': isValidDate}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-calendar-date" viewBox="0 0 16 16">
                         <path
@@ -27,15 +28,17 @@
                 </span>
                 <div class="form-floating">
                     <input type="date" class="form-control" id="floatingDateInput" name="BirthDay"
-                        [(ngModel)]="user.BirthDay" placeholder="Fecha de nacimiento" required>
+                        [(ngModel)]="user.BirthDay" placeholder="Fecha de nacimiento" required
+                        (change)="validateDate()">
                     <label for="floatingDateInput">Fecha de Nacimiento</label>
                 </div>
             </div>
         </div>
+
+
+
+
         <div class="col-lg-4 col-md-12">
-
-
-
             <div class="form-floating">
                 <select class="form-select" id="Rol" name="Rol" [(ngModel)]="user.Rol" required
                     aria-label="Floating label select example">

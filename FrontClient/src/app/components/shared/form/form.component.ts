@@ -41,4 +41,23 @@ export class FormComponent {
       }
     );
   }
+
+  isDNICorrect() {
+    return this.user.DNI && this.user.DNI.length === 9;
+  }
+
+  isValidDate = false;
+
+  validateDate() {
+    const userDate = new Date(this.user.BirthDay);
+    const currentDate = new Date();
+
+    if (userDate > currentDate) {
+      alert('La fecha de nacimiento no puede ser una fecha futura.');
+      this.isValidDate = false;
+    } else {
+      this.isValidDate = true;
+    }
+  }
 }
+
