@@ -10,8 +10,8 @@
                     </svg>
                 </span>
                 <div class="form-floating col-5">
-                    <input type="text" class="form-control" id="DNI" name="DNI" [(ngModel)]="user.DNI"
-                        placeholder="" required maxlength="9">
+                    <input type="text" class="form-control" id="DNI" name="DNI" [(ngModel)]="user.DNI" placeholder=""
+                        required maxlength="9">
                     <label for="DNI">DNI</label>
                 </div>
             </div>
@@ -28,8 +28,7 @@
                 </span>
                 <div class="form-floating">
                     <input type="date" class="form-control" id="floatingDateInput" name="BirthDay"
-                        [(ngModel)]="user.BirthDay" placeholder="" required
-                        (change)="validateDate()">
+                        [(ngModel)]="user.BirthDay" placeholder="" required (change)="validateDate()">
                     <label for="floatingDateInput">Fecha de Nacimiento</label>
                 </div>
             </div>
@@ -97,8 +96,8 @@
                 </span>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingSurname2Input" name="Surname_2"
-                        [(ngModel)]="user.Surname_2" placeholder="" required
-                        (input)="onInputChange(user.Surname_1)" maxlength="30">
+                        [(ngModel)]="user.Surname_2" placeholder="" required (input)="onInputChange(user.Surname_1)"
+                        maxlength="30">
                     <label for="floatingSurname2Input">Segundo Apellido</label>
                 </div>
             </div>
@@ -109,7 +108,7 @@
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-email': isValidEmail}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-envelope-fill" viewBox="0 0 16 16">
                         <path
@@ -118,7 +117,8 @@
                 </span>
                 <div class="form-floating">
                     <input type="email" class="form-control" id="floatingEmailInput" name="Email"
-                        [(ngModel)]="user.Email" placeholder="" required>
+                        [(ngModel)]="user.Email" placeholder="" required (ngModelChange)="onEmailChange($event)">
+
                     <label for="floatingEmailInput">Correo Electrónico</label>
                     <div class="invalid-feedback">
                         Por favor ingrese un correo electrónico válido.

@@ -65,11 +65,21 @@ export class FormComponent {
     // Realizar validaciones adicionales o acciones específicas
     console.log('El valor del campo de entrada ha cambiado:', value);
     // Puedes agregar más lógica aquí según sea necesario
-}
+  }
 
   isValidInput(value: string): boolean {
     return value.trim() !== '';
-}
+  }
 
+  isValidEmail: boolean = false;
+
+  onEmailChange(value: string) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]/;
+    if (emailRegex.test(value)) {
+      this.isValidEmail = true;
+    } else {
+      this.isValidEmail = false;
+    }
+  }
 }
 
