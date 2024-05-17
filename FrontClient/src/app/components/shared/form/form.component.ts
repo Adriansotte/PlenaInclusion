@@ -17,6 +17,7 @@ export class FormComponent {
     Surname_2: '',
     Email: '',
     Pass: '',
+    ConfirmPass: '',
     DNI_tutor: '',
     Adress: '',
     Phone: '',

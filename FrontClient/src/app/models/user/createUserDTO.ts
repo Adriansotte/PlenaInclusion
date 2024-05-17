@@ -6,6 +6,7 @@ export interface registerUserDTO {
     Surname_2: string;
     Email: string;
     Pass: string;
+    ConfirmPass: string;
     DNI_tutor: string;
     Adress: string;
     Phone: string;

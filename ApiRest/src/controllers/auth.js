@@ -36,7 +36,7 @@ const registerController = async (req, res) => {
             Surname_2: formData.Surname_2,
             Email: formData.Email,
             Pass: Pass,
-            Photo: formData.Photo, // Agrega el nombre del archivo de la foto
+            Photo: `${process.env.DATABASEIP}:${process.env.PORT}/${formData.Photo}`,
             DNI_tutor: formData.DNI_tutor,
             Adress: formData.Adress,
             Phone: formData.Phone,

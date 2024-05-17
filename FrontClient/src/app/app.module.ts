@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { ThemeButtonComponent } from './components/shared/theme-button/theme-button.component';
 import { FormComponent } from './components/shared/form/form.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 @NgModule({
   declarations: [
     AppComponent,
     ThemeButtonComponent,
-    FormComponent
+    FormComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,
