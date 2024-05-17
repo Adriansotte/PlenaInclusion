@@ -11,37 +11,53 @@ const UserModel = require('../models/userModel');
  */
 const registerController = async (req, res) => {
     try {
-        console.log("hola")
-        let formData;
-        if (req.is("multipart/form-data")) {
-            // Maneja datos de formulario multipartes
-            userData = req.body;
-        } else {
-            // Maneja datos en formato JSON
-            userData = req.body;
-        }
-        // Procesa los datos del formulario enviado desde Angular
-        // const formData = req.body;
-        console.log(formData)
-        console.log({ formData })
-        req = matchedData(req);
-        const Pass = await encrypt(req.Pass)
-        const body = { ...req, Pass }
-        const dataUser = await UserModel.create(body);
-        // TODO: mirar que el strict valga
-        dataUser.set('Pass', undefined, { strict: false })
+        // Acceso a los datos del formulario
+        const formData = req.body;
 
-        const data = {
-            token: await tokenSign(dataUser),
-            user: dataUser
+        // Acceso al archivo subido
+        const file = req.file;
+
+        // Verifica si se ha enviado un archivo
+        if (file) {
+            // Si hay un archivo, agrega su nombre al objeto formData
+            formData.Photo = file.filename;
         }
 
-        res.send({ data })
+        // Encripta la contraseña
+        const Pass = await encrypt(formData.Pass);
+
+        // Crea el objeto de datos del usuario
+        const userData = {
+            DNI: formData.DNI,
+            Rol: formData.Rol,
+            Name: formData.Name,
+            Surname_1: formData.Surname_1,
+            Surname_2: formData.Surname_2,
+            Email: formData.Email,
+            Pass: Pass,
+            Photo: formData.Photo, // Agrega el nombre del archivo de la foto
+            DNI_tutor: formData.DNI_tutor,
+            Adress: formData.Adress,
+            Phone: formData.Phone,
+            BirthDay: formData.BirthDay
+        };
+
+        // Crea el usuario en la base de datos
+        const newUser = await UserModel.create(userData);
+
+        // Oculta la contraseña antes de enviarla en la respuesta
+        newUser.set('Pass', undefined, { strict: false });
+
+        // Genera un token de sesión para el usuario
+        const token = await tokenSign(newUser);
+
+        // Envía la respuesta con el token y los datos del usuario
+        res.status(201).json({ token, user: newUser });
     } catch (error) {
-        handleHttpError(res, "ERROR_REGISTER_USER")
+        console.error("Error al registrar usuario:", error);
+        handleHttpError(res, "ERROR_REGISTER_USER");
     }
-
-}
+};
 
 /**
  * Es el encargado de loggear una persona

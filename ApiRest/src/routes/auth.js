@@ -2,12 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { loginController, registerController } = require("../controllers/auth")
 const { validatorRegister, validatorLogin } = require("../valdiators/auth")
-const multer = require("multer");
+const uploadMiddleware = require("../utils/handleStorage");
 
-// Configura multer para manejar formularios multipartes
-const upload = multer();
 
-router.post("/register", upload.any(), validatorRegister, registerController);
+router.post("/register", uploadMiddleware.single("Photo"), validatorRegister, registerController);
 
 router.post("/login", validatorLogin, loginController)
 
