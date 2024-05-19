@@ -1,12 +1,10 @@
 $primary: #03920c;
 $warning: #ff9b36;
 $danger: #e72e2b;
+$success: #Dde8e8;
 
 $theme-colors: (
-    "primary": $primary,
-    "danger": $danger,
-    "warning": $warning
-
+    
 );
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss"
