@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { registerUserDTO } from 'src/app/models/user/createUserDTO';
 import { RegisterService } from 'src/app/services/register/register.service';
 import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
@@ -28,7 +29,9 @@ export class FormComponent implements OnInit {
 
   defaultProfileImageUrl: string = "";
 
-  constructor(private registerService: RegisterService, private defaultProfileService: DefaultProfileService) { }
+  constructor(private registerService: RegisterService,
+    private defaultProfileService: DefaultProfileService,
+    private router: Router) { }
 
 
   ngOnInit(): void {
@@ -86,7 +89,11 @@ export class FormComponent implements OnInit {
       }
     });
   }
-  
+
+  navigateToHome(): void {
+    this.router.navigate(['home'])
+  }
+
 
   isDNIValid: boolean = false;
   isRolSelected: boolean = false;
