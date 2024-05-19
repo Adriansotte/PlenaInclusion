@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { environments } from 'src/environments/environments';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DefaultProfileService {
+  
+  url: string = environments.baseUrl
 
   constructor(private http: HttpClient) { }
 
