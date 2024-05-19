@@ -11,6 +11,7 @@ import { ConfirmationComponent } from './components/shared/confirmation/confirma
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { HomeComponent } from './components/pages/home/home.component';
+import { LoginFormComponent } from './components/shared/login-form/login-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +21,8 @@ import { HomeComponent } from './components/pages/home/home.component';
     ConfirmationComponent,
     NotFoundComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
