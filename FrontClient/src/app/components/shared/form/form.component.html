@@ -5,7 +5,7 @@
             <img [src]="imagenMostrada" alt="Imagen seleccionada" class="img-fluid rounded shadow-lg" style="max-height: 150px;">
         </div>
         <div *ngIf="!imagenMostrada" class="col-auto vh-25 d-flex justify-content-center align-items-center">
-            <img src="http://localhost:3000/file-1716121143641.png" alt="Imagen predeterminada" class="img-fluid rounded shadow-lg" style="max-height: 150px;">
+            <img src={{defaultProfileImageUrl}} alt="Imagen predeterminada" class="img-fluid rounded shadow-lg" style="max-height: 150px;">
         </div>
 
     </div>

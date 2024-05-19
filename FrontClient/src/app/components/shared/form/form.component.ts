@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { registerUserDTO } from 'src/app/models/user/createUserDTO';
 import { RegisterService } from 'src/app/services/register/register.service';
+import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
-export class FormComponent {
+export class FormComponent implements OnInit {
 
   user: registerUserDTO = {
     DNI: '',
@@ -25,7 +26,22 @@ export class FormComponent {
   };
   Photo: File | undefined;
 
-  constructor(private registerService: RegisterService) { }
+  defaultProfileImageUrl: string = "";
+
+  constructor(private registerService: RegisterService, private defaultProfileService: DefaultProfileService) { }
+
+
+  ngOnInit(): void {
+    // Suscripción para obtener la URL de la imagen predeterminada
+    this.defaultProfileService.getDefaultProfileImage().subscribe({
+      next: (imageUrl: string) => {
+        this.defaultProfileImageUrl = imageUrl; // Asigna la URL de la imagen predeterminada
+      },
+      error: (error: any) => {
+        console.error('Error al obtener la imagen predeterminada:', error);
+      }
+    });
+  }
 
   archivoInsertado: boolean = false;
   archivoInsertadoValid: boolean = true;
