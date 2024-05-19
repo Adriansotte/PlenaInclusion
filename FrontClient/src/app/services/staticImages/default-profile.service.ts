@@ -8,13 +8,14 @@ import { environments } from 'src/environments/environments';
   providedIn: 'root'
 })
 export class DefaultProfileService {
-  
+
   url: string = environments.baseUrl
+  defaultProfileImage : string = environments.defautlProfileImage
 
   constructor(private http: HttpClient) { }
 
   getDefaultProfileImage(): Observable<string> {
-    return this.http.get<any>('http://localhost:3000/api/storage/ed6d99c3-0647-417b-8f9b-8f458fe15135').pipe(
+    return this.http.get<any>(`${this.url}/api/storage/${this.defaultProfileImage}`).pipe(
       map((response: any) => response.data.url)
     );
   }
