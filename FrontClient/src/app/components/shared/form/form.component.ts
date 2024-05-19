@@ -27,9 +27,32 @@ export class FormComponent {
 
   constructor(private registerService: RegisterService) { }
 
-  onFileSelected(event: any) {
-    this.Photo = event.target.files[0];
+  archivoInsertado: boolean = false;
+  archivoInsertadoValid: boolean = true;
+  imagenMostrada: any;
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png'];
+    const maxSize = 5 * 1024 * 1024; // 5 MB
+
+    if (file && allowedTypes.includes(file.type) && file.size <= maxSize) {
+      this.archivoInsertadoValid = true;
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagenMostrada = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      this.archivoInsertadoValid = false;
+      this.imagenMostrada = null;
+    }
+
+    this.archivoInsertado = true;
   }
+
 
   submitForm() {
     this.registerService.registerUser(this.user, this.Photo).subscribe(
@@ -42,11 +65,37 @@ export class FormComponent {
     );
   }
 
-  isDNICorrect() {
-    return this.user.DNI && this.user.DNI.length === 9;
+  isDNIValid: boolean = false;
+  isRolSelected: boolean = false;
+  isValidDate: boolean = false;
+  isNameEntered: boolean = false;
+  isSurname1Entered: boolean = false;
+  isSurname2Entered: boolean = false;
+  isValidEmail: boolean = false;
+  isValidAdress: boolean = false;
+  isValidPhone: boolean = false;
+  isPasswordValid: boolean = false;
+  passwordsMatch: boolean = false;
+  confirmPassValid: boolean = false;
+
+  // Función que valida el DNI
+  isDNICorrect(): boolean {
+    this.isDNIValid = this.user.DNI.length === 9;
+    return this.isDNIValid;
   }
 
-  isValidDate = false;
+  // Función que se llama cuando se cambia el valor del DNI
+  onDNIInputChange(): void {
+    this.isDNICorrect();
+  }
+
+
+  // Función que valida si se ha seleccionado un rol
+  isRolValid(): boolean {
+    this.isRolSelected = this.user.Rol !== '';
+    return this.isRolSelected;
+  }
+
 
   validateDate() {
     const userDate = new Date(this.user.BirthDay);
@@ -67,11 +116,37 @@ export class FormComponent {
     // Puedes agregar más lógica aquí según sea necesario
   }
 
-  isValidInput(value: string): boolean {
-    return value.trim() !== '';
+  // Función que valida el nombre y actualiza isNameEntered
+  isValidName(value: string): boolean {
+    const regex = /^[a-zA-Z\s]+$/;
+    const isValid = regex.test(value.trim());
+    this.isNameEntered = value.trim() !== '' && isValid;
+    return isValid;
   }
 
-  isValidEmail: boolean = false;
+
+  // Función que valida el primer apellido y actualiza isSurname1Entered
+  isValidSurname1(value: string): boolean {
+    const regex = /^[a-zA-Z\s]+$/;
+    const isValid = regex.test(value.trim());
+    this.isSurname1Entered = value.trim() !== '' && isValid;
+    return isValid;
+  }
+
+  // Función que valida el segundo apellido y actualiza isSurname2Entered
+  isValidSurname2(value: string): boolean {
+    const regex = /^[a-zA-Z\s]+$/;
+    const isValid = regex.test(value.trim());
+    this.isSurname2Entered = value.trim() !== '' && isValid;
+    return isValid;
+  }
+
+  isValidInput(value: string): boolean {
+    const regex = /^[a-zA-Z\s]+$/;
+    return regex.test(value.trim());
+  }
+
+
 
   onEmailChange(value: string) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]/;
@@ -81,5 +156,48 @@ export class FormComponent {
       this.isValidEmail = false;
     }
   }
+
+
+  // Función para validar la contraseña y actualizar isPasswordValid
+  isValidPassword(value: string): void {
+    this.isPasswordValid = value.length >= 5 && value.length <= 20;
+  }
+
+  checkPasswords(): void {
+    this.passwordsMatch = this.user.Pass === this.user.ConfirmPass;
+    this.confirmPassValid = this.passwordsMatch && this.user.ConfirmPass !== '';
+  }
+
+
+  isValidInputAdress(value: string): boolean {
+    const regex = /^[a-zA-Z0-9\s]+$/;
+    this.isValidAdress = regex.test(value.trim());
+    return this.isValidAdress;
+  }
+
+  // Función que se llama cuando se cambia el valor de la dirección
+  onAddressInputChange(value: string): void {
+    this.isValidInputAdress(value);
+  }
+
+
+  isValidInputPhone(value: string): boolean {
+    const regex = /^[0-9]{9}$/;
+    this.isValidPhone = regex.test(value.trim());
+    return this.isValidPhone;
+  }
+
+  // Función que se llama cuando se cambia el valor del teléfono
+  onPhoneInputChange(value: string): void {
+    this.isValidInputPhone(value);
+  }
+
+  dniTutorValido: boolean = false;
+
+  validarDniTutor(): void {
+    this.dniTutorValido = this.user.DNI_tutor.length === 9;
+  }
+
+
 }
 

@@ -1,8 +1,42 @@
 <form (ngSubmit)="submitForm()" enctype="multipart/form-data" class="needs-validation p-3" novalidate>
-    <div class="row my-4">
+    <div class="row justify-content-center p-2">
+
+        <div *ngIf="imagenMostrada" class="col-auto vh-25 d-flex justify-content-center align-items-center">
+            <img [src]="imagenMostrada" alt="Imagen seleccionada" class="img-fluid rounded shadow-lg" style="max-height: 150px;">
+        </div>
+        <div *ngIf="!imagenMostrada" class="col-auto vh-25 d-flex justify-content-center align-items-center">
+            <img src="http://localhost:3000/file-1716121143641.png" alt="Imagen predeterminada" class="img-fluid rounded shadow-lg" style="max-height: 150px;">
+        </div>
+
+    </div>
+    <div class="row justify-content-center">
+
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text" [ngClass]="{'valid-DNI': isDNICorrect()}">
+                <label for="Photo" class="input-group-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-image" viewBox="0 0 16 16">
+                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                        <path
+                            d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z" />
+                    </svg>
+                </label>
+                <input class="form-control" type="file" id="Photo" name="Photo" (change)="onFileSelected($event)"
+                    accept="image/*">
+            </div>
+            <div *ngIf="!archivoInsertado" class="">
+                Por favor seleccione una foto.
+            </div>
+            <div *ngIf="!archivoInsertadoValid && archivoInsertado" class="">
+                Por favor seleccione una foto válida (formato jpg o png, máximo 5 MB).
+            </div>
+        </div>
+    </div>
+    <div class="row my-4">
+
+        <div class="col-lg-4 col-md-12">
+            <div class="input-group">
+                <span class="input-group-text" [ngClass]="{'valid-DNI': isDNIValid}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
                         <path
@@ -11,11 +45,15 @@
                 </span>
                 <div class="form-floating col-5">
                     <input type="text" class="form-control" id="DNI" name="DNI" [(ngModel)]="user.DNI" placeholder=""
-                        required maxlength="9">
+                        required maxlength="9" (input)="onDNIInputChange()">
                     <label for="DNI">DNI</label>
                 </div>
             </div>
+            <div *ngIf="!isDNIValid && user.DNI.length > 0" class="text-danger mt-2">
+                El DNI debe tener exactamente 9 caracteres.
+            </div>
         </div>
+
 
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
@@ -37,20 +75,24 @@
         <div class="col-lg-4 col-md-12">
             <div class="form-floating">
                 <select class="form-select" id="Rol" name="Rol" [(ngModel)]="user.Rol" required
-                    aria-label="Floating label select example">
+                    aria-label="Floating label select example" (ngModelChange)="isRolValid()">
                     <option value="Nominal">Nominal</option>
                     <option value="Monitor">Monitor</option>
                     <option value="Administrador">Administrador</option>
                 </select>
                 <label for="Rol" class="ms-2">Rol:</label>
+                <div *ngIf="!isRolSelected && user.Rol" class="text-danger mt-2">
+                    Por favor selecciona al menos un rol.
+                </div>
             </div>
         </div>
+
         <!-- TODO: sacar la informacion de los DNI de tutor mediante un EndPoint -->
     </div>
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text" [ngClass]="{'valid-input': isValidInput(user.Name)}">
+                <span class="input-group-text" [ngClass]="{'valid-input': isValidName(user.Name)}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -68,7 +110,7 @@
 
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text" [ngClass]="{'valid-input': isValidInput(user.Surname_1)}">
+                <span class="input-group-text" [ngClass]="{'valid-input': isValidSurname1(user.Surname_1)}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                         <path
@@ -78,7 +120,7 @@
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingSurname1Input" name="Surname_1"
                         [(ngModel)]="user.Surname_1" placeholder="" required maxlength="30"
-                        (input)="onInputChange(user.Surname_1)">
+                        (input)="isValidSurname1(user.Surname_1)">
                     <label for="floatingSurname1Input">Primer Apellido</label>
                 </div>
             </div>
@@ -87,7 +129,7 @@
 
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text" [ngClass]="{'valid-input': isValidInput(user.Surname_2)}">
+                <span class="input-group-text" [ngClass]="{'valid-input': isValidSurname2(user.Surname_2)}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                         <path
@@ -96,8 +138,8 @@
                 </span>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingSurname2Input" name="Surname_2"
-                        [(ngModel)]="user.Surname_2" placeholder="" required (input)="onInputChange(user.Surname_1)"
-                        maxlength="30">
+                        [(ngModel)]="user.Surname_2" placeholder="" required maxlength="30"
+                        (input)="isValidSurname2(user.Surname_2)">
                     <label for="floatingSurname2Input">Segundo Apellido</label>
                 </div>
             </div>
@@ -136,10 +178,9 @@
 
     </div>
     <div class="row my-4">
-
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-input': isPasswordValid}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-key-fill" viewBox="0 0 16 16">
                         <path
@@ -148,7 +189,8 @@
                 </span>
                 <div class="form-floating">
                     <input type="password" class="form-control" id="floatingPasswordInput" name="Pass"
-                        [(ngModel)]="user.Pass" placeholder="" required>
+                        [(ngModel)]="user.Pass" placeholder="" required minlength="5" maxlength="20"
+                        (input)="isValidPassword(user.Pass)">
                     <label for="floatingPasswordInput">Contraseña</label>
                     <div class="invalid-feedback">
                         Por favor ingrese una contraseña válida.
@@ -157,9 +199,10 @@
             </div>
         </div>
 
+
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-input': confirmPassValid}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key"
                         viewBox="0 0 16 16">
                         <path
@@ -169,38 +212,45 @@
                 </span>
                 <div class="form-floating">
                     <input type="password" class="form-control" id="floatingConfirmPasswordInput" name="ConfirmPass"
-                        [(ngModel)]="user.ConfirmPass" placeholder="" required>
+                        [(ngModel)]="user.ConfirmPass" placeholder="" required (input)="checkPasswords()">
                     <label for="floatingConfirmPasswordInput">Repite la Contraseña</label>
-                    <div class="invalid-feedback">
-                        Por favor repita la contraseña.
-                    </div>
                 </div>
             </div>
+            <div *ngIf="!passwordsMatch && user.ConfirmPass" class="text-danger mt-2">
+                La contraseña no es igual.
+            </div>
+        </div>
+
+        <div class="col-auto d-flex align-items-center">
+            <span id="passwordHelpInline" class="form-text">
+                Con el formato de 5 caracteres mínimo y 20 de máximo
+            </span>
         </div>
     </div>
+
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-input': isValidAdress}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+                        class="bi bi-house-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M8 3.293l-6 6V14a1 1 0 0 0 1 1h4v-4h2v4h4a1 1 0 0 0 1-1V9.293l-6-6zM7.5 1.207l-7 7A.5.5 0 0 0 1 9h2v6h10V9h2a.5.5 0 0 0 .5-.707l-7-7a.5.5 0 0 0-.707 0z" />
                     </svg>
                 </span>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingAddressInput" name="Adress"
-                        [(ngModel)]="user.Adress" placeholder="" required>
+                    <input type="text" class="form-control" id="floatingAddressInput" name="Address"
+                        [(ngModel)]="user.Adress" placeholder="Dirección" required
+                        (input)="onAddressInputChange(user.Adress)" maxlength="50">
                     <label for="floatingAddressInput">Dirección</label>
-                    <div class="invalid-feedback">
-                        Por favor ingrese una dirección válida.
-                    </div>
                 </div>
             </div>
         </div>
 
+
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-input': isValidPhone}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-telephone" viewBox="0 0 16 16">
                         <path
@@ -209,19 +259,20 @@
                 </span>
                 <div class="form-floating">
                     <input type="tel" class="form-control" id="floatingPhoneInput" name="Phone" [(ngModel)]="user.Phone"
-                        placeholder="" required>
+                        placeholder="" required (input)="onPhoneInputChange(user.Phone)" maxlength="10">
                     <label for="floatingPhoneInput">Teléfono</label>
-                    <div class="invalid-feedback">
-                        Por favor ingrese un número de teléfono válido.
-                    </div>
+                </div>
+                <div *ngIf="!isValidPhone && user.Phone" class="text-danger mt-2">
+                    Por favor ingrese un número de teléfono válido.
                 </div>
             </div>
         </div>
+
     </div>
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" [ngClass]="{'valid-input': dniTutorValido}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-check-fill" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -231,31 +282,18 @@
                 </span>
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingDniTutorInput" name="DNI_tutor"
-                        [(ngModel)]="user.DNI_tutor" placeholder="" required>
+                        [(ngModel)]="user.DNI_tutor" placeholder="" required (input)="validarDniTutor()" maxlength="9">
                     <label for="floatingDniTutorInput">DNI del Tutor</label>
                 </div>
             </div>
-            <div class="invalid-feedback">
+            <div *ngIf="!dniTutorValido && user.DNI_tutor">
                 Por favor ingrese un DNI válido del tutor.
             </div>
         </div>
-        <div class="col-lg-4 col-md-12">
-            <div class="input-group">
-                <label for="Photo" class="input-group-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-image" viewBox="0 0 16 16">
-                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                        <path
-                            d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z" />
-                    </svg>
-                </label>
-                <input class="form-control" type="file" id="Photo" name="Photo" (change)="onFileSelected($event)"
-                    accept="image/*">
-            </div>
-            <div class="invalid-feedback">
-                Por favor seleccione una foto.
-            </div>
-        </div>
+
+
+
+
     </div>
     <div class="row justify-content-around">
         <div class="col-2">
