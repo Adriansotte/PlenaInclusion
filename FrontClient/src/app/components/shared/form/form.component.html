@@ -13,7 +13,7 @@
     </div>
     <div class="row justify-content-center">
 
-        <div class="col-lg-4 col-md-12">
+        <div class="col-lg-6 col-md-12">
             <div class="input-group">
                 <label for="Photo" class="input-group-text">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -26,16 +26,15 @@
                 <input class="form-control" type="file" id="Photo" name="Photo" (change)="onFileSelected($event)"
                     accept="image/*">
             </div>
-            <div *ngIf="!archivoInsertado" class="">
+            <div *ngIf="!archivoInsertado" class="text-center">
                 Por favor seleccione una foto.
             </div>
-            <div *ngIf="!archivoInsertadoValid && archivoInsertado" class="">
+            <div *ngIf="!archivoInsertadoValid && archivoInsertado" class="text-center">
                 Por favor seleccione una foto válida (formato jpg o png, máximo 5 MB).
             </div>
         </div>
     </div>
     <div class="row my-4">
-
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
                 <span class="input-group-text" [ngClass]="{'valid-DNI': isDNIValid}">
@@ -55,7 +54,6 @@
                 El DNI debe tener exactamente 9 caracteres.
             </div>
         </div>
-
 
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
@@ -88,8 +86,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- TODO: sacar la informacion de los DNI de tutor mediante un EndPoint -->
     </div>
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
@@ -128,7 +124,6 @@
             </div>
         </div>
 
-
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
                 <span class="input-group-text" [ngClass]="{'valid-input': isValidSurname2(user.Surname_2)}">
@@ -147,7 +142,6 @@
             </div>
         </div>
 
-
     </div>
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
@@ -162,7 +156,6 @@
                 <div class="form-floating">
                     <input type="email" class="form-control" id="floatingEmailInput" name="Email"
                         [(ngModel)]="user.Email" placeholder="" required (ngModelChange)="onEmailChange($event)">
-
                     <label for="floatingEmailInput">Correo Electrónico</label>
                     <div class="invalid-feedback">
                         Por favor ingrese un correo electrónico válido.
@@ -175,8 +168,6 @@
                 Con el formato ejemplo&#64;correo.com
             </span>
         </div>
-
-
 
     </div>
     <div class="row my-4">
@@ -316,15 +307,6 @@
                 </button>
             </ng-template>
         </div>
-
-
-        <!-- Button trigger modal -->
-        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Enviar
-        </button> -->
-
-
-        <!-- Modal -->
     </div>
 </form>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -363,12 +345,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal -->
-<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-
-    <app-confirmation [title]="'Custom Modal Title'" [cancelButtonText]="'Close'" [confirmButtonText]="'Confirm'"
-        [onConfirm]="submitForm">
-    </app-confirmation>
-</div> -->
