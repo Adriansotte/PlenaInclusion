@@ -1,9 +1,11 @@
 $primary: #03920c;
-$danger: #ff4136;
+$warning: #ff9b36;
+$danger: #e72e2b;
 
 $theme-colors: (
     "primary": $primary,
-    "danger": $danger
+    "danger": $danger,
+    "warning": $warning
 
 );
 

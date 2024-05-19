@@ -1,4 +1,4 @@
 export const environments = {
     baseUrl: 'http://plenaInclusion.com',
-    defautlProfileImage: "ed6d99c3-0647-417b-8f9b-8f458fe15135"
+    defautlProfileImage: "1fd5abd7-0784-41b7-814e-0755560d50c0"
 }

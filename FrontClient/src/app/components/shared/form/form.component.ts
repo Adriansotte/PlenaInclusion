@@ -53,8 +53,9 @@ export class FormComponent implements OnInit {
     const maxSize = 5 * 1024 * 1024; // 5 MB
 
     if (file && allowedTypes.includes(file.type) && file.size <= maxSize) {
+      
       this.archivoInsertadoValid = true;
-
+      this.Photo = file;
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.imagenMostrada = e.target.result;
@@ -71,6 +72,7 @@ export class FormComponent implements OnInit {
 
 
   submitForm() {
+    console.log(this.Photo)
     this.registerService.registerUser(this.user, this.Photo).subscribe(
       (response) => {
         console.log(response);
@@ -214,6 +216,22 @@ export class FormComponent implements OnInit {
     this.dniTutorValido = this.user.DNI_tutor.length === 9;
   }
 
+  isAllFieldsValid(): boolean {
+    return this.isDNIValid &&
+      this.isRolSelected &&
+      this.isValidDate &&
+      this.isNameEntered &&
+      this.isSurname1Entered &&
+      this.isSurname2Entered &&
+      this.isValidEmail &&
+      this.isValidAdress &&
+      this.isValidPhone &&
+      this.isPasswordValid &&
+      this.passwordsMatch &&
+      this.confirmPassValid &&
+      this.archivoInsertado &&
+      this.archivoInsertadoValid;
+  }
 
 }
 

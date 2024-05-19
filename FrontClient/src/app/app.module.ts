@@ -7,12 +7,14 @@ import { ThemeButtonComponent } from './components/shared/theme-button/theme-but
 import { FormComponent } from './components/shared/form/form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
+import { ConfirmationComponent } from './components/shared/confirmation/confirmation.component';
 @NgModule({
   declarations: [
     AppComponent,
     ThemeButtonComponent,
     FormComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

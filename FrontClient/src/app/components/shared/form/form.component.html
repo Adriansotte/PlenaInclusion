@@ -2,10 +2,12 @@
     <div class="row justify-content-center p-2">
 
         <div *ngIf="imagenMostrada" class="col-auto vh-25 d-flex justify-content-center align-items-center">
-            <img [src]="imagenMostrada" alt="Imagen seleccionada" class="img-fluid rounded shadow-lg" style="max-height: 150px;">
+            <img [src]="imagenMostrada" alt="Imagen seleccionada" class="img-fluid rounded shadow-lg"
+                style="max-height: 150px;">
         </div>
         <div *ngIf="!imagenMostrada" class="col-auto vh-25 d-flex justify-content-center align-items-center">
-            <img src={{defaultProfileImageUrl}} alt="Imagen predeterminada" class="img-fluid rounded shadow-lg" style="max-height: 150px;">
+            <img src={{defaultProfileImageUrl}} alt="Imagen predeterminada" class="img-fluid rounded shadow-lg"
+                style="max-height: 150px;">
         </div>
 
     </div>
@@ -262,9 +264,9 @@
                         placeholder="" required (input)="onPhoneInputChange(user.Phone)" maxlength="10">
                     <label for="floatingPhoneInput">Teléfono</label>
                 </div>
-                <div *ngIf="!isValidPhone && user.Phone" class="text-danger mt-2">
-                    Por favor ingrese un número de teléfono válido.
-                </div>
+            </div>
+            <div *ngIf="!isValidPhone && user.Phone" class="text-danger mt-2">
+                Por favor ingrese un número de teléfono válido.
             </div>
         </div>
 
@@ -296,11 +298,77 @@
 
     </div>
     <div class="row justify-content-around">
-        <div class="col-2">
+        <div class="col-12 col-md-3">
             <button class="btn btn-outline-danger w-100">Cancelar</button>
         </div>
-        <div class="col-2">
-            <button type="submit" class="btn btn-outline-primary w-100">Enviar</button>
+
+        <!-- Componente HTML -->
+        <div class="col-12 col-md-3">
+            <!-- Si isAllFieldsValid() es true, muestra este botón -->
+            <button *ngIf="isAllFieldsValid(); else elseBlock" type="button" class="btn btn-outline-primary w-100"
+                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Enviar!
+            </button>
+            <!-- Si isAllFieldsValid() es false, muestra este botón -->
+            <ng-template #elseBlock>
+                <button type="button" class="btn btn-outline-warning w-100">
+                    Rellena los Campos
+                </button>
+            </ng-template>
         </div>
+
+
+        <!-- Button trigger modal -->
+        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Enviar
+        </button> -->
+
+
+        <!-- Modal -->
     </div>
 </form>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="staticBackdropLabel">Confirmación de la Solicitud</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Deseas Registrarte en la Aplicación?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="submitForm()"
+                    data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Aviso</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Perfil creado correctamente
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <app-confirmation [title]="'Custom Modal Title'" [cancelButtonText]="'Close'" [confirmButtonText]="'Confirm'"
+        [onConfirm]="submitForm">
+    </app-confirmation>
+</div> -->
