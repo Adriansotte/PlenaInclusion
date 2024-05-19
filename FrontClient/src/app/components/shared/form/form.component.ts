@@ -53,7 +53,7 @@ export class FormComponent implements OnInit {
     const maxSize = 5 * 1024 * 1024; // 5 MB
 
     if (file && allowedTypes.includes(file.type) && file.size <= maxSize) {
-      
+
       this.archivoInsertadoValid = true;
       this.Photo = file;
       const reader = new FileReader();
@@ -70,18 +70,23 @@ export class FormComponent implements OnInit {
     this.archivoInsertado = true;
   }
 
-
-  submitForm() {
-    console.log(this.Photo)
-    this.registerService.registerUser(this.user, this.Photo).subscribe(
-      (response) => {
+  submitForm(): void {
+    console.log(this.Photo);
+    this.registerService.registerUser(this.user, this.Photo).subscribe({
+      next: (response) => {
         console.log(response);
+        if (response && response.token && response.user) {
+          sessionStorage.setItem('token', response.token);
+          sessionStorage.setItem('user', JSON.stringify(response.user));
+          console.log('Token y usuario almacenados en sessionStorage');
+        }
       },
-      (error) => {
-        console.error(error);
+      error: (error) => {
+        console.error('Error en el registro', error);
       }
-    );
+    });
   }
+  
 
   isDNIValid: boolean = false;
   isRolSelected: boolean = false;

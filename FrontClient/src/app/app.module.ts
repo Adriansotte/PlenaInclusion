@@ -8,13 +8,19 @@ import { FormComponent } from './components/shared/form/form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 import { ConfirmationComponent } from './components/shared/confirmation/confirmation.component';
+import { NotFoundComponent } from './components/pages/not-found/not-found.component';
+import { LoginComponent } from './components/pages/login/login.component';
+import { HomeComponent } from './components/pages/home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
     ThemeButtonComponent,
     FormComponent,
     RegisterPageComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    NotFoundComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
