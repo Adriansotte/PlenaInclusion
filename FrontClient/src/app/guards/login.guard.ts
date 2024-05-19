@@ -4,15 +4,15 @@ import { CanActivate, Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class authGuard implements CanActivate {
+export class loginGuard implements CanActivate {
 
   constructor(private router: Router) {}
 
   canActivate(): boolean {
     const token = sessionStorage.getItem('token');
 
-    if (!token) {
-      this.router.navigate(['/']);
+    if (token) {
+      this.router.navigate(['/home']);
       return false;
     }
 

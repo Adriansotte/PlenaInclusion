@@ -5,20 +5,17 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { authGuard } from './guards/auth.guard';
+import { loginGuard } from './guards/login.guard';
 
 const routes: Routes = [
   {
     path: "",
-    pathMatch: "full",
-    redirectTo: "home"
+    component: LoginComponent,
+    canActivate: [loginGuard]
   },
   {
     path: "register",
     component: RegisterPageComponent
-  },
-  {
-    path: "login",
-    component: LoginComponent
   },
   {
     path: "home",
