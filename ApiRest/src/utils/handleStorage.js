@@ -1,4 +1,6 @@
-const multer = require("multer")
+const multer = require("multer");
+require("dotenv").config();
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

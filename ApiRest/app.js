@@ -1,13 +1,17 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const defineRelations = require("./src/models/relations");
+const multer = require("multer"); // Importa multer
+
 const app = express();
 
 // Conexion a la base de datos
 const sequelize = require('./src/config/config');
 
 app.use(cors());
+
+// Configura multer para manejar formularios multipartes
+const upload = multer();
 
 app.use(express.json());
 

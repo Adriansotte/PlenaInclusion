@@ -1,25 +1,35 @@
-const { check } = require("express-validator");
+const { check, body } = require("express-validator");
 const validateResults = require("../utils/handleValidator");
 
+
 const validatorRegister = [
-    check("DNI").exists().notEmpty().isString(),
-    check("Rol").exists().notEmpty().isIn(['Nominal', 'Monitor', 'Administrador']),
-    check("Name").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
-    check("Surname_1").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
-    check("Surname_2").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
-    check("Email").exists().notEmpty().isEmail(),
-    check("Pass").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
-    check("Photo").optional().isString(),
-    check("DNI_tutor").optional().custom((value, { req }) => {
-        if (value !== null) {
-            // Si el valor no es null, debe ser una cadena de hasta 10 caracteres
-            return typeof value === 'string' && value.length <= 10;
+    // Validación de campos de texto
+    body("DNI").notEmpty().isString(),
+    body("Rol").notEmpty().isIn(['Nominal', 'Monitor', 'Administrador']),
+    body("Name").notEmpty().isString().isLength({ min: 3, max: 99 }),
+    body("Surname_1").notEmpty().isString().isLength({ min: 3, max: 99 }),
+    body("Surname_2").notEmpty().isString().isLength({ min: 3, max: 99 }),
+    body("Email").notEmpty().isEmail(),
+    //body("Pass").notEmpty().isString().isLength({ min: 3, max: 99 }),
+    body("DNI_tutor").optional().isString().isLength({ max: 10 })
+        .withMessage('DNI_tutor debe ser una cadena de hasta 10 caracteres si se proporciona'),
+    body("Adress").notEmpty().isString(),
+    body("Phone").notEmpty().isString(),
+    body("BirthDay").optional().isDate(),
+
+    // Validación del campo de foto
+    (req, res, next) => {
+        // Si hay un archivo en la solicitud, no se requiere validar el campo 'Photo'
+        if (req.file) {
+            next();
+        } else {
+            // Si no hay archivo, validamos el campo 'Photo' opcional
+            body("Photo").optional().notEmpty().isString();
+            next();
         }
-        // Si es null, la validación pasa
-        return true;
-    }).withMessage('DNI_tutor debe ser una cadena de hasta 10 caracteres si se proporciona'),
-    check("Adress").exists().notEmpty().isString(),
-    check("Phone").exists().notEmpty().isString(),
+    },
+
+    // Ejecutar la validación
     (req, res, next) => {
         return validateResults(req, res, next);
     }
