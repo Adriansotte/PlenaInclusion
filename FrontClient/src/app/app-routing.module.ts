@@ -6,6 +6,7 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { authGuard } from './guards/auth.guard';
 import { loginGuard } from './guards/login.guard';
+import { AllSchedulesComponent } from './components/shared/all-schedules/all-schedules.component';
 
 const routes: Routes = [
   {
@@ -22,10 +23,11 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [authGuard]
   },
+  { path: "listSchedules", component: AllSchedulesComponent },
   {
     path: "**",
     component: NotFoundComponent
-  }
+  },
 ];
 
 @NgModule({
