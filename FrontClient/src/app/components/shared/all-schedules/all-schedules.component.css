@@ -1,0 +1,11 @@
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombrado suave para todas las tarjetas */
+    transition: transform 0.3s;
+    /* Transición suave al agrandar */
+}
+
+.card:hover {
+    transform: scale(1.05);
+    /* Agrandar la tarjeta al pasar el mouse */
+}
