@@ -4,7 +4,6 @@ const { matchedData } = require("express-validator");
 
 const getAllActivities = async (req, res) => {
     try {
-        console.log("hola en el controlador de actividades")
         const user = req.user;
         const activities = await ActivityModel.findAll();
         res.json(activities);
@@ -28,13 +27,40 @@ const getActivity = async (req, res) => {
 
 const postActivity = async (req, res) => {
     try {
-        const body = matchedData(req);
-        const data = await ActivityModel.create(body);
-        res.send({ data });
+        // Acceso a los datos del formulario
+        const formData = req.body;
+
+        // Acceso al archivo subido
+        const file = req.file;
+
+        // Verifica si se ha enviado un archivo
+        if (file) {
+            // Si hay un archivo, agrega su nombre al objeto formData
+            formData.Photo = file.filename;
+        }
+
+        const activityData = {
+            Name: formData.Name,
+            Description: formData.Description,
+            Photo: `${process.env.DATABASEIP}:${process.env.PORT}/${formData.Photo}`,
+        }
+        const data = await ActivityModel.create(activityData);
+        res.status(201).json({ activityData });
+
     } catch (e) {
         handleHttpError(res, 'ERROR_POST_ACTIVITY')
     }
 }
+
+// const postActivity = async (req, res) => {
+//     try {
+//         const body = matchedData(req);
+//         const data = await ActivityModel.create(body);
+//         res.send({ data });
+//     } catch (e) {
+//         handleHttpError(res, 'ERROR_POST_ACTIVITY')
+//     }
+// }
 
 const updateActivity = async (req, res) => {
     try {
