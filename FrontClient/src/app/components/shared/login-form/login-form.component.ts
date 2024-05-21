@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { loginUserDTO } from 'src/app/models/user/loginUserDTO';
 import { LoginService } from 'src/app/services/login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -18,23 +19,30 @@ export class LoginFormComponent {
   isPasswordValid: boolean = false;
   loginError: string = '';
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+    private router: Router
+  ) { }
 
   submitForm() {
     if (this.isValidEmail && this.isPasswordValid) {
-      this.loginService.loginUser(this.user).subscribe(
-        response => {
-          // Manejar la respuesta del servidor
-          console.log('Login exitoso:', response);
+      this.loginService.loginUser(this.user).subscribe({
+        next: response => {
+          sessionStorage.setItem('token', response.data.token);
+          sessionStorage.setItem('user', JSON.stringify(response.data.user));
         },
-        error => {
-          // Manejar errores
-          console.error('Error de login:', error);
-          this.loginError = 'Error al iniciar sesión. Por favor, intente de nuevo.';
+        error: error => {
+          if (error.error.error == "USER_NOT_FOUND") {
+            this.loginError = "Correo Equivocado";
+          } else if (error.error.error == "INVALID_PASSWORD")
+            this.loginError = "Contraseña Incorrecta";
+        },
+        complete: () => {
+          this.router.navigate(['home'])
         }
-      );
+      });
     }
   }
+
 
   onEmailChange(value: string) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

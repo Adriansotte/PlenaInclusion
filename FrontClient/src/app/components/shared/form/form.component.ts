@@ -77,11 +77,9 @@ export class FormComponent implements OnInit {
     console.log(this.Photo);
     this.registerService.registerUser(this.user, this.Photo).subscribe({
       next: (response) => {
-        console.log(response);
         if (response && response.token && response.user) {
           sessionStorage.setItem('token', response.token);
           sessionStorage.setItem('user', JSON.stringify(response.user));
-          console.log('Token y usuario almacenados en sessionStorage');
         }
       },
       error: (error) => {
