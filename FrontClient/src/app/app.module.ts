@@ -12,6 +12,7 @@ import { NotFoundComponent } from './components/pages/not-found/not-found.compon
 import { LoginComponent } from './components/pages/login/login.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoginFormComponent } from './components/shared/login-form/login-form.component';
+import { AllSchedulesComponent } from './components/shared/all-schedules/all-schedules.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { LoginFormComponent } from './components/shared/login-form/login-form.co
     NotFoundComponent,
     LoginComponent,
     HomeComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    AllSchedulesComponent
   ],
   imports: [
     BrowserModule,

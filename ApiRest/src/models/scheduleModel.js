@@ -32,7 +32,7 @@ const ScheduleModel = db.define('Schedule', {
         allowNull: false
     },
     Frequency: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('Puntual', 'Semanal'),
         allowNull: false
     },
     StartDate: {

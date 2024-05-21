@@ -6,8 +6,6 @@ const { authMiddleware } = require("../middlewares/session");
 const { checkRol } = require("../middlewares/rol");
 const uploadMiddleware = require("../utils/handleStorage");
 
-
-
 router.get("/", authMiddleware, getAllActivities);
 
 router.get("/:id", authMiddleware, validatorGetActivity, getActivity);
