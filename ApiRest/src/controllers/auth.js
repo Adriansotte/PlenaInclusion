@@ -13,7 +13,6 @@ const registerController = async (req, res) => {
     try {
         // Acceso a los datos del formulario
         const formData = req.body;
-        console.log(formData)
 
         // Acceso al archivo subido
         const file = req.file;
@@ -67,31 +66,42 @@ const registerController = async (req, res) => {
  */
 const loginController = async (req, res) => {
     try {
-        const validatedData = matchedData(req);
+        const formData = req.body;
+        console.log('Form Data:', formData);
 
-        const user = await UserModel.findOne({ where: { Email: validatedData.Email } });
+        // Verifica que los datos validados no estén vacíos
+        if (!formData.Email || !formData.Pass) {
+            handleHttpError(res, "VALIDATION_ERROR", 400);
+            return;
+        }
+
+        const user = await UserModel.findOne({ where: { Email: formData.Email } });
+        console.log('User:', user); // Depuración: Verifica que el usuario se encuentra
 
         if (!user) {
             handleHttpError(res, "USER_NOT_FOUND", 404);
             return;
         }
+
         const hashPassword = user.Pass;
-        const check = await compare(req.body.Pass, hashPassword);
+        const check = await compare(formData.Pass, hashPassword); // Usa formData en lugar de req.body directamente
+        console.log('Password Check:', check); // Depuración: Verifica el resultado de la comparación de contraseñas
 
         if (!check) {
             handleHttpError(res, "INVALID_PASSWORD", 401);
             return;
         }
 
-        user.set('Pass', undefined, { strict: false })
+        user.set('Pass', undefined, { strict: false });
         const data = {
             token: await tokenSign(user),
             user
-        }
-        res.send({ data })
+        };
+        res.send({ data });
     } catch (error) {
-        handleHttpError(res, "ERROR_LOGGIN_USER")
+        console.log(error);
+        handleHttpError(res, "ERROR_LOGGIN_USER");
     }
-}
+};
 
 module.exports = { loginController, registerController }

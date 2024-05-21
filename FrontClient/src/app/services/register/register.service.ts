@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { registerUserDTO } from '../../models/user/createUserDTO';
+import { environments } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
+
+  url: string = environments.baseUrl
 
   constructor(private http: HttpClient) { }
 
@@ -29,6 +32,6 @@ export class RegisterService {
       formData.append('Photo', file);
     }
 
-    return this.http.post<any>('http://localhost:3000/api/auth/register?', formData);
+    return this.http.post<any>(`${this.url}/api/auth/register?`, formData);
   }
 }

@@ -36,10 +36,10 @@ const validatorRegister = [
 ];
 
 const validatorLogin = [
-    check("Email").exists().notEmpty().isEmail(),
-    check("Pass").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
+    check('Email').notEmpty().isEmail().withMessage('Debe ser un correo electrónico válido'),
+    check('Pass').exists().notEmpty().isString().isLength({ min: 3, max: 99 }).withMessage('La contraseña debe tener entre 3 y 99 caracteres'),
     (req, res, next) => {
-        return validateResults(req, res, next);
+        validateResults(req, res, next);
     }
 ];
 

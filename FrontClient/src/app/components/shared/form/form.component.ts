@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { registerUserDTO } from 'src/app/models/user/createUserDTO';
 import { RegisterService } from 'src/app/services/register/register.service';
 import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
@@ -28,7 +29,9 @@ export class FormComponent implements OnInit {
 
   defaultProfileImageUrl: string = "";
 
-  constructor(private registerService: RegisterService, private defaultProfileService: DefaultProfileService) { }
+  constructor(private registerService: RegisterService,
+    private defaultProfileService: DefaultProfileService,
+    private router: Router) { }
 
 
   ngOnInit(): void {
@@ -53,7 +56,7 @@ export class FormComponent implements OnInit {
     const maxSize = 5 * 1024 * 1024; // 5 MB
 
     if (file && allowedTypes.includes(file.type) && file.size <= maxSize) {
-      
+
       this.archivoInsertadoValid = true;
       this.Photo = file;
       const reader = new FileReader();
@@ -70,18 +73,25 @@ export class FormComponent implements OnInit {
     this.archivoInsertado = true;
   }
 
-
-  submitForm() {
-    console.log(this.Photo)
-    this.registerService.registerUser(this.user, this.Photo).subscribe(
-      (response) => {
-        console.log(response);
+  submitForm(): void {
+    console.log(this.Photo);
+    this.registerService.registerUser(this.user, this.Photo).subscribe({
+      next: (response) => {
+        if (response && response.token && response.user) {
+          sessionStorage.setItem('token', response.token);
+          sessionStorage.setItem('user', JSON.stringify(response.user));
+        }
       },
-      (error) => {
-        console.error(error);
+      error: (error) => {
+        console.error('Error en el registro', error);
       }
-    );
+    });
   }
+
+  navigateToHome(): void {
+    this.router.navigate(['home'])
+  }
+
 
   isDNIValid: boolean = false;
   isRolSelected: boolean = false;

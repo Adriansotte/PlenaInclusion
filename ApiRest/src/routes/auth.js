@@ -5,8 +5,8 @@ const { validatorRegister, validatorLogin } = require("../valdiators/auth")
 const uploadMiddleware = require("../utils/handleStorage");
 
 
-router.post("/register", uploadMiddleware.single("Photo"), registerController);
+router.post("/register", uploadMiddleware.single("Photo"), validatorRegister, registerController);
 
-router.post("/login", validatorLogin, loginController)
+router.post("/login", uploadMiddleware.none(), validatorLogin, loginController)
 
 module.exports = router;
