@@ -3,14 +3,14 @@ import { loginUserDTO } from 'src/app/models/user/loginUserDTO';
 import { LoginService } from 'src/app/services/login/login.service';
 import { Router } from '@angular/router';
 
-declare var bootstrap: any; 
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent implements AfterViewInit  {
+export class LoginFormComponent implements AfterViewInit {
 
   user: loginUserDTO = {
     Email: '',
@@ -45,6 +45,12 @@ export class LoginFormComponent implements AfterViewInit  {
     }
   }
 
+  goToRegister(event: Event) {
+    event.preventDefault();
+    this.router.navigate(['/register']);
+
+
+  }
 
   onEmailChange(value: string) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,9 +67,14 @@ export class LoginFormComponent implements AfterViewInit  {
 
   ngAfterViewInit() {
     // Inicializar tooltips de Bootstrap
-    const tooltipTriggerEl = document.getElementById('tooltipButton');
-    if (tooltipTriggerEl) {
-      new bootstrap.Tooltip(tooltipTriggerEl);
+    const tooltipButtonEl = document.getElementById('tooltipButton');
+    if (tooltipButtonEl) {
+      new bootstrap.Tooltip(tooltipButtonEl);
+    }
+
+    const registerTooltipEl = document.getElementById('registerTooltip');
+    if (registerTooltipEl) {
+      new bootstrap.Tooltip(registerTooltipEl);
     }
   }
 }

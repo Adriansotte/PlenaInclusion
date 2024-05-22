@@ -1,7 +1,7 @@
 <form (ngSubmit)="submitForm()" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="row gy-3">
         <div class="col-12">
-            <h1>Inicia Sesión</h1>
+            <h1 class="text-primary">Inicia Sesión</h1>
         </div>
         <div class="col-12">
             <div class="input-group">
@@ -43,16 +43,19 @@
             </div>
         </div>
         <div class="col">
-            <!-- Botón "Iniciar Sesión" visible solo si los campos son válidos -->
             <button *ngIf="isValidEmail && isPasswordValid" type="submit" class="btn btn-primary">
                 Iniciar Sesión
             </button>
-            <!-- Botón con tooltip visible si los campos no son válidos -->
             <button *ngIf="!isValidEmail || !isPasswordValid" id="tooltipButton" type="button" class="btn btn-primary"
-                data-bs-toggle="tooltip" data-bs-placement="right" title="Rellena el formulario">
+                data-bs-toggle="tooltip" data-bs-placement="right" title="Rellena los Campos">
                 Iniciar Sesión
             </button>
             <div *ngIf="loginError" class="alert alert-danger mt-2">{{ loginError }}</div>
+        </div>
+        <div class="col-12">
+            <a href="#" id="registerTooltip" (click)="goToRegister($event)">¿No tienes
+                cuenta? Haz click aqui.</a>
+
         </div>
     </div>
 </form>
