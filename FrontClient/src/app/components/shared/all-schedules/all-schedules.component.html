@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-3 p-2" *ngFor="let schedule of schedules">
-            <div class="card h-100">
+            <div class="card h-100 shadow p-3 mb-5 bg-body-tertiary rounded">
                 <img [src]="schedule.Activity.Photo" class="card-img-top" alt="Activity Photo">
                 <div class="card-body">
                     <h5 class="card-title">{{ schedule.Activity.Name }}</h5>

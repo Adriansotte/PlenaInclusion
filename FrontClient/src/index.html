@@ -8,9 +8,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="./style.css">
+  <style>
+    body {
+      padding-top: 100px;
+      /* Ajustar según la altura de la navbar fija */
+    }
+
+    .container-fluid {
+      transition: margin-right 0.3s ease-in-out;
+    }
+
+    .offcanvas.show~.container-fluid {
+      margin-right: 300px;
+      /* Ajustar según el ancho del offcanvas */
+    }
+  </style>
 </head>
 
-<body data-bs-theme="ligth" >
+<body data-bs-theme="ligth">
   <app-root></app-root>
 </body>
 

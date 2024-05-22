@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { loginUserDTO } from 'src/app/models/user/loginUserDTO';
 import { LoginService } from 'src/app/services/login/login.service';
 import { Router } from '@angular/router';
+
+declare var bootstrap: any; 
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements AfterViewInit  {
 
   user: loginUserDTO = {
     Email: '',
@@ -55,5 +57,13 @@ export class LoginFormComponent {
 
   isValidPassword(value: string): void {
     this.isPasswordValid = value.length >= 5 && value.length <= 20;
+  }
+
+  ngAfterViewInit() {
+    // Inicializar tooltips de Bootstrap
+    const tooltipTriggerEl = document.getElementById('tooltipButton');
+    if (tooltipTriggerEl) {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    }
   }
 }

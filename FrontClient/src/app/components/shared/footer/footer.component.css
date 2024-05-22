@@ -1,0 +1,9 @@
+footer {
+    background-color: #343a40;
+    /* Color de fondo oscuro */
+}
+
+footer a {
+    text-decoration: none;
+    /* Sin subrayado para enlaces */
+}

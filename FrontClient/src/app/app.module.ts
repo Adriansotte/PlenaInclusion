@@ -14,6 +14,8 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { LoginFormComponent } from './components/shared/login-form/login-form.component';
 import { AllSchedulesComponent } from './components/shared/all-schedules/all-schedules.component';
 import { TokenAuthInterceptor } from './interceptors/tokenAuth/token-auth.interceptor';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { TokenAuthInterceptor } from './interceptors/tokenAuth/token-auth.interc
     LoginComponent,
     HomeComponent,
     LoginFormComponent,
-    AllSchedulesComponent
+    AllSchedulesComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
