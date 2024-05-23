@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
 import { AllSchedulesService } from 'src/app/services/schedules/listSchedules/all-schedules.service';
 
+declare var bootstrap: any;
+
+
 @Component({
   selector: 'app-all-schedules',
   templateUrl: './all-schedules.component.html',
   styleUrls: ['./all-schedules.component.css']
 })
 export class AllSchedulesComponent implements OnInit {
-
   schedules: scheduleDTO[] = [];
+  selectedSchedule: scheduleDTO | null = null;
 
   constructor(private allSchedulesService: AllSchedulesService) { }
 
@@ -28,4 +31,12 @@ export class AllSchedulesComponent implements OnInit {
     });
   }
 
+  onScheduleClicked(schedule: scheduleDTO): void {
+    this.selectedSchedule = schedule;
+    const modalElement = document.getElementById('scheduleModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
 }

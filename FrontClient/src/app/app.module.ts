@@ -17,6 +17,7 @@ import { TokenAuthInterceptor } from './interceptors/tokenAuth/token-auth.interc
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { ScheduleCardComponent } from './components/shared/schedule-card/schedule-card.component';
+import { ScheduleModalComponent } from './components/shared/schedule-modal/schedule-modal.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ScheduleCardComponent } from './components/shared/schedule-card/schedul
     AllSchedulesComponent,
     HeaderComponent,
     FooterComponent,
-    ScheduleCardComponent
+    ScheduleCardComponent,
+    ScheduleModalComponent
   ],
   imports: [
     BrowserModule,
