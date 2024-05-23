@@ -20,8 +20,8 @@ export class AllSchedulesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.handleSchedules();
-    this.pruebaInsercion();
+    this.handleSchedules();
+    // this.pruebaInsercion();
   }
 
   pruebaInsercion(): void {
