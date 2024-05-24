@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +19,9 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { ScheduleCardComponent } from './components/shared/schedule-card/schedule-card.component';
 import { ScheduleModalComponent } from './components/shared/schedule-modal/schedule-modal.component';
 
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -47,7 +50,8 @@ import { ScheduleModalComponent } from './components/shared/schedule-modal/sched
     provide: HTTP_INTERCEPTORS,
     useClass: TokenAuthInterceptor,
     multi: true
-  }],
+  },
+  { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

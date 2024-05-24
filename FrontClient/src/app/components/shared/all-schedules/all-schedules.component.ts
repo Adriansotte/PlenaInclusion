@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
+import { typeDTO } from 'src/app/models/type/typeDTO';
 import { userScheduleDTO } from 'src/app/models/userSchedule/userScheduleDTO';
 import { AllSchedulesService } from 'src/app/services/schedules/listSchedules/all-schedules.service';
+import { TypeService } from 'src/app/services/type/type.service';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 
 declare var bootstrap: any;
@@ -14,18 +16,36 @@ declare var bootstrap: any;
 export class AllSchedulesComponent implements OnInit {
   schedules: scheduleDTO[] = [];
   filteredSchedules: scheduleDTO[] = [];
+  typeList: typeDTO[] = [];
   selectedSchedule: scheduleDTO | null = null;
   userSchedules: userScheduleDTO[] = [];
   searchTerm: string = '';
   startDate: string | null = null;
   endDate: string | null = null;
+  selectedType: string | null = null; // Propiedad para el tipo seleccionado
+  selectedFrequency: string | null = null; // Propiedad para la frecuencia seleccionada
+  selectedDay: string | null = null; // Propiedad para el día de la semana seleccionado
 
   constructor(private allSchedulesService: AllSchedulesService,
-    private userScheduleService: UserScheduleService) { }
+    private userScheduleService: UserScheduleService,
+    private typeService: TypeService) { }
 
   ngOnInit(): void {
+    this.startDate = new Date().toISOString().split('T')[0]; // Set start date to today's date
     this.handleUserSchedules();
     this.handleSchedules();
+    this.handleTypes();
+  }
+
+  handleTypes(): void {
+    this.typeService.getAllTypes().subscribe({
+      next: (data: typeDTO[]) => {
+        this.typeList = data; // Almacenar los tipos en la lista de tipos
+      },
+      error: (error: any) => {
+        console.error('Error fetching types:', error);
+      }
+    });
   }
 
   handleSchedules(): void {
@@ -56,23 +76,27 @@ export class AllSchedulesComponent implements OnInit {
   applyFilter(): void {
     this.filteredSchedules = this.schedules.filter(schedule => {
       const matchesName = schedule.Activity.Name.toLowerCase().includes(this.searchTerm.toLowerCase());
-
       const scheduleStartDate = new Date(schedule.StartDate);
       const scheduleFinishDate = new Date(schedule.FinishDate);
       const startDate = this.startDate ? new Date(this.startDate) : null;
       const endDate = this.endDate ? new Date(this.endDate) : null;
-
       const matchesStartDate = !startDate || scheduleStartDate >= startDate || scheduleFinishDate >= startDate;
       const matchesEndDate = !endDate || scheduleStartDate <= endDate || scheduleFinishDate <= endDate;
+      const matchesType = !this.selectedType || schedule.ID_Type === this.selectedType;
+      const matchesFrequency = !this.selectedFrequency || schedule.Frequency === this.selectedFrequency;
+      const matchesDay = !this.selectedDay || schedule.DayOfWeek === this.selectedDay;
 
-      return matchesName && matchesStartDate && matchesEndDate;
+      return matchesName && matchesStartDate && matchesEndDate && matchesType && matchesFrequency && matchesDay;
     });
   }
 
   clearFilters(): void {
     this.searchTerm = '';
-    this.startDate = null;
+    this.startDate = new Date().toISOString().split('T')[0]; // Reset start date to today's date
     this.endDate = null;
+    this.selectedType = null;
+    this.selectedFrequency = null;
+    this.selectedDay = null;
     this.applyFilter();
   }
 
