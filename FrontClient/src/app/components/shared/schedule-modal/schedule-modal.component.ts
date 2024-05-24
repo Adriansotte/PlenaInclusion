@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
-import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service'; // Asegúrate de importar tu servicio
+import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
+import { getWeeklyAttendanceDates } from '../../../../utils/getWeeklyAttendanceDates';
+
 
 @Component({
   selector: 'app-schedule-modal',
@@ -34,6 +36,12 @@ export class ScheduleModalComponent {
       }
     } else {
       console.error('No hay schedule seleccionado');
+    }
+  }
+
+  calcularFechas() {
+    if (this.schedule && this.schedule.Frequency === "Semanal") {
+      const fechas = getWeeklyAttendanceDates(this.schedule.StartDate, this.schedule.FinishDate);
     }
   }
 }
