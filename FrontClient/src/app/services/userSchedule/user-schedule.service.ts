@@ -21,4 +21,8 @@ export class UserScheduleService {
     }
     return this.http.post<any>(`${this.url}/api/userSchedules`, body);
   }
+
+  listSchedulesByUser(userId: string | null) {
+    return this.http.get<any>(`${this.url}/api/userSchedules/users/${userId}/schedules`);
+  }
 }

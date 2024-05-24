@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
+import { userScheduleDTO } from 'src/app/models/userSchedule/userScheduleDTO';
 import { AllSchedulesService } from 'src/app/services/schedules/listSchedules/all-schedules.service';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 
 declare var bootstrap: any;
-
 
 @Component({
   selector: 'app-all-schedules',
@@ -14,23 +14,23 @@ declare var bootstrap: any;
 export class AllSchedulesComponent implements OnInit {
   schedules: scheduleDTO[] = [];
   selectedSchedule: scheduleDTO | null = null;
+  userSchedules: userScheduleDTO[] = [];
 
   constructor(private allSchedulesService: AllSchedulesService,
     private userScheduleService: UserScheduleService
   ) { }
 
   ngOnInit(): void {
+    this.handleUserSchedules();
     this.handleSchedules();
-    // this.pruebaInsercion();
   }
 
-  pruebaInsercion(): void {
-    this.userScheduleService.postSchedule("54f3cf07-b44a-4fa3-b49b-3c78db126d1f",
-      "380e20c7-07cf-11ef-82d3-7c10c9911f32",
-      "2024-12-23"
-    ).subscribe({
-      next: (data: any) => {
-        console.log("Se ha insertado correctamente en la tabla intermedia!!!")
+  handleSchedules(): void {
+    this.allSchedulesService.listAllSchedules().subscribe({
+      next: (data: scheduleDTO[]) => {
+        this.schedules = data.filter(schedule =>
+          !this.userSchedules.some(userSchedule => userSchedule.ScheduleIDSchedule === schedule.ID_Schedule)
+        );
       },
       error: (error: any) => {
         console.error('Error fetching schedules:', error);
@@ -38,13 +38,13 @@ export class AllSchedulesComponent implements OnInit {
     });
   }
 
-  handleSchedules(): void {
-    this.allSchedulesService.listAllSchedules().subscribe({
-      next: (data: scheduleDTO[]) => {
-        this.schedules = data;
+  handleUserSchedules(): void {
+    this.userScheduleService.listSchedulesByUser(sessionStorage.getItem('ID_User')).subscribe({
+      next: (data: userScheduleDTO[]) => {
+        this.userSchedules = data;
       },
       error: (error: any) => {
-        console.error('Error fetching schedules:', error);
+        console.error("Error al conseguir las actividades del usuario:", error);
       }
     });
   }
@@ -58,5 +58,8 @@ export class AllSchedulesComponent implements OnInit {
     }
   }
 
-
+  handleScheduleRegistered(): void {
+    this.handleUserSchedules();
+    this.handleSchedules();
+  }
 }

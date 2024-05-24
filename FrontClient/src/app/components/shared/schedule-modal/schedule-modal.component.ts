@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 import { getWeeklyAttendanceDates } from '../../../../utils/getWeeklyAttendanceDates';
@@ -11,6 +11,7 @@ import { getWeeklyAttendanceDates } from '../../../../utils/getWeeklyAttendanceD
 })
 export class ScheduleModalComponent {
   @Input() schedule: scheduleDTO | null = null;
+  @Output() handleScheduleRegistered: EventEmitter<void> = new EventEmitter<void>();
 
   fechas: string[] = [];
 
@@ -45,7 +46,7 @@ export class ScheduleModalComponent {
         console.error('Error en el registro', error);
       },
       complete: () => {
-        console.log('Registro completado');
+        this.handleScheduleRegistered.emit();
       }
     });
   }

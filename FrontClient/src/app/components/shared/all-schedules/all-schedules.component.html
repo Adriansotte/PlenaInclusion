@@ -1,9 +1,8 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let schedule of schedules">
-            <app-schedule-card [schedule]="schedule" (scheduleClicked)="onScheduleClicked($event)"></app-schedule-card>
-        </div>
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let schedule of schedules">
+        <app-schedule-card [schedule]="schedule" (scheduleClicked)="onScheduleClicked($event)"></app-schedule-card>
     </div>
 </div>
 
-<app-schedule-modal [schedule]="selectedSchedule"></app-schedule-modal>
+<app-schedule-modal [schedule]="selectedSchedule"
+    (handleScheduleRegistered)="handleScheduleRegistered()"></app-schedule-modal>
