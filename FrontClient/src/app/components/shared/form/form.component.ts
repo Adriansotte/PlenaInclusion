@@ -78,8 +78,13 @@ export class FormComponent implements OnInit {
     this.registerService.registerUser(this.user, this.Photo).subscribe({
       next: (response) => {
         if (response && response.token && response.user) {
-          sessionStorage.setItem('token', response.token);
-          sessionStorage.setItem('user', JSON.stringify(response.user));
+          sessionStorage.setItem('token', response.data.token);
+          sessionStorage.setItem('ID_User', response.data.user.ID_user);
+          sessionStorage.setItem('Email', response.data.user.Email);
+          sessionStorage.setItem('Name', response.data.user.Name);
+          sessionStorage.setItem('Surname_1', response.data.user.Surname_1);
+          sessionStorage.setItem('Surname_2', response.data.user.Surname_2);
+          sessionStorage.setItem('Rol', response.data.user.Rol);
         }
       },
       error: (error) => {
