@@ -1,20 +1,30 @@
 <div class="row mb-3">
-    <div class="col-12 col-md-3 mb-2 mb-md-0">
-        <input type="text" class="form-control" placeholder="Buscar actividades..." [(ngModel)]="searchTerm"
-            (input)="applyFilter()">
+    <div class="col-12 col-md-2 mb-2 mb-md-0">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="activityName" placeholder="Buscar actividades..."
+                [(ngModel)]="searchTerm" (input)="applyFilter()">
+            <label for="activityName">Nombre de la Actividad</label>
+        </div>
     </div>
-    <div class="col-12 col-md-3 mb-2 mb-md-0">
-        <input type="date" class="form-control" placeholder="Fecha de inicio" [(ngModel)]="startDate"
-            (input)="applyFilter()">
+    <div class="col-12 col-md-2 mb-2 mb-md-0">
+        <div class="form-floating">
+            <input type="date" class="form-control" id="startDate" placeholder="Fecha de inicio" [(ngModel)]="startDate"
+                (input)="applyFilter()">
+            <label for="startDate">Fecha de inicio</label>
+        </div>
     </div>
-    <div class="col-12 col-md-3 mb-2 mb-md-0">
-        <input type="date" class="form-control" placeholder="Fecha de fin" [(ngModel)]="endDate"
-            (input)="applyFilter()">
+    <div class="col-12 col-md-2 mb-2 mb-md-0">
+        <div class="form-floating">
+            <input type="date" class="form-control" id="endDate" placeholder="Fecha de fin" [(ngModel)]="endDate"
+                (input)="applyFilter()">
+            <label for="endDate">Fecha de fin</label>
+        </div>
     </div>
     <div class="col-12 col-md-3">
         <button class="btn btn-warning w-100" (click)="clearFilters()">Limpiar filtros</button>
     </div>
 </div>
+
 
 <div class="row">
     <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let schedule of filteredSchedules">
