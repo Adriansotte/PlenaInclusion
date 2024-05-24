@@ -22,16 +22,16 @@ export class AllSchedulesComponent implements OnInit {
   searchTerm: string = '';
   startDate: string | null = null;
   endDate: string | null = null;
-  selectedType: string | null = null; // Propiedad para el tipo seleccionado
-  selectedFrequency: string | null = null; // Propiedad para la frecuencia seleccionada
-  selectedDay: string | null = null; // Propiedad para el día de la semana seleccionado
+  selectedType: string | null = null;
+  selectedFrequency: string | null = null;
+  selectedDay: string | null = null;
 
   constructor(private allSchedulesService: AllSchedulesService,
     private userScheduleService: UserScheduleService,
     private typeService: TypeService) { }
 
   ngOnInit(): void {
-    this.startDate = new Date().toISOString().split('T')[0]; // Set start date to today's date
+    this.startDate = new Date().toISOString().split('T')[0];
     this.handleUserSchedules();
     this.handleSchedules();
     this.handleTypes();
@@ -40,7 +40,7 @@ export class AllSchedulesComponent implements OnInit {
   handleTypes(): void {
     this.typeService.getAllTypes().subscribe({
       next: (data: typeDTO[]) => {
-        this.typeList = data; // Almacenar los tipos en la lista de tipos
+        this.typeList = data;
       },
       error: (error: any) => {
         console.error('Error fetching types:', error);
@@ -54,7 +54,7 @@ export class AllSchedulesComponent implements OnInit {
         this.schedules = data.filter(schedule =>
           !this.userSchedules.some(userSchedule => userSchedule.ScheduleIDSchedule === schedule.ID_Schedule)
         );
-        this.applyFilter(); // Apply initial filter after fetching schedules
+        this.applyFilter();
       },
       error: (error: any) => {
         console.error('Error fetching schedules:', error);
@@ -92,7 +92,7 @@ export class AllSchedulesComponent implements OnInit {
 
   clearFilters(): void {
     this.searchTerm = '';
-    this.startDate = new Date().toISOString().split('T')[0]; // Reset start date to today's date
+    this.startDate = new Date().toISOString().split('T')[0];
     this.endDate = null;
     this.selectedType = null;
     this.selectedFrequency = null;

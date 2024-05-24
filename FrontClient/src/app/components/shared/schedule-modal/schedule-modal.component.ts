@@ -3,6 +3,7 @@ import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 import { getWeeklyAttendanceDates } from '../../../../utils/getWeeklyAttendanceDates';
 
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-schedule-modal',
@@ -59,5 +60,16 @@ export class ScheduleModalComponent {
     }
     console.log(this.fechas)
     //TODO: dejar en vacio las fechas despues de asignar
+  }
+
+  confirmRegistration(): void {
+    const confirmModal = document.getElementById('confirmModal');
+    if (confirmModal) {
+      const modal = bootstrap.Modal.getInstance(confirmModal);
+      if (modal) {
+        modal.hide();
+      }
+    }
+    this.registerForSchedule();
   }
 }

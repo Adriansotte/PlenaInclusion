@@ -2,7 +2,8 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content bg-success-subtle">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="scheduleModalLabel">{{ schedule?.Activity?.Name }} {{schedule?.Type?.Name}}</h1>
+                <h1 class="modal-title fs-5" id="scheduleModalLabel">{{ schedule?.Activity?.Name }}
+                    {{schedule?.Type?.Name}}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -159,8 +160,30 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="registerForSchedule()">Me
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Me
                     apunto!</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmación de inscripción a la actividad -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas inscribirte en esta actividad?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="confirmRegistration()">Confirmar</button>
+
             </div>
         </div>
     </div>
