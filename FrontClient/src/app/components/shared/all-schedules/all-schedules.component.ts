@@ -13,12 +13,15 @@ declare var bootstrap: any;
 })
 export class AllSchedulesComponent implements OnInit {
   schedules: scheduleDTO[] = [];
+  filteredSchedules: scheduleDTO[] = [];
   selectedSchedule: scheduleDTO | null = null;
   userSchedules: userScheduleDTO[] = [];
+  searchTerm: string = '';
+  startDate: string | null = null;
+  endDate: string | null = null;
 
   constructor(private allSchedulesService: AllSchedulesService,
-    private userScheduleService: UserScheduleService
-  ) { }
+    private userScheduleService: UserScheduleService) { }
 
   ngOnInit(): void {
     this.handleUserSchedules();
@@ -31,6 +34,7 @@ export class AllSchedulesComponent implements OnInit {
         this.schedules = data.filter(schedule =>
           !this.userSchedules.some(userSchedule => userSchedule.ScheduleIDSchedule === schedule.ID_Schedule)
         );
+        this.applyFilter(); // Apply initial filter after fetching schedules
       },
       error: (error: any) => {
         console.error('Error fetching schedules:', error);
@@ -47,6 +51,29 @@ export class AllSchedulesComponent implements OnInit {
         console.error("Error al conseguir las actividades del usuario:", error);
       }
     });
+  }
+
+  applyFilter(): void {
+    this.filteredSchedules = this.schedules.filter(schedule => {
+      const matchesName = schedule.Activity.Name.toLowerCase().includes(this.searchTerm.toLowerCase());
+
+      const scheduleStartDate = new Date(schedule.StartDate);
+      const scheduleFinishDate = new Date(schedule.FinishDate);
+      const startDate = this.startDate ? new Date(this.startDate) : null;
+      const endDate = this.endDate ? new Date(this.endDate) : null;
+
+      const matchesStartDate = !startDate || scheduleStartDate >= startDate || scheduleFinishDate >= startDate;
+      const matchesEndDate = !endDate || scheduleStartDate <= endDate || scheduleFinishDate <= endDate;
+
+      return matchesName && matchesStartDate && matchesEndDate;
+    });
+  }
+
+  clearFilters(): void {
+    this.searchTerm = '';
+    this.startDate = null;
+    this.endDate = null;
+    this.applyFilter();
   }
 
   onScheduleClicked(schedule: scheduleDTO): void {
