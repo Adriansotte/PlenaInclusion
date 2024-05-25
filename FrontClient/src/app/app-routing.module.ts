@@ -7,6 +7,7 @@ import { NotFoundComponent } from './components/pages/not-found/not-found.compon
 import { authGuard } from './guards/auth.guard';
 import { loginGuard } from './guards/login.guard';
 import { AllSchedulesComponent } from './components/shared/all-schedules/all-schedules.component';
+import { UserSchedulesComponent } from './components/shared/user-schedules/user-schedules.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,16 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [authGuard]
   },
-  { path: "listSchedules", component: AllSchedulesComponent },
+  {
+    path: "schedules",
+    component: AllSchedulesComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: "userSchedules",
+    component: UserSchedulesComponent,
+    canActivate: [authGuard]
+  },
   {
     path: "**",
     component: NotFoundComponent

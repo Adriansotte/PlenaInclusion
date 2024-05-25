@@ -1,0 +1,13 @@
+<div class="card h-100 shadow p-3 mb-5 bg-warning-subtle rounded" (click)="onCardClick()">
+    <div class="card-header">
+        {{userSchedule?.Schedule?.DayOfWeek }} {{ userSchedule?.AttendanceDate | date: 'longDate' }}
+    </div>
+    <img [src]="userSchedule?.Schedule?.Activity?.Photo" class="card-img-top" alt="Activity Photo">
+    <div class="card-body">
+        <h5 class="card-title">{{ userSchedule?.Schedule?.Activity?.Name }}</h5>
+        <p class="card-text">{{ userSchedule?.Schedule?.Activity?.Description }}</p>
+    </div>
+    <div class="card-footer">
+        <small class="text-body-secondary">Acudir a: {{ userSchedule?.Schedule?.Address }}</small>
+    </div>
+</div>

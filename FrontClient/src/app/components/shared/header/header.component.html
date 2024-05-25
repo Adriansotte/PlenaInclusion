@@ -4,8 +4,10 @@
             <img src="http://localhost:3000/file-1716147884401.png" alt="Logo" class="ms-5" style="height: 60px;">
         </div>
         <div class="col d-flex justify-content-center align-items-center d-none d-md-flex">
-            <button *ngIf="role != null" class="btn btn-warning mx-2" type="button">Ver Actividades</button>
-            <button *ngIf="role != null" class="btn btn-warning mx-2" type="button">Mis Actividades</button>
+            <button *ngIf="role != null" class="btn btn-warning mx-2" type="button"
+                (click)="navigateToListSchedules()">Ver Actividades</button>
+            <button *ngIf="role != null" class="btn btn-warning mx-2" type="button"
+                (click)="navigateToUserSchedules()">Mis Actividades</button>
             <button *ngIf="role == 'Monitor' || role == 'Administrador'" class="btn btn-warning mx-2" type="button">Ver
                 Usuarios</button>
         </div>
