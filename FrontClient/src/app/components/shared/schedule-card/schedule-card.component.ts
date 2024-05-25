@@ -10,6 +10,8 @@ export class ScheduleCardComponent {
   @Input() schedule: scheduleDTO | null = null;
   @Output() scheduleClicked = new EventEmitter<scheduleDTO>();
 
+  date: Date = new Date();
+
   onCardClick(): void {
     if (this.schedule) {
       this.scheduleClicked.emit(this.schedule);

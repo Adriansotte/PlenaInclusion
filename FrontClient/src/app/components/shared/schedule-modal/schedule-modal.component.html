@@ -127,8 +127,8 @@
                                 </svg>
                             </span>
                             <div class="form-floating col-5">
-                                <input type="text" class="form-control" value="{{ schedule?.StartDate }}" placeholder=""
-                                    readonly>
+                                <input type="text" class="form-control" value="{{ schedule?.StartDate |
+                                    date: 'longDate' }}" placeholder="" readonly>
                                 <label>Fecha de Inicio</label>
                             </div>
                         </div>
@@ -148,8 +148,8 @@
                                 </svg>
                             </span>
                             <div class="form-floating col-5">
-                                <input type="text" class="form-control" value="{{ schedule?.FinishDate }}"
-                                    placeholder="" readonly>
+                                <input type="text" class="form-control" value="{{ schedule?.FinishDate |
+                                    date: 'longDate' }}" placeholder="" readonly>
                                 <label>Fecha Final</label>
                             </div>
                         </div>
