@@ -12,8 +12,16 @@ export class ScheduleCardComponent {
 
   date: Date = new Date();
 
+  isCardDisabled(): boolean {
+    if (this.schedule && this.schedule.FinishDate) {
+      const finishDate = new Date(this.schedule.FinishDate);
+      return finishDate < this.date;
+    }
+    return false;
+  }
+
   onCardClick(): void {
-    if (this.schedule) {
+    if (this.schedule && !this.isCardDisabled()) {
       this.scheduleClicked.emit(this.schedule);
     }
   }
