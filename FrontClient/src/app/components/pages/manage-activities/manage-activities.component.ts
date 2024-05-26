@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { activityDTO } from 'src/app/models/activity/activityDTO';
 import { ActivityService } from 'src/app/services/activities/activity.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-manage-activities',
   templateUrl: './manage-activities.component.html',
@@ -10,6 +12,7 @@ import { ActivityService } from 'src/app/services/activities/activity.service';
 export class ManageActivitiesComponent implements OnInit {
 
   activities: activityDTO[] = [];
+  selectedActivity: activityDTO | null = null;
 
   constructor(private activityService: ActivityService) { }
 
@@ -30,7 +33,13 @@ export class ManageActivitiesComponent implements OnInit {
   }
 
   onActivityClick(activity: activityDTO): void {
-    // Maneja el evento de clic en una actividad, por ejemplo, navegando a otra página o mostrando detalles
-    console.log('Activity clicked:', activity);
+    this.selectedActivity = activity;
+    console.log(this.selectedActivity)
+    const modalElement = document.getElementById('activityModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
+
 }

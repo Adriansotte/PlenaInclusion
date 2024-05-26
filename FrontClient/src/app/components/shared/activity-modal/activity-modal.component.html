@@ -1,0 +1,30 @@
+<div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{ selectedActivity?.Name }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <img [src]="selectedActivity?.Photo" class="img-fluid rounded" alt="Activity Image">
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nameInput" placeholder="Nombre"
+                        [ngModel]="selectedActivity?.Name">
+                    <label for="nameInput">Nombre</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="descriptionInput" placeholder="Descripción"
+                        [ngModel]="selectedActivity?.Description"></textarea>
+                    <label for="descriptionInput">Descripción</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
