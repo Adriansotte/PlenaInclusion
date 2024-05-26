@@ -45,16 +45,6 @@
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-lg-2">
         <div class="form-floating">
-            <select class="form-select" id="frequencySelect" [(ngModel)]="selectedFrequency" (change)="applyFilter()">
-                <option value="">Todas las frecuencias</option>
-                <option value="Puntual">Puntual</option>
-                <option value="Semanal">Semanal</option>
-            </select>
-            <label for="frequencySelect">Frecuencia</label>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-        <div class="form-floating">
             <select class="form-select" id="daySelect" [(ngModel)]="selectedDay" (change)="applyFilter()">
                 <option value="">Todos los días</option>
                 <option value="Lunes">Lunes</option>

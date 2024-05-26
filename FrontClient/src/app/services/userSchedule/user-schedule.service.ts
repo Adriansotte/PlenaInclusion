@@ -28,7 +28,13 @@ export class UserScheduleService {
 
   deleteRegistation(userId: string, scheduleId: string): Observable<any> {
     return this.http.delete<any>(`${this.url}/api/userSchedules/deleteByUserAndSchedule/${userId}/${scheduleId}`);
-
   }
 
+  rateUserSchedule(idUserSchedule: string, rating: number, comment: string): Observable<any> {
+    const body = {
+      Comment: comment,
+      Rating: rating
+    }
+    return this.http.put<any>(`${this.url}/api/userSchedules/${idUserSchedule}`, body);
+  }
 }
