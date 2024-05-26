@@ -99,8 +99,6 @@ export class AllSchedulesComponent implements OnInit {
     });
   }
 
-
-
   clearFilters(): void {
     this.searchTerm = '';
     this.startDate = new Date().toISOString().split('T')[0];
@@ -111,7 +109,6 @@ export class AllSchedulesComponent implements OnInit {
     this.showNotRegistered = false;
     this.applyFilter();
   }
-
 
   onScheduleClicked(schedule: scheduleDTO): void {
     this.selectedSchedule = schedule;
@@ -129,5 +126,10 @@ export class AllSchedulesComponent implements OnInit {
 
   isUserRegistered(scheduleId: string | undefined): boolean {
     return this.userSchedules.some(schedule => schedule.Schedule.ID_Schedule === scheduleId);
+  }
+
+  handleScheduleChange(): void {
+    this.handleSchedules();
+    this.handleUserSchedules();
   }
 }

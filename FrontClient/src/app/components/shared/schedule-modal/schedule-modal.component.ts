@@ -15,6 +15,7 @@ export class ScheduleModalComponent {
   @Input() schedule: scheduleDTO | null = null;
   @Output() handleScheduleRegistered: EventEmitter<void> = new EventEmitter<void>();
   @Input() isUserRegistered: boolean = false;
+  @Output() scheduleChange: EventEmitter<void> = new EventEmitter<void>();
 
   fechas: string[] = [];
 
@@ -51,6 +52,7 @@ export class ScheduleModalComponent {
       error: error => {
         console.error('Error en el registro', error);
       }
+
     })
   }
 
@@ -65,6 +67,38 @@ export class ScheduleModalComponent {
     })
   }
 
+  deleteForSchedule() {
+    if (this.schedule) {
+      const userId = sessionStorage.getItem('ID_User');
+      if (userId) {
+        const scheduleId = this.schedule.ID_Schedule;
+        this.deleteRegistation();
+        this.decrementAttendance(scheduleId);
+      } else {
+        console.error('ID de usuario no encontrado en el sesionStorage');
+      }
+    } else {
+      console.error('No hay schedule seleccionado');
+    }
+    this.fechas = [];
+
+  }
+
+  deleteRegistation(): void {
+    const userid = sessionStorage.getItem("ID_User");
+    this.userScheduleService.deleteRegistation(userid!, this.schedule?.ID_Schedule!).subscribe({
+      next: response => {
+        console.log('Borrado exitoso', response);
+      },
+      error: error => {
+        console.error('Error en el borrado', error);
+      },
+      complete: () => {
+        this.scheduleChange.emit();
+      }
+    })
+  }
+
   launchInsertion(userId: string, scheduleId: string, date: string) {
     this.userScheduleService.postSchedule(userId, scheduleId, date).subscribe({
       next: response => {
@@ -74,7 +108,7 @@ export class ScheduleModalComponent {
         console.error('Error en el registro', error);
       },
       complete: () => {
-        this.handleScheduleRegistered.emit();
+        this.scheduleChange.emit();
       }
     });
   }
@@ -86,7 +120,6 @@ export class ScheduleModalComponent {
       this.fechas.push(new Date(this.schedule?.StartDate!).toISOString().split('T')[0]);
     }
     console.log(this.fechas)
-    //TODO: dejar en vacio las fechas despues de asignar
   }
 
   confirmRegistration(): void {
@@ -98,5 +131,17 @@ export class ScheduleModalComponent {
       }
     }
     this.registerForSchedule();
+  }
+
+
+  confirmDeletion(): void {
+    const deleteModal = document.getElementById('deleteModal');
+    if (deleteModal) {
+      const modal = bootstrap.Modal.getInstance(deleteModal);
+      if (modal) {
+        modal.hide();
+      }
+    }
+    this.deleteForSchedule();
   }
 }

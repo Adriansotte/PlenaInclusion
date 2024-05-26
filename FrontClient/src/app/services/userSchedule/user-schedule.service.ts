@@ -25,4 +25,10 @@ export class UserScheduleService {
   listSchedulesByUser(userId: string | null) {
     return this.http.get<any>(`${this.url}/api/userSchedules/users/${userId}/schedules`);
   }
+
+  deleteRegistation(userId: string, scheduleId: string): Observable<any> {
+    return this.http.delete<any>(`${this.url}/api/userSchedules/deleteByUserAndSchedule/${userId}/${scheduleId}`);
+
+  }
+
 }

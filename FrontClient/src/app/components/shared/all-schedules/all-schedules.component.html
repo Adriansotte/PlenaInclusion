@@ -95,4 +95,4 @@
 </div>
 
 <app-schedule-modal [schedule]="selectedSchedule" [isUserRegistered]="isUserRegistered(selectedSchedule?.ID_Schedule)"
-    (handleScheduleRegistered)="handleScheduleRegistered()"></app-schedule-modal>
+    (scheduleChange)="handleScheduleChange()"></app-schedule-modal>
