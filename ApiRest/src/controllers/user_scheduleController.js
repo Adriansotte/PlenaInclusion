@@ -167,6 +167,24 @@ const deleteUserSchedule = async (req, res) => {
     }
 };
 
+const deleteByUserAndSchedule = async (req, res) => {
+    try {
+        const { userId, scheduleId } = req.params;
+
+        await User_ScheduleModel.destroy({
+            where: {
+                UserIDUser: userId,
+                ScheduleIDSchedule: scheduleId
+            }
+        });
+
+        return res.json({ message: 'Registros eliminados correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar registros:', error);
+        return res.status(500).json({ error: 'Error al eliminar registros' });
+    }
+};
+
 module.exports = {
     getAllUser_Schedules: getAllUser_Schedules,
     postUser_Schedule: postUser_Schedule,
@@ -174,5 +192,6 @@ module.exports = {
     getUsersByScheduleId: getUsersByScheduleId,
     getSchedulesByUserId: getSchedulesByUserId,
     deleteUserSchedule: deleteUserSchedule,
-    updateUserSchedule: updateUserSchedule
+    updateUserSchedule: updateUserSchedule,
+    deleteByUserAndSchedule: deleteByUserAndSchedule
 };
