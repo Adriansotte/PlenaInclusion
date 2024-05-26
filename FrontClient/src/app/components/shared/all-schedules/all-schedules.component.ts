@@ -62,14 +62,13 @@ export class AllSchedulesComponent implements OnInit {
     });
   }
 
-
   handleUserSchedules(): void {
     this.userScheduleService.listSchedulesByUser(sessionStorage.getItem('ID_User')).subscribe({
       next: (data: userScheduleDTO[]) => {
         this.userSchedules = data;
       },
       error: (error: any) => {
-        console.error("Error al conseguir las actividades del usuario:", error);
+        this.userSchedules = [];
       }
     });
   }
@@ -119,17 +118,13 @@ export class AllSchedulesComponent implements OnInit {
     }
   }
 
-  handleScheduleRegistered(): void {
-    this.handleUserSchedules();
-    this.handleSchedules();
-  }
-
   isUserRegistered(scheduleId: string | undefined): boolean {
     return this.userSchedules.some(schedule => schedule.Schedule.ID_Schedule === scheduleId);
   }
 
   handleScheduleChange(): void {
-    this.handleSchedules();
     this.handleUserSchedules();
+    this.handleSchedules();
+    console.log("Se ha llamado al eventEmiters")
   }
 }

@@ -97,10 +97,6 @@ const getSchedulesByUserId = async (req, res) => {
             ]
         });
 
-        if (user_Schedules.length === 0) {
-            return res.status(404).json({ error: 'No se encontraron horarios para el usuario especificado' });
-        }
-
         res.json(user_Schedules);
     } catch (error) {
         console.error('Error al obtener los horarios del usuario:', error);

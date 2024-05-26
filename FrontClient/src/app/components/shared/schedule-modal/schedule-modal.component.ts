@@ -22,6 +22,20 @@ export class ScheduleModalComponent {
   constructor(private userScheduleService: UserScheduleService,
     private scheduleService: AllSchedulesService
   ) { }
+  deleteForSchedule() {
+    if (this.schedule) {
+      const userId = sessionStorage.getItem('ID_User');
+      if (userId) {
+        const scheduleId = this.schedule.ID_Schedule;
+        this.deleteRegistation();
+        this.decrementAttendance(scheduleId);
+      } else {
+        console.error('ID de usuario no encontrado en el sesionStorage');
+      }
+    } else {
+      console.error('No hay schedule seleccionado');
+    }
+  }
 
   registerForSchedule() {
     if (this.schedule) {
@@ -67,22 +81,6 @@ export class ScheduleModalComponent {
     })
   }
 
-  deleteForSchedule() {
-    if (this.schedule) {
-      const userId = sessionStorage.getItem('ID_User');
-      if (userId) {
-        const scheduleId = this.schedule.ID_Schedule;
-        this.deleteRegistation();
-        this.decrementAttendance(scheduleId);
-      } else {
-        console.error('ID de usuario no encontrado en el sesionStorage');
-      }
-    } else {
-      console.error('No hay schedule seleccionado');
-    }
-    this.fechas = [];
-
-  }
 
   deleteRegistation(): void {
     const userid = sessionStorage.getItem("ID_User");
@@ -119,7 +117,6 @@ export class ScheduleModalComponent {
     } else {
       this.fechas.push(new Date(this.schedule?.StartDate!).toISOString().split('T')[0]);
     }
-    console.log(this.fechas)
   }
 
   confirmRegistration(): void {
