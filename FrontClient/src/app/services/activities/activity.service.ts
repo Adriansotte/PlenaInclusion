@@ -17,4 +17,16 @@ export class ActivityService {
     return this.http.get<activityDTO[]>(`${this.url}/api/activities`);
   }
 
+  addActivity(activity: activityDTO, file: File | undefined): Observable<any> {
+    const formData = new FormData();
+    formData.append('Name', activity.Name);
+    formData.append('Description', activity.Description);
+    if (file) {
+      formData.append('Photo', file);
+    }
+
+    return this.http.post<any>(`${this.url}/api/auth/register?`, formData);
+
+  }
+
 }
