@@ -8,6 +8,7 @@ import { authGuard } from './guards/auth.guard';
 import { loginGuard } from './guards/login.guard';
 import { AllSchedulesComponent } from './components/shared/all-schedules/all-schedules.component';
 import { UserSchedulesComponent } from './components/shared/user-schedules/user-schedules.component';
+import { ManageActivitiesComponent } from './components/pages/manage-activities/manage-activities.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
   {
     path: "userSchedules",
     component: UserSchedulesComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: "manageA",
+    component: ManageActivitiesComponent,
     canActivate: [authGuard]
   },
   {
