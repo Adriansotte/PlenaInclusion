@@ -1,20 +1,22 @@
 <div class="card h-100 shadow p-3 mb-5 bg-warning-subtle rounded" (click)="onCardClick()"
     [class.disabled-card]="isCardDisabled()">
     <div class="card-header">
-        {{ schedule?.Frequency }}
+        {{ schedule?.Frequency }} {{schedule?.Attendance}}/{{schedule?.Capacity}}
     </div>
-    <img [src]="schedule?.Activity?.Photo" class="card-img-top" alt="Activity Photo">
+    <div class="image-container">
+        <img [src]="schedule?.Activity?.Photo" class="card-img-top" alt="Activity Photo">
+    </div>
     <div class="card-body">
         <h5 class="card-title">{{ schedule?.Activity?.Name }}</h5>
         <p class="card-text">{{ schedule?.Activity?.Description }}</p>
         <p class="card-text" *ngIf="schedule?.Frequency == 'Puntual'">
-            Fecha de Realización: {{ schedule?.StartDate | date: 'longDate'}}
+            Realización:{{ schedule?.DayOfWeek }}, {{ schedule?.StartDate | date: 'longDate'}}
         </p>
         <p class="card-text" *ngIf="schedule?.Frequency == 'Semanal'">
-            Fecha de Inicio: {{ schedule?.StartDate | date: 'longDate' }}
+            Inicio: {{ schedule?.DayOfWeek }}, {{ schedule?.StartDate | date: 'longDate' }}
         </p>
         <p class="card-text" *ngIf="schedule?.Frequency == 'Semanal'">
-            Fecha de Finalización: {{ schedule?.FinishDate | date: 'longDate'}}
+            Finalización: {{ schedule?.DayOfWeek }}, {{ schedule?.FinishDate | date: 'longDate'}}
         </p>
     </div>
     <div class="card-footer">

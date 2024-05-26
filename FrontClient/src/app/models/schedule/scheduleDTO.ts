@@ -9,7 +9,9 @@ export interface scheduleDTO {
     FinishHour: string,
     Frequency: string,
     StartDate: Date,
-    FinishDate: Date
+    FinishDate: Date,
+    Capacity: number,
+    Attendance: number,
     ID_Activity: string,
     ID_Type: string,
     Activity: activityDTO,

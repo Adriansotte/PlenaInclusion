@@ -43,6 +43,13 @@ const ScheduleModel = db.define('Schedule', {
         type: DataTypes.DATEONLY,
         allowNull: false
     },
+    Capacity: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    Attendance: {
+        type: DataTypes.INTEGER,
+    },
 }, {
     freezeTableName: true,
     timestamps: true,
