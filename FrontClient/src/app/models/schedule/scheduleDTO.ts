@@ -1,4 +1,5 @@
 import { activityDTO } from "../activity/activityDTO";
+import { CampaignDTO } from "../campaign/campaignDTO";
 import { typeDTO } from "../type/typeDTO";
 
 export interface scheduleDTO {
@@ -15,5 +16,6 @@ export interface scheduleDTO {
     ID_Activity: string,
     ID_Type: string,
     Activity: activityDTO,
-    Type: typeDTO
+    Type: typeDTO,
+    Campaign: CampaignDTO
 }

@@ -1,6 +1,7 @@
 const ScheduleModel = require('../models/scheduleModel');
 const ActivityModel = require('../models/activityModel');
 const TypeModel = require('../models/typeModel');
+const CampaignModel = require('../models/campaignModel');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
 
@@ -9,7 +10,8 @@ async function getAllSchedules(req, res) {
         const schedules = await ScheduleModel.findAll({
             include: [
                 { model: ActivityModel },
-                { model: TypeModel }
+                { model: TypeModel },
+                { model: CampaignModel }
             ]
         });
         res.json(schedules);
@@ -26,7 +28,8 @@ const getSchedule = async (req, res) => {
         const schedule = await ScheduleModel.findByPk(id, {
             include: [
                 { model: ActivityModel },
-                { model: TypeModel }
+                { model: TypeModel },
+                { model: CampaignModel }
             ]
         });
         res.json(schedule);

@@ -1,6 +1,6 @@
 <div class="card h-100 shadow p-3 mb-5 bg-warning-subtle rounded" (click)="onCardClick()">
     <div class="card-header">
-        {{ schedule?.Frequency }} {{schedule?.Attendance}}/{{schedule?.Capacity}}
+        {{schedule?.Campaign?.Name}}
         <span *ngIf="isUserRegistered" class="ms-2">¡Ya estás apuntado!</span>
     </div>
     <div class="image-container">
@@ -9,6 +9,7 @@
     <div class="card-body">
         <h5 class="card-title">{{ schedule?.Activity?.Name }}</h5>
         <p class="card-text">{{ schedule?.Activity?.Description }}</p>
+        <p class="card-text">Asistentes: {{schedule?.Attendance}}/{{schedule?.Capacity}}</p>
         <p class="card-text" *ngIf="schedule?.Frequency == 'Puntual'">
             Realización:{{ schedule?.DayOfWeek }}, {{ schedule?.StartDate | date: 'longDate'}}
         </p>
@@ -19,7 +20,8 @@
             Finalización: {{ schedule?.DayOfWeek }}, {{ schedule?.FinishDate | date: 'longDate'}}
         </p>
     </div>
-    <div class="card-footer">
+    <div class="card-footer d-flex justify-content-between">
         <small class="text-body-secondary">Tipo de Actividad: {{ schedule?.Type?.Name }}</small>
+        <small class="text-body-secondary">{{ schedule?.Frequency }}</small>
     </div>
 </div>

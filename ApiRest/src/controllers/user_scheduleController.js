@@ -2,6 +2,7 @@ const User_ScheduleModel = require('../models/user_scheduleModel');
 const UserModel = require('../models/userModel');
 const ScheduleModel = require("../models/scheduleModel");
 const ActivityModel = require("../models/activityModel");
+const CampaignModel = require("../models/campaignModel");
 const TypeModel = require("../models/typeModel");
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
@@ -14,7 +15,8 @@ const getAllUser_Schedules = async (req, res) => {
                     model: ScheduleModel,
                     include: [
                         { model: ActivityModel },
-                        { model: TypeModel }
+                        { model: TypeModel },
+                        { model: CampaignModel }
                     ]
                 },
                 { model: UserModel }
@@ -37,7 +39,9 @@ const getUserSchedule = async (req, res) => {
                     model: ScheduleModel,
                     include: [
                         { model: ActivityModel },
-                        { model: TypeModel }
+                        { model: TypeModel },
+                        { model: CampaignModel }
+
                     ]
                 },
                 { model: UserModel }
@@ -61,7 +65,8 @@ const getUsersByScheduleId = async (req, res) => {
                     model: ScheduleModel,
                     include: [
                         { model: ActivityModel },
-                        { model: TypeModel }
+                        { model: TypeModel },
+                        { model: CampaignModel }
                     ]
                 },
                 { model: UserModel }
@@ -90,7 +95,8 @@ const getSchedulesByUserId = async (req, res) => {
                     model: ScheduleModel,
                     include: [
                         { model: ActivityModel },
-                        { model: TypeModel }
+                        { model: TypeModel },
+                        { model: CampaignModel }
                     ]
                 },
                 { model: UserModel }

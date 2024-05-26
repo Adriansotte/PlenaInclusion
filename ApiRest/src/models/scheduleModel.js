@@ -15,6 +15,11 @@ const ScheduleModel = db.define('Schedule', {
         type: DataTypes.UUID,
         allowNull: false
     },
+    ID_Campaign: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        onDelete: 'CASCADE'
+    },
     Address: {
         type: DataTypes.STRING,
         allowNull: false
@@ -63,5 +68,3 @@ const ScheduleModel = db.define('Schedule', {
 })();
 
 module.exports = ScheduleModel;
-
-
