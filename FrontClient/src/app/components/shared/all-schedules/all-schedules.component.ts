@@ -51,9 +51,7 @@ export class AllSchedulesComponent implements OnInit {
   handleSchedules(): void {
     this.allSchedulesService.listAllSchedules().subscribe({
       next: (data: scheduleDTO[]) => {
-        this.schedules = data.filter(schedule =>
-          !this.userSchedules.some(userSchedule => userSchedule.ScheduleIDSchedule === schedule.ID_Schedule)
-        );
+        this.schedules = data;
         this.applyFilter();
       },
       error: (error: any) => {
@@ -61,6 +59,7 @@ export class AllSchedulesComponent implements OnInit {
       }
     });
   }
+
 
   handleUserSchedules(): void {
     this.userScheduleService.listSchedulesByUser(sessionStorage.getItem('ID_User')).subscribe({
@@ -112,5 +111,9 @@ export class AllSchedulesComponent implements OnInit {
   handleScheduleRegistered(): void {
     this.handleUserSchedules();
     this.handleSchedules();
+  }
+
+  isUserRegistered(scheduleId: string | undefined): boolean {
+    return this.userSchedules.some(schedule => schedule.Schedule.ID_Schedule === scheduleId);
   }
 }

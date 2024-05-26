@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 import { getWeeklyAttendanceDates } from '../../../../utils/getWeeklyAttendanceDates';
+import { AllSchedulesService } from 'src/app/services/schedules/listSchedules/all-schedules.service';
 
 declare var bootstrap: any;
 
@@ -13,10 +14,13 @@ declare var bootstrap: any;
 export class ScheduleModalComponent {
   @Input() schedule: scheduleDTO | null = null;
   @Output() handleScheduleRegistered: EventEmitter<void> = new EventEmitter<void>();
+  @Input() isUserRegistered: boolean = false;
 
   fechas: string[] = [];
 
-  constructor(private userScheduleService: UserScheduleService) { }
+  constructor(private userScheduleService: UserScheduleService,
+    private scheduleService: AllSchedulesService
+  ) { }
 
   registerForSchedule() {
     if (this.schedule) {
@@ -27,6 +31,7 @@ export class ScheduleModalComponent {
         for (const date of this.fechas) {
           this.launchInsertion(userId, scheduleId, date)
         }
+        this.incrementAttendance(scheduleId);
 
       } else {
         console.error('ID de usuario no encontrado en el sesionStorage');
@@ -36,6 +41,28 @@ export class ScheduleModalComponent {
     }
     this.fechas = [];
 
+  }
+
+  incrementAttendance(scheduleId: string): void {
+    this.scheduleService.incrementAttendace(scheduleId).subscribe({
+      next: response => {
+        console.log(response);
+      },
+      error: error => {
+        console.error('Error en el registro', error);
+      }
+    })
+  }
+
+  decrementAttendance(scheduleId: string): void {
+    this.scheduleService.decrementAttendace(scheduleId).subscribe({
+      next: response => {
+        console.log(response);
+      },
+      error: error => {
+        console.error('Error en el registro', error);
+      }
+    })
   }
 
   launchInsertion(userId: string, scheduleId: string, date: string) {

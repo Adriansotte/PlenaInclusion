@@ -9,19 +9,12 @@ import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
 export class ScheduleCardComponent {
   @Input() schedule: scheduleDTO | null = null;
   @Output() scheduleClicked = new EventEmitter<scheduleDTO>();
+  @Input() isUserRegistered: boolean = false;
 
   date: Date = new Date();
 
-  isCardDisabled(): boolean {
-    if (this.schedule && this.schedule.FinishDate) {
-      const finishDate = new Date(this.schedule.FinishDate);
-      return finishDate < this.date;
-    }
-    return false;
-  }
-
   onCardClick(): void {
-    if (this.schedule && !this.isCardDisabled()) {
+    if (this.schedule) {
       this.scheduleClicked.emit(this.schedule);
     }
   }

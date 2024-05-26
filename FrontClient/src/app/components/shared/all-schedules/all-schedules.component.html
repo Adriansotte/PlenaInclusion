@@ -75,9 +75,10 @@
 
 <div class="row">
     <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let schedule of filteredSchedules">
-        <app-schedule-card [schedule]="schedule" (scheduleClicked)="onScheduleClicked($event)"></app-schedule-card>
+        <app-schedule-card [schedule]="schedule" [isUserRegistered]="isUserRegistered(schedule?.ID_Schedule)"
+            (scheduleClicked)="onScheduleClicked($event)"></app-schedule-card>
     </div>
 </div>
 
-<app-schedule-modal [schedule]="selectedSchedule"
+<app-schedule-modal [schedule]="selectedSchedule" [isUserRegistered]="isUserRegistered(selectedSchedule?.ID_Schedule)"
     (handleScheduleRegistered)="handleScheduleRegistered()"></app-schedule-modal>
