@@ -8,11 +8,11 @@ import { userScheduleDTO } from 'src/app/models/userSchedule/userScheduleDTO';
 })
 export class UserScheduleCardComponent {
   @Input() userSchedule: userScheduleDTO | null = null;
-  @Output() userscehduleClicked = new EventEmitter<userScheduleDTO>();
+  @Output() userScehduleClicked = new EventEmitter<userScheduleDTO>();
 
   onCardClick(): void {
     if (this.userSchedule) {
-      this.userscehduleClicked.emit(this.userSchedule);
+      this.userScehduleClicked.emit(this.userSchedule);
     }
   }
 }

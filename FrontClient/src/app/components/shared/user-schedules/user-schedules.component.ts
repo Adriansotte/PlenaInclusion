@@ -4,6 +4,8 @@ import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule
 import { TypeService } from 'src/app/services/type/type.service';
 import { typeDTO } from 'src/app/models/type/typeDTO';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-user-schedules',
   templateUrl: './user-schedules.component.html',
@@ -21,12 +23,12 @@ export class UserSchedulesComponent implements OnInit {
   selectedDay: string = '';
   showRegistered: boolean = false;
   showNotRegistered: boolean = false;
+  selectedUserSchedule: userScheduleDTO | null = null;
 
   constructor(private userScheduleService: UserScheduleService,
     private typeService: TypeService) { }
 
   ngOnInit(): void {
-    // Establecer las fechas de inicio y fin predeterminadas
     const today = new Date();
     this.startDate = today.toISOString().split('T')[0];
     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
@@ -99,5 +101,18 @@ export class UserSchedulesComponent implements OnInit {
     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
     this.endDate = nextWeek.toISOString().split('T')[0];
     this.applyFilter();
+  }
+
+  onUserScehduleClicked(schedule: userScheduleDTO): void {
+    this.selectedUserSchedule = schedule;
+    const modalElement = document.getElementById('userScheduleModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  handleScheduleChange(): void {
+    this.handleUserSchedules();
   }
 }

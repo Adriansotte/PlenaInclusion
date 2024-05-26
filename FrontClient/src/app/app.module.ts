@@ -24,6 +24,7 @@ import { registerLocaleData } from '@angular/common';
 import { UserSchedulesComponent } from './components/shared/user-schedules/user-schedules.component';
 import { UserScheduleCardComponent } from './components/shared/user-schedule-card/user-schedule-card.component';
 import { NoActivityFoundComponent } from './components/shared/no-activity-found/no-activity-found.component';
+import { UserScheduleModalComponent } from './components/shared/user-schedule-modal/user-schedule-modal.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -44,7 +45,8 @@ registerLocaleData(localeEs, 'es');
     ScheduleModalComponent,
     UserSchedulesComponent,
     UserScheduleCardComponent,
-    NoActivityFoundComponent
+    NoActivityFoundComponent,
+    UserScheduleModalComponent
   ],
   imports: [
     BrowserModule,

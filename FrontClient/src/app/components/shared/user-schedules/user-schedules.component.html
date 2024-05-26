@@ -73,6 +73,10 @@
         <p>No se han encontrado actividades para registrarse.</p>
     </div>
     <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let userSchedule of filteredSchedules">
-        <app-user-schedule-card [userSchedule]="userSchedule"></app-user-schedule-card>
+        <app-user-schedule-card [userSchedule]="userSchedule"
+            (userScehduleClicked)="onUserScehduleClicked($event)"></app-user-schedule-card>
     </div>
 </div>
+
+<app-user-schedule-modal [userSchedule]="selectedUserSchedule"
+    (scheduleChange)="handleScheduleChange()"></app-user-schedule-modal>

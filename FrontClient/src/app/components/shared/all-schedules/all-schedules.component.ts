@@ -126,6 +126,5 @@ export class AllSchedulesComponent implements OnInit {
   handleScheduleChange(): void {
     this.handleUserSchedules();
     this.handleSchedules();
-    console.log("Se ha llamado al eventEmiters")
   }
 }
