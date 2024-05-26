@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { userScheduleDTO } from 'src/app/models/userSchedule/userScheduleDTO';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 import { TypeService } from 'src/app/services/type/type.service';
+import { typeDTO } from 'src/app/models/type/typeDTO';
 
 @Component({
   selector: 'app-user-schedules',
@@ -10,28 +11,93 @@ import { TypeService } from 'src/app/services/type/type.service';
 })
 export class UserSchedulesComponent implements OnInit {
   userSchedules: userScheduleDTO[] = [];
+  filteredSchedules: userScheduleDTO[] = [];
+  typeList: typeDTO[] = [];
+  searchTerm: string = '';
+  startDate: string = '';
+  endDate: string = '';
+  selectedType: string = '';
+  selectedFrequency: string = '';
+  selectedDay: string = '';
+  showRegistered: boolean = false;
+  showNotRegistered: boolean = false;
 
   constructor(private userScheduleService: UserScheduleService,
     private typeService: TypeService) { }
 
   ngOnInit(): void {
+    // Establecer las fechas de inicio y fin predeterminadas
+    const today = new Date();
+    this.startDate = today.toISOString().split('T')[0];
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    this.endDate = nextWeek.toISOString().split('T')[0];
+
     this.handleUserSchedules();
+    this.loadTypes();
   }
 
   handleUserSchedules(): void {
     this.userScheduleService.listSchedulesByUser(sessionStorage.getItem('ID_User')).subscribe({
       next: (data: userScheduleDTO[]) => {
-        // Asigna los datos
         this.userSchedules = data;
-        // Ordena los userSchedules por AttendanceDate
-        this.userSchedules.sort((a, b) => {
-          return new Date(a.AttendanceDate).getTime() - new Date(b.AttendanceDate).getTime();
-        });
+        this.applyFilter(); // Apply initial filter
         console.log(data);
       },
       error: (error: any) => {
         console.error("Error al conseguir las actividades del usuario:", error);
       }
     });
+  }
+
+  loadTypes(): void {
+    this.typeService.getAllTypes().subscribe({
+      next: (data: typeDTO[]) => {
+        this.typeList = data;
+      },
+      error: (error: any) => {
+        console.error('Error fetching types:', error);
+      }
+    });
+  }
+
+  applyFilter(): void {
+    this.filteredSchedules = this.userSchedules.filter(schedule => {
+      const matchesSearchTerm = this.searchTerm ?
+        schedule.Schedule.Activity.Name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
+      const matchesStartDate = this.startDate ?
+        new Date(schedule.AttendanceDate) >= new Date(this.startDate) : true;
+      const matchesEndDate = this.endDate ?
+        new Date(schedule.AttendanceDate) <= new Date(this.endDate) : true;
+      const matchesType = this.selectedType ?
+        schedule.Schedule.Type.Name === this.selectedType : true;
+      const matchesFrequency = this.selectedFrequency ?
+        schedule.Schedule.Frequency === this.selectedFrequency : true;
+      const matchesDay = this.selectedDay ?
+        schedule.Schedule.DayOfWeek === this.selectedDay : true;
+
+      return matchesSearchTerm && matchesStartDate && matchesEndDate &&
+        matchesType && matchesFrequency && matchesDay;
+    });
+    this.filteredSchedules.sort((a, b) => new Date(a.AttendanceDate).getTime() - new Date(b.AttendanceDate).getTime());
+  }
+
+  clearFilters(): void {
+    this.searchTerm = '';
+    this.startDate = '';
+    this.endDate = '';
+    this.selectedType = '';
+    this.selectedFrequency = '';
+    this.selectedDay = '';
+    this.showRegistered = false;
+    this.showNotRegistered = false;
+    this.applyFilter();
+  }
+
+  setTodayAndNextWeek(): void {
+    const today = new Date();
+    this.startDate = today.toISOString().split('T')[0];
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    this.endDate = nextWeek.toISOString().split('T')[0];
+    this.applyFilter();
   }
 }

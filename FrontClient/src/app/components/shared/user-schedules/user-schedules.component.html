@@ -3,9 +3,86 @@
         <h1 class="text-primary shadow p-3 bg-body-tertiary rounded">Tu Horario</h1>
     </div>
 </div>
+<div class="row mb-3 g-2">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="input-group">
+            <span class="input-group-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+            </span>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="activityName" placeholder="Buscar actividades..."
+                    [(ngModel)]="searchTerm" (input)="applyFilter()">
+                <label for="activityName">Buscar</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="form-floating">
+            <input type="date" class="form-control" id="startDate" placeholder="Fecha de inicio" [(ngModel)]="startDate"
+                (input)="applyFilter()">
+            <label for="startDate">Fecha de inicio</label>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="form-floating">
+            <input type="date" class="form-control" id="endDate" placeholder="Fecha de fin" [(ngModel)]="endDate"
+                (input)="applyFilter()">
+            <label for="endDate">Fecha de fin</label>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="form-floating">
+            <select class="form-select" id="typeSelect" [(ngModel)]="selectedType" (change)="applyFilter()">
+                <option value="">Todos los tipos</option>
+                <option *ngFor="let type of typeList" [value]="type.Name">{{ type.Name }}</option>
+            </select>
+            <label for="typeSelect">Tipo de Actividad</label>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="form-floating">
+            <select class="form-select" id="frequencySelect" [(ngModel)]="selectedFrequency" (change)="applyFilter()">
+                <option value="">Todas las frecuencias</option>
+                <option value="Puntual">Puntual</option>
+                <option value="Semanal">Semanal</option>
+            </select>
+            <label for="frequencySelect">Frecuencia</label>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="form-floating">
+            <select class="form-select" id="daySelect" [(ngModel)]="selectedDay" (change)="applyFilter()">
+                <option value="">Todos los días</option>
+                <option value="Lunes">Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miércoles">Miércoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+            </select>
+            <label for="daySelect">Día de la Semana</label>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-3">
+        <button class="btn btn-warning w-100" (click)="clearFilters()">Limpiar filtros</button>
+    </div>
+    <div class="col-12 col-md-3">
+        <button class="btn btn-primary w-100" (click)="setTodayAndNextWeek()">De hoy a siete dias</button>
+    </div>
+</div>
+
 
 <div class="row">
-    <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let userSchedule of userSchedules">
-        <app-user-schedule-card [userSchedule]="userSchedule"  ></app-user-schedule-card>
+    <div *ngIf="filteredSchedules.length === 0" class="col-12 text-center">
+        <p>No se han encontrado actividades para registrarse.</p>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let userSchedule of filteredSchedules">
+        <app-user-schedule-card [userSchedule]="userSchedule"></app-user-schedule-card>
     </div>
 </div>
