@@ -25,6 +25,8 @@ export class AllSchedulesComponent implements OnInit {
   selectedType: string | null = null;
   selectedFrequency: string | null = null;
   selectedDay: string | null = null;
+  showRegistered: boolean = false;
+  showNotRegistered: boolean = false;
 
   constructor(private allSchedulesService: AllSchedulesService,
     private userScheduleService: UserScheduleService,
@@ -84,10 +86,20 @@ export class AllSchedulesComponent implements OnInit {
       const matchesType = !this.selectedType || schedule.ID_Type === this.selectedType;
       const matchesFrequency = !this.selectedFrequency || schedule.Frequency === this.selectedFrequency;
       const matchesDay = !this.selectedDay || schedule.DayOfWeek === this.selectedDay;
-
-      return matchesName && matchesStartDate && matchesEndDate && matchesType && matchesFrequency && matchesDay;
+      const isRegistered = this.isUserRegistered(schedule?.ID_Schedule);
+      if (this.showRegistered && this.showNotRegistered) {
+        return matchesName && matchesStartDate && matchesEndDate && matchesType && matchesFrequency && matchesDay;
+      } else if (this.showRegistered) {
+        return isRegistered && matchesName && matchesStartDate && matchesEndDate && matchesType && matchesFrequency && matchesDay;
+      } else if (this.showNotRegistered) {
+        return !isRegistered && matchesName && matchesStartDate && matchesEndDate && matchesType && matchesFrequency && matchesDay;
+      } else {
+        return matchesName && matchesStartDate && matchesEndDate && matchesType && matchesFrequency && matchesDay;
+      }
     });
   }
+
+
 
   clearFilters(): void {
     this.searchTerm = '';
@@ -96,8 +108,10 @@ export class AllSchedulesComponent implements OnInit {
     this.selectedType = null;
     this.selectedFrequency = null;
     this.selectedDay = null;
+    this.showNotRegistered = false;
     this.applyFilter();
   }
+
 
   onScheduleClicked(schedule: scheduleDTO): void {
     this.selectedSchedule = schedule;
