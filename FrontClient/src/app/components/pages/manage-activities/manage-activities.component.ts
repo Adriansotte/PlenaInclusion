@@ -21,12 +21,16 @@ export class ManageActivitiesComponent implements OnInit {
     this.activityService.listAllActivities().subscribe({
       next: (data: activityDTO[]) => {
         this.activities = data;
-        console.log(data)
+        console.log(data);
       },
       error: (error: any) => {
-        console.error('Error fetchign activities', error)
+        console.error('Error fetching activities', error);
       }
-    })
+    });
   }
 
+  onActivityClick(activity: activityDTO): void {
+    // Maneja el evento de clic en una actividad, por ejemplo, navegando a otra página o mostrando detalles
+    console.log('Activity clicked:', activity);
+  }
 }

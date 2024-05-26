@@ -3,3 +3,28 @@
         <h1 class="text-primary shadow p-3 bg-body-tertiary rounded">Lista de Actividades</h1>
     </div>
 </div>
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped shadow p-3 mb-5 bg-warning-subtle rounded">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let activity of activities" (click)="onActivityClick(activity)">
+                        <td>
+                            <img [src]="activity.Photo" alt="Activity Photo" class="img-fluid" style="height: 60px;">
+                        </td>
+                        <td>{{ activity.Name }}</td>
+                        <td>{{ activity.Description }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
