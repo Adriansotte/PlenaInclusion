@@ -16,9 +16,7 @@
 
 .image-container {
     height: 150px;
-    /* Define la altura fija de la imagen */
     overflow: hidden;
-    /* Oculta el desbordamiento de la imagen */
     display: flex;
     justify-content: center;
     align-items: center;
