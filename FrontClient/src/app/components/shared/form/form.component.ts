@@ -35,10 +35,9 @@ export class FormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // Suscripción para obtener la URL de la imagen predeterminada
     this.defaultProfileService.getDefaultProfileImage().subscribe({
       next: (imageUrl: string) => {
-        this.defaultProfileImageUrl = imageUrl; // Asigna la URL de la imagen predeterminada
+        this.defaultProfileImageUrl = imageUrl;
       },
       error: (error: any) => {
         console.error('Error al obtener la imagen predeterminada:', error);

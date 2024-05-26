@@ -14,6 +14,7 @@ declare var bootstrap: any;
   styleUrls: ['./all-schedules.component.css']
 })
 export class AllSchedulesComponent implements OnInit {
+
   schedules: scheduleDTO[] = [];
   filteredSchedules: scheduleDTO[] = [];
   typeList: typeDTO[] = [];
