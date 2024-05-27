@@ -73,7 +73,6 @@ export class FormComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.Photo);
     this.registerService.registerUser(this.user, this.Photo).subscribe({
       next: (response) => {
         if (response && response.token && response.user) {
@@ -88,6 +87,9 @@ export class FormComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error en el registro', error);
+      },
+      complete: () => {
+        this.navigateToHome();
       }
     });
   }

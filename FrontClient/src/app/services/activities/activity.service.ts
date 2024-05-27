@@ -24,9 +24,7 @@ export class ActivityService {
     if (file) {
       formData.append('Photo', file);
     }
-
-    return this.http.post<any>(`${this.url}/api/auth/register?`, formData);
-
+    return this.http.post<any>(`${this.url}/api/activities`, formData);
   }
 
 }

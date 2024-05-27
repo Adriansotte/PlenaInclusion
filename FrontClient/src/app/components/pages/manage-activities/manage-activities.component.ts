@@ -34,8 +34,15 @@ export class ManageActivitiesComponent implements OnInit {
 
   onActivityClick(activity: activityDTO): void {
     this.selectedActivity = activity;
-    console.log(this.selectedActivity)
     const modalElement = document.getElementById('activityModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  addActivityModal() {
+    const modalElement = document.getElementById('addActivityModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
