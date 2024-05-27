@@ -24,6 +24,8 @@ export class AddActivityComponent {
   archivoInsertado: boolean = false;
   archivoInsertadoValid: boolean = false;
   imagenMostrada: any;
+  isNameEntered: boolean = false;
+  isDescritionEntered: boolean = false;
 
   constructor(private defaultProfileService: DefaultProfileService,
     private activityService: ActivityService) { }
@@ -74,8 +76,11 @@ export class AddActivityComponent {
     }
   }
 
-  isFieldValid(field: NgModel): boolean | null {
-    return field.dirty && field.touched;
+  isFieldValid(value: string): boolean | null {
+    const regex = /^[a-zA-Z\s]+$/;
+    const isValid = regex.test(value.trim());
+    this.isNameEntered = value.trim() !== '' && isValid;
+    return isValid;
   }
 
   isFieldValidDescription(field: NgModel): boolean | null {
@@ -86,10 +91,5 @@ export class AddActivityComponent {
     return this.nombreCampo?.valid && this.descripcionCampo?.valid && this.archivoInsertadoValid;
   }
 
-  // Método para verificar y actualizar la validez del campo cuando se modifica el valor
-  checkValidity(field: NgModel): void {
-    if (field.touched || field.dirty) {
-        this.isFieldValid(field);
-    }
-}
+
 }
