@@ -76,20 +76,15 @@ export class AddActivityComponent {
     }
   }
 
-  isFieldValid(value: string): boolean | null {
-    const regex = /^[a-zA-Z\s]+$/;
+  isFieldValid(value: string): boolean {
+    const regex = /^[a-zA-Z0-9\s.,:]+$/;
     const isValid = regex.test(value.trim());
     this.isNameEntered = value.trim() !== '' && isValid;
     return isValid;
   }
 
-  isFieldValidDescription(field: NgModel): boolean | null {
-    return field.dirty && field.touched;
-  }
-
   isAllFieldsValid(): boolean | null {
-    return this.nombreCampo?.valid && this.descripcionCampo?.valid && this.archivoInsertadoValid;
+    return this.isNameEntered && this.isDescritionEntered && this.archivoInsertadoValid;
   }
-
 
 }
