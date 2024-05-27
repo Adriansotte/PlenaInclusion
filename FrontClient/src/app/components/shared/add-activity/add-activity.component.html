@@ -96,14 +96,23 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary" [disabled]="!isAllFieldsValid()"
-                    (click)="submitForm()">Crear</button>
+
+                <button *ngIf="isAllFieldsValid(); else elseBlock" type="button" class="btn btn-outline-primary"
+                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Enviar!
+                </button>
+                <!-- Si isAllFieldsValid() es false, muestra este botón -->
+                <ng-template #elseBlock>
+                    <button type="button" class="btn btn-outline-warning">
+                        Rellena los Campos
+                    </button>
+                </ng-template>
             </div>
         </div>
     </div>
 </div>
 
-<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -112,7 +121,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Deseas Registrarte en la Aplicación?</p>
+                <p>¿Estas seguro de crear la actividad?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -121,8 +130,8 @@
             </div>
         </div>
     </div>
-</div> -->
-<!-- <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
     tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -131,11 +140,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Perfil creado correctamente
+                Actividad creada correctamente!!!
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-dismiss="modal" (click)="navigateToHome()">Entendido</button>
+                <button class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>
-</div> -->
+</div>

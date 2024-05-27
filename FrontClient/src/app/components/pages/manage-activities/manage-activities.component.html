@@ -36,5 +36,5 @@
 
 <app-activity-modal [selectedActivity]="selectedActivity" (activitiesChange)="handleActivities()"></app-activity-modal>
 
-<app-add-activity></app-add-activity>
+<app-add-activity (activityCreated)="handleActivities()"></app-add-activity>
 

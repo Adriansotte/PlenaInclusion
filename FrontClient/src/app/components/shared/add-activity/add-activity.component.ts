@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { activityDTO } from 'src/app/models/activity/activityDTO';
 import { ActivityService } from 'src/app/services/activities/activity.service';
@@ -13,6 +13,8 @@ export class AddActivityComponent {
 
   @ViewChild('nombreCampo') nombreCampo!: NgModel;
   @ViewChild('descripcionCampo') descripcionCampo!: NgModel;
+
+  @Output() activityCreated: EventEmitter<void> = new EventEmitter<void>();
 
   activity: activityDTO = {
     Name: '',
@@ -69,6 +71,9 @@ export class AddActivityComponent {
         },
         error: (error) => {
           console.error('Error en la inserción de la actividad', error);
+        },
+        complete: () => {
+          this.activityCreated.emit();
         }
       });
     } else {
@@ -84,7 +89,7 @@ export class AddActivityComponent {
   }
 
   isAllFieldsValid(): boolean | null {
-    return this.isNameEntered && this.isDescritionEntered && this.archivoInsertadoValid;
+    return this.nombreCampo?.valid && this.descripcionCampo?.valid && this.archivoInsertadoValid;
   }
 
 }
