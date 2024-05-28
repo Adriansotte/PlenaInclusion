@@ -1,6 +1,7 @@
 const ActivityModel = require("../models/activityModel");
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
+const ScheduleModel = require("../models/scheduleModel")
 
 const getAllActivities = async (req, res) => {
     try {
@@ -67,18 +68,25 @@ const updateActivity = async (req, res) => {
 
 const deleteActivity = async (req, res) => {
     try {
+
         const { id } = req.params;
+        const activity = await ScheduleModel.findOne({
+            where: { ID_Activity: id }
+        });
+        if (activity) {
+            return res.status(404).json({ error: "ACTIVITY_IN_SCHEDULE" });
+        }
         const user = await ActivityModel.destroy({
             where: { ID_activity: id }
         });
         if (user === 1) {
-            res.json({ message: "Activity deleted successfully" });
+            return res.json({ message: "Activity deleted successfully" });
         } else {
-            res.status(404).json({ error: "Activity not found" });
+            return res.status(404).json({ error: "Activity not found" });
         }
     } catch (error) {
         console.error('Error al eliminar la actividad:', error);
-        handleHttpError(res, "ERROR_DELETE_USER");
+        return handleHttpError(res, "ERROR_DELETE_ACTIVITY");
     }
 };
 
