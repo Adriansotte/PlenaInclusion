@@ -57,7 +57,7 @@
                                     </svg>
                                 </span>
                                 <div class="form-floating col-5">
-                                    <input type="text" class="form-control" id="Name" name="Name"
+                                    <input type="text" class="form-control" id="ActivityName" name="ActivityName"
                                         [(ngModel)]="activity.Name" placeholder="" required maxlength="40"
                                         #nombreCampo="ngModel">
                                     <label for="Nombre">Nombre de la Actividad</label>
@@ -101,7 +101,6 @@
                     data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Enviar!
                 </button>
-                <!-- Si isAllFieldsValid() es false, muestra este botón -->
                 <ng-template #elseBlock>
                     <button type="button" class="btn btn-outline-warning">
                         Rellena los Campos

@@ -73,6 +73,9 @@ export class AddActivityComponent {
           console.error('Error en la inserción de la actividad', error);
         },
         complete: () => {
+          this.activity.Description = "";
+          this.activity.Name = "";
+          this.Photo = undefined;
           this.activityCreated.emit();
         }
       });
