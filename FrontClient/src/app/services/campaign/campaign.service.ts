@@ -17,4 +17,9 @@ export class CampaignService {
     return this.http.get<CampaignDTO[]>(`${this.url}/api/campaigns`);
   }
 
+  addCampaign(campaign: CampaignDTO): Observable<any> {
+    return this.http.post<any>(`${this.url}/api/campaigns`, campaign);
+
+  }
+
 }
