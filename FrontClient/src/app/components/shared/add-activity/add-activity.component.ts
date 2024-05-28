@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { activityDTO } from 'src/app/models/activity/activityDTO';
 import { ActivityService } from 'src/app/services/activities/activity.service';
@@ -9,7 +9,7 @@ import { DefaultProfileService } from 'src/app/services/staticImages/default-pro
   templateUrl: './add-activity.component.html',
   styleUrls: ['./add-activity.component.css']
 })
-export class AddActivityComponent {
+export class AddActivityComponent implements OnInit {
 
   @ViewChild('nombreCampo') nombreCampo!: NgModel;
   @ViewChild('descripcionCampo') descripcionCampo!: NgModel;

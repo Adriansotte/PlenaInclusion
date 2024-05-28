@@ -7,7 +7,7 @@
 
     <div class="row justify-content-center mt-3">
         <div class="col-md-10">
-            <button type="button" class="btn btn-primary mb-3" (click)="addCampaignModal()">Añadir Actividad</button>
+            <button type="button" class="btn btn-primary mb-3" (click)="addCampaignModal()">Añadir Campaña</button>
 
             <div class="table-responsive rounded rounded-4 shadow">
                 <table class="table table-hover table-striped rounded m-0">
@@ -32,3 +32,5 @@
         </div>
     </div>
 </div>
+
+<app-add-campagne (campaignCreated)="handleCampaigns()"></app-add-campagne>
