@@ -28,6 +28,9 @@ import { UserScheduleModalComponent } from './components/shared/user-schedule-mo
 import { ManageActivitiesComponent } from './components/pages/manage-activities/manage-activities.component';
 import { ActivityModalComponent } from './components/shared/activity-modal/activity-modal.component';
 import { AddActivityComponent } from './components/shared/add-activity/add-activity.component';
+import { ManageCampagneComponent } from './components/pages/manage-campagne/manage-campagne.component';
+import { CampagneModalComponent } from './components/shared/campagne-modal/campagne-modal.component';
+import { AddCampagneComponent } from './components/shared/add-campagne/add-campagne.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -52,7 +55,10 @@ registerLocaleData(localeEs, 'es');
     UserScheduleModalComponent,
     ManageActivitiesComponent,
     ActivityModalComponent,
-    AddActivityComponent
+    AddActivityComponent,
+    ManageCampagneComponent,
+    CampagneModalComponent,
+    AddCampagneComponent
   ],
   imports: [
     BrowserModule,

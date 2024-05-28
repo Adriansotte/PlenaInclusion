@@ -9,6 +9,7 @@ import { loginGuard } from './guards/login.guard';
 import { AllSchedulesComponent } from './components/shared/all-schedules/all-schedules.component';
 import { UserSchedulesComponent } from './components/shared/user-schedules/user-schedules.component';
 import { ManageActivitiesComponent } from './components/pages/manage-activities/manage-activities.component';
+import { ManageCampagneComponent } from './components/pages/manage-campagne/manage-campagne.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,11 @@ const routes: Routes = [
   {
     path: "manageA",
     component: ManageActivitiesComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: "manageC",
+    component: ManageCampagneComponent,
     canActivate: [authGuard]
   },
   {
