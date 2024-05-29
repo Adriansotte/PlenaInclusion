@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CampaignDTO } from 'src/app/models/campaign/campaignDTO';
+import { CampaignService } from 'src/app/services/campaign/campaign.service';
 
 @Component({
   selector: 'app-campagne-modal',
@@ -7,4 +9,23 @@ import { Component } from '@angular/core';
 })
 export class CampagneModalComponent {
 
+  @Input() selectedCampaign: CampaignDTO | null = null;
+
+  @Output() campaignsChange: EventEmitter<CampaignDTO> = new EventEmitter<CampaignDTO>();
+
+  constructor(private campaignService: CampaignService) { }
+
+  deleteActivity() {
+    this.campaignService.deleteCampaign(this.selectedCampaign?.ID_Campaign!).subscribe({
+      next: response => {
+        // this.deleteSuccessModal();
+      },
+      error: (error: any) => {
+        // this.deleteFailedModal()
+      },
+      complete: () => {
+        this.campaignsChange.emit();
+      }
+    })
+  }
 }

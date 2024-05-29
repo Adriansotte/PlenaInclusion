@@ -19,7 +19,10 @@ export class CampaignService {
 
   addCampaign(campaign: CampaignDTO): Observable<any> {
     return this.http.post<any>(`${this.url}/api/campaigns`, campaign);
+  }
 
+  deleteCampaign(idCampaign: string) {
+    return this.http.delete<CampaignDTO>(`${this.url}/api/campaigns/${idCampaign}`);
   }
 
 }

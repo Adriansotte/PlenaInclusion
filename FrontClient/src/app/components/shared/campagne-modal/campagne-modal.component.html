@@ -1,1 +1,32 @@
-<p>campagne-modal works!</p>
+<div class="modal fade" id="campaignModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ selectedCampaign?.Name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nameInput" placeholder="Nombre"
+                                [ngModel]="selectedCampaign?.Name" readonly>
+                            <label for="nameInput">Nombre</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="descriptionInput" placeholder="Descripción"
+                                [ngModel]="selectedCampaign?.Description" readonly style="height: 300px;"></textarea>
+                            <label for="descriptionInput">Descripción</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal">Borrar Actividad</button>
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
