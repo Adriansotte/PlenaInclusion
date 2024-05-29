@@ -7,12 +7,49 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form (ngSubmit)="submitForm()" enctype="multipart/form-data" class="needs-validation p-3 bg-secondary"
-                    novalidate>
+                <form enctype="multipart/form-data" class="needs-validation p-3 bg-secondary" novalidate>
+                    <div class="row my-4">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-calendar-date" viewBox="0 0 16 16">
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
+                                    </svg>
+                                </span>
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="floatingStartDateInput" name="StartDate"
+                                        [(ngModel)]="campaign.StartDate" placeholder="" required>
+                                    <label for="floatingStartDateInput">Fecha de Inicio</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-calendar-date" viewBox="0 0 16 16">
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
+                                    </svg>
+                                </span>
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="floatingFinishDateInput"
+                                        name="FinishDate" [(ngModel)]="campaign.FinishDate" placeholder="" required>
+                                    <label for="floatingFinishDateInput">Fecha de Finalización</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!areDatesValid()" class="text-danger">
+                        La fecha de inicio debe ser anterior a la fecha de finalización.
+                    </div>
                     <div class="row my-2">
                         <div class="col-12">
                             <div class="input-group">
-                                <span class="input-group-text">
+                                <span class="input-group-text" [ngClass]="{'valid-input': isFieldValid(campaign.Name)}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-alphabet-uppercase" viewBox="0 0 16 16">
                                         <path
@@ -35,7 +72,8 @@
                     <div class="row my-4">
                         <div class="col-12">
                             <div class="input-group">
-                                <span class="input-group-text">
+                                <span class="input-group-text"
+                                    [ngClass]="{'valid-input': isFieldValid(campaign.Description)}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-book" viewBox="0 0 16 16">
                                         <path
@@ -55,55 +93,21 @@
                         </div>
 
                     </div>
-                    <div class="row my-4">
 
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-calendar-date" viewBox="0 0 16 16">
-                                        <path
-                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
-                                    </svg>
-                                </span>
-                                <div class="form-floating">
-                                    <input type="date" class="form-control" id="floatingDateInput" name="StartDate"
-                                        [(ngModel)]="campaign.StartDate" placeholder="" required>
-                                    <label for="floatingDateInput">Fecha de Inicio</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-calendar-date" viewBox="0 0 16 16">
-                                        <path
-                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
-                                    </svg>
-                                </span>
-                                <div class="form-floating">
-                                    <input type="date" class="form-control" id="floatingDateInput" name="StartDate"
-                                        [(ngModel)]="campaign.StartDate" placeholder="" required>
-                                    <label for="floatingDateInput">Fecha de Finalización</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
 
-                <!-- <button *ngIf="isAllFieldsValid(); else elseBlock" type="button" class="btn btn-outline-primary"
-                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Enviar!
+                <button *ngIf="isFormValid(); else elseBlock" type="button" class="btn btn-outline-primary"
+                    data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="submitForm()">
+                    Crear!
                 </button>
                 <ng-template #elseBlock>
                     <button type="button" class="btn btn-outline-warning">
                         Rellena los Campos
                     </button>
-                </ng-template> -->
+                </ng-template>
             </div>
         </div>
     </div>

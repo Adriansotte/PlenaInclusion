@@ -31,6 +31,8 @@ import { AddActivityComponent } from './components/shared/add-activity/add-activ
 import { ManageCampagneComponent } from './components/pages/manage-campagne/manage-campagne.component';
 import { CampagneModalComponent } from './components/shared/campagne-modal/campagne-modal.component';
 import { AddCampagneComponent } from './components/shared/add-campagne/add-campagne.component';
+import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
+import { SuccessModalComponent } from './components/shared/success-modal/success-modal.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -58,7 +60,9 @@ registerLocaleData(localeEs, 'es');
     AddActivityComponent,
     ManageCampagneComponent,
     CampagneModalComponent,
-    AddCampagneComponent
+    AddCampagneComponent,
+    ConfirmationModalComponent,
+    SuccessModalComponent
   ],
   imports: [
     BrowserModule,
