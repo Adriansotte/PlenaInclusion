@@ -12,7 +12,12 @@ export class ConfirmationModalComponent {
   @Output() acepted: EventEmitter<void> = new EventEmitter<void>();
   @Output() canceled: EventEmitter<void> = new EventEmitter<void>();
 
-  confirmar(): void {
+  confirm(): void {
     this.acepted.emit();
   }
+
+  cancel(): void {
+    this.canceled.emit();
+  }
+
 }
