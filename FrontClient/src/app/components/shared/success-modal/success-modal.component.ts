@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-success-modal',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./success-modal.component.css']
 })
 export class SuccessModalComponent {
+  @Input() titulo: string | undefined;
+  @Input() mensaje: string | undefined;
 
 }

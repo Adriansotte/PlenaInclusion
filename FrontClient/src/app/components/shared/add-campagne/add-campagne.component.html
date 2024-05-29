@@ -100,7 +100,7 @@
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
 
                 <button *ngIf="isFormValid(); else elseBlock" type="button" class="btn btn-outline-primary"
-                    data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="submitForm()">
+                    data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="openConfirmationModal()">
                     Crear!
                 </button>
                 <ng-template #elseBlock>
@@ -113,39 +113,7 @@
     </div>
 </div>
 
-<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title fs-5" id="staticBackdropLabel">Confirmación de la Solicitud</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>¿Estas seguro de crear la actividad?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" (click)="submitForm()"
-                    data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Aceptar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-    tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Aviso</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Actividad creada correctamente!!!
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
-            </div>
-        </div>
-    </div>
-</div> -->
+<app-confirmation-modal [titulo]="'Confirmación de la Solicitud'" [mensaje]="'¿Estás seguro de crear la campaña?'"
+    (acepted)="submitForm()" (canceled)="refreshItems()"></app-confirmation-modal>
+
+<app-success-modal [mensaje]="adviceTitle" [titulo]="'Aviso'"></app-success-modal>
