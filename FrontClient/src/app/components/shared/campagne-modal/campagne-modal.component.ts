@@ -16,6 +16,8 @@ export class CampagneModalComponent {
   @Output() campaignsChange: EventEmitter<CampaignDTO> = new EventEmitter<CampaignDTO>();
 
   adviceTitle: string = "";
+  isValidDate: boolean = false;
+  isInvalidDate: boolean = false;
 
   constructor(private campaignService: CampaignService) { }
 
@@ -23,20 +25,15 @@ export class CampagneModalComponent {
     this.campaignService.deleteCampaign(this.selectedCampaign?.ID_Campaign!).subscribe({
       next: response => {
         this.adviceTitle = "Campaña borrada correctamente!!!";
-
-        // this.deleteSuccessModal();
       },
       error: (error: any) => {
         console.log(error)
         this.adviceTitle = "Campaña Pertenece a un Horario, de momento no se puede borrar.";
         this.openAdviceModal();
-
-        // this.deleteFailedModal()
       },
       complete: () => {
         this.campaignsChange.emit();
         this.openAdviceModal();
-
       }
     })
   }
@@ -56,4 +53,23 @@ export class CampagneModalComponent {
       modal.show();
     }
   }
+
+  validateDate() {
+    if (this.selectedCampaign) {
+      const startDate = new Date(this.selectedCampaign.StartDate);
+      const finishDate = new Date(this.selectedCampaign.FinishDate);
+      console.log(startDate, finishDate);
+
+      this.isValidDate = finishDate > startDate;
+      if (this.isValidDate) {
+        console.log("Fechas correctas");
+      }
+      this.isInvalidDate = finishDate <= startDate;
+      if (this.isInvalidDate) {
+        console.log("Fechas incorrectas");
+        alert("La fecha de finalización debe ser posterior a la fecha de inicio.");
+      }
+    }
+  }
+
 }

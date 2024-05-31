@@ -112,24 +112,19 @@ export class FormComponent implements OnInit {
   passwordsMatch: boolean = false;
   confirmPassValid: boolean = false;
 
-  // Función que valida el DNI
   isDNICorrect(): boolean {
     this.isDNIValid = this.user.DNI.length === 9;
     return this.isDNIValid;
   }
 
-  // Función que se llama cuando se cambia el valor del DNI
   onDNIInputChange(): void {
     this.isDNICorrect();
   }
 
-
-  // Función que valida si se ha seleccionado un rol
   isRolValid(): boolean {
     this.isRolSelected = this.user.Rol !== '';
     return this.isRolSelected;
   }
-
 
   validateDate() {
     const userDate = new Date(this.user.BirthDay);
@@ -145,9 +140,7 @@ export class FormComponent implements OnInit {
 
 
   onInputChange(value: string) {
-    // Realizar validaciones adicionales o acciones específicas
     console.log('El valor del campo de entrada ha cambiado:', value);
-    // Puedes agregar más lógica aquí según sea necesario
   }
 
   // Función que valida el nombre y actualiza isNameEntered
