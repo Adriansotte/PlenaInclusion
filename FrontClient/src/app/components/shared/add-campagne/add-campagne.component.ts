@@ -27,7 +27,6 @@ export class AddCampagneComponent {
   constructor(private campaignService: CampaignService) { }
 
   submitForm(): void {
-    console.log("Envia el formulario")
     this.campaignService.addCampaign(this.campaign).subscribe({
       next: (response: any) => {
         console.log(response);
@@ -60,7 +59,7 @@ export class AddCampagneComponent {
   }
 
   openConfirmationModal() {
-    const modalElement = document.getElementById('confirmationModal');
+    const modalElement = document.getElementById('staticBackdrop');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
@@ -68,7 +67,7 @@ export class AddCampagneComponent {
   }
 
   openAdviceModal() {
-    const modalElement = document.getElementById('successModal');
+    const modalElement = document.getElementById('advice');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();

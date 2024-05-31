@@ -56,8 +56,8 @@ export class CampagneModalComponent {
     })
   }
 
-  openConfirmationModal(actionType: 'delete' | 'update') { // Modificado
-    this.actionType = actionType; // Nuevo
+  openConfirmationModal(actionType: 'delete' | 'update') {
+    this.actionType = actionType;
     const modalElement = document.getElementById('confirmationModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
@@ -65,12 +65,12 @@ export class CampagneModalComponent {
     }
   }
 
-  confirmAction() { // Nuevo
+  confirmAction() {
     if (this.actionType === 'delete') {
       this.deleteCampagne();
     } else if (this.actionType === 'update') {
       this.updateCampagne();
-    }
+    } 
   }
 
   openAdviceModal() {
