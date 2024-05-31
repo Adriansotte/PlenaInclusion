@@ -18,9 +18,13 @@ export class CampagneModalComponent {
   deleteActivity() {
     this.campaignService.deleteCampaign(this.selectedCampaign?.ID_Campaign!).subscribe({
       next: response => {
+        console.log(response)
+
         // this.deleteSuccessModal();
       },
       error: (error: any) => {
+        console.log(error)
+
         // this.deleteFailedModal()
       },
       complete: () => {

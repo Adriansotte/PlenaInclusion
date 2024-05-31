@@ -33,6 +33,6 @@
     </div>
 </div>
 
-<app-campagne-modal [selectedCampaign]="selectedCampaign"></app-campagne-modal>
+<app-campagne-modal [selectedCampaign]="selectedCampaign" (campaignsChange)="handleCampaigns()"></app-campagne-modal>
 
 <app-add-campagne (campaignCreated)="handleCampaigns()"></app-add-campagne>
