@@ -24,9 +24,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
-                    (click)="deleteActivity()">Borrar Actividad</button>
+                    (click)="openConfirmationModal()">Borrar Actividad</button>
                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+
+<app-confirmation-modal [titulo]="'Eliminación de la Campaña'" [mensaje]="'¿Estás seguro de borrar la campaña?'"
+    (acepted)="(deleteCampagne())"></app-confirmation-modal>
+
+<app-success-modal [mensaje]="adviceTitle" [titulo]="'Aviso'"></app-success-modal>
