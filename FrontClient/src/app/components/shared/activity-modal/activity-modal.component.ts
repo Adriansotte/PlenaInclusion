@@ -14,8 +14,45 @@ export class ActivityModalComponent {
 
   @Output() activitiesChange: EventEmitter<activityDTO> = new EventEmitter<activityDTO>();
 
+  Photo: File | undefined;
+
+  archivoInsertado: boolean = true;
+  archivoInsertadoValid: boolean = true;
+  imagenMostrada: any;
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png'];
+    const maxSize = 5 * 1024 * 1024; // 5 MB
+
+    if (file && allowedTypes.includes(file.type) && file.size <= maxSize) {
+      this.archivoInsertadoValid = true;
+      this.Photo = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagenMostrada = e.target.result;
+        if (this.selectedActivity) {
+          this.selectedActivity.Photo = e.target.result;
+        }
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      this.archivoInsertadoValid = false;
+      this.imagenMostrada = null;
+      if (this.selectedActivity) {
+        this.selectedActivity.Photo = '';
+      }
+    }
+
+    this.archivoInsertado = true;
+  }
 
   constructor(private activityService: ActivityService) { }
+
+  updateActivity() {
+    
+  }
 
   deleteActivity() {
     this.activityService.deleteActivty(this.selectedActivity?.ID_activity!).subscribe({
@@ -47,4 +84,5 @@ export class ActivityModalComponent {
     }
   }
 
+  
 }

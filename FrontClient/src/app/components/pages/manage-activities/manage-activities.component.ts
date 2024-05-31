@@ -48,5 +48,4 @@ export class ManageActivitiesComponent implements OnInit {
       modal.show();
     }
   }
-
 }

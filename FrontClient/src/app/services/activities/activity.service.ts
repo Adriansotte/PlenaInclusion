@@ -27,6 +27,16 @@ export class ActivityService {
     return this.http.post<any>(`${this.url}/api/activities`, formData);
   }
 
+  updateActivity(activity: activityDTO, file?: File): Observable<activityDTO> {
+    const formData = new FormData();
+    formData.append('Name', activity.Name);
+    formData.append('Description', activity.Description);
+    if (file) {
+      formData.append('Photo', file);
+    }
+    return this.http.put<activityDTO>(`${this.url}/api/activities/${activity.ID_activity}`, formData);
+  }
+
   deleteActivty(idActivity: string) {
     return this.http.delete<activityDTO[]>(`${this.url}/api/activities/${idActivity}`);
   }
