@@ -1,7 +1,7 @@
 const ActivityModel = require("../models/activityModel");
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
-const ScheduleModel = require("../models/scheduleModel")
+const ScheduleModel = require("../models/scheduleModel");
 
 const getAllActivities = async (req, res) => {
     try {

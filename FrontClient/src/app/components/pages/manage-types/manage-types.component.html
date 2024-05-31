@@ -29,3 +29,5 @@
 </div>
 
 <app-type-modal [selectedType]="selectedType" (typeChange)="handleTypes()"></app-type-modal>
+
+<app-add-type (typeCreated)="handleTypes()" ></app-add-type>

@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div *ngIf="selectedType.Description == ''" class="text-danger">
-                                El campo Nombre es obligatorio y debe tener un máximo de 70 caracteres.
+                                El campo Descripcion es obligatorio y debe tener un máximo de 70 caracteres.
                             </div>
                         </div>
 
@@ -64,7 +64,7 @@
                         Rellena correctamente los campos
                     </button>
                 </ng-template>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
                     (click)="typeChange.emit();">Cerrar</button>
             </div>
         </div>
