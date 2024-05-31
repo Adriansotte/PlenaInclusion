@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CampaignDTO } from 'src/app/models/campaign/campaignDTO';
 import { CampaignService } from 'src/app/services/campaign/campaign.service';
+import { isFieldValid } from 'src/utils/fieldValid';
 
 declare var bootstrap: any;
 
@@ -16,8 +17,10 @@ export class CampagneModalComponent {
   @Output() campaignsChange: EventEmitter<CampaignDTO> = new EventEmitter<CampaignDTO>();
 
   adviceTitle: string = "";
-  isValidDate: boolean = false;
+  isValidDate: boolean = true;
   isInvalidDate: boolean = false;
+  actionType: 'delete' | 'update' | null = null;
+  messageModal: string = "";
 
   constructor(private campaignService: CampaignService) { }
 
@@ -53,11 +56,20 @@ export class CampagneModalComponent {
     })
   }
 
-  openConfirmationModal() {
+  openConfirmationModal(actionType: 'delete' | 'update') { // Modificado
+    this.actionType = actionType; // Nuevo
     const modalElement = document.getElementById('confirmationModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
+    }
+  }
+
+  confirmAction() { // Nuevo
+    if (this.actionType === 'delete') {
+      this.deleteCampagne();
+    } else if (this.actionType === 'update') {
+      this.updateCampagne();
     }
   }
 
@@ -84,6 +96,20 @@ export class CampagneModalComponent {
         console.log("Fechas incorrectas");
         alert("La fecha de finalización debe ser posterior a la fecha de inicio.");
       }
+    }
+  }
+
+  isFieldValid(value: string): boolean {
+    return isFieldValid(value);
+  }
+
+  isFormValid(): boolean {
+    if (this.selectedCampaign) {
+      return this.isFieldValid(this.selectedCampaign.Name) &&
+        this.isFieldValid(this.selectedCampaign.Description) &&
+        this.isValidDate
+    } else {
+      return false;
     }
   }
 

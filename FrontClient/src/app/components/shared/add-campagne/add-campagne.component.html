@@ -97,7 +97,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" (click)="campaignCreated.emit();">Cerrar</button>
 
                 <button *ngIf="isFormValid(); else elseBlock" type="button" class="btn btn-outline-primary"
                     data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="openConfirmationModal()">
