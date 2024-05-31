@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environments } from 'src/environments/environments';
 
 declare var google: any;
 
@@ -8,12 +9,13 @@ declare var google: any;
   styleUrls: ['./google-auth-btn.component.css']
 })
 export class GoogleAuthBtnComponent implements OnInit {
+  client_id: string = environments.client_id;
 
   ngOnInit(): void {
     google.accounts.id.initialize({
-      client_id: '562380291200-abf1rofqn5kjjdlohfj45nhro3obdl7c.apps.googleusercontent.com',
+      client_id: this.client_id,
       callback: (response: any) => {
-        console.log(response)
+        this.handleLoggin(response.credential)
       }
     });
     google.accounts.id.renderButton(
@@ -28,12 +30,19 @@ export class GoogleAuthBtnComponent implements OnInit {
   }
 
   private decodeToken(token: string) {
-    return JSON.parse(atob(token).split('.')[1])
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
   }
 
-  handleLoggin(response: any) {
-    if (response) {
-
+  handleLoggin(credential: any) {
+    if (credential) {
+      const payload = this.decodeToken(credential);
+      console.log(payload);
     }
   }
 

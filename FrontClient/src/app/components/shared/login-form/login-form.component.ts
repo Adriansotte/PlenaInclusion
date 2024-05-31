@@ -24,7 +24,7 @@ export class LoginFormComponent implements AfterViewInit {
 
   constructor(
     private loginService: LoginService,
-    private authService: AuthService,  // Inyecta AuthService
+    private authService: AuthService,
     private router: Router
   ) { }
 
