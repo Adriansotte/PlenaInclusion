@@ -36,6 +36,7 @@ import { SuccessModalComponent } from './components/shared/success-modal/success
 import { ManageTypesComponent } from './components/pages/manage-types/manage-types.component';
 import { TypeModalComponent } from './components/shared/type-modal/type-modal.component';
 import { AddTypeComponent } from './components/shared/add-type/add-type.component';
+import { GoogleAuthBtnComponent } from './components/shared/google-auth-btn/google-auth-btn.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -68,7 +69,8 @@ registerLocaleData(localeEs, 'es');
     SuccessModalComponent,
     ManageTypesComponent,
     TypeModalComponent,
-    AddTypeComponent
+    AddTypeComponent,
+    GoogleAuthBtnComponent
   ],
   imports: [
     BrowserModule,
