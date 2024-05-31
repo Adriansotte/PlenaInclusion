@@ -49,17 +49,25 @@ const postActivity = async (req, res) => {
 const updateActivity = async (req, res) => {
     try {
         const { id } = req.params;
-        const body = matchedData(req, { onlyValidData: true });
+        const formData = req.body;
+        const file = req.file;
+
+        if (file) {
+            formData.Photo = `http://${process.env.DATABASEIP}:${process.env.PORT}/${file.filename}`;
+        }
+
         const activityBeforeUpdate = await ActivityModel.findByPk(id);
-        console.log(activityBeforeUpdate)
         if (!activityBeforeUpdate) {
             return res.status(404).send({ error: "Activity not found" });
         }
-        await ActivityModel.update(body, {
+
+        await ActivityModel.update(formData, {
             where: { ID_activity: id }
         });
-        const activityrAfterUpdate = await ActivityModel.findByPk(id);
-        return res.send({ data: activityrAfterUpdate });
+
+        const activityAfterUpdate = await ActivityModel.findByPk(id);
+
+        return res.send({ data: activityAfterUpdate });
     } catch (error) {
         console.error('Error al actualizar la actividad:', error);
         handleHttpError(res, 'ERROR_UPDATE_ACTIVITY');

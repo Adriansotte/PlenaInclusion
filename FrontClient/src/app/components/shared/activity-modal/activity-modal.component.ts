@@ -20,6 +20,11 @@ export class ActivityModalComponent {
   archivoInsertadoValid: boolean = true;
   imagenMostrada: any;
 
+  adviceTitle: string = "";
+
+  actionType: 'delete' | 'update' | null = null;
+
+
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     const allowedTypes = ['image/jpeg', 'image/png'];
@@ -51,7 +56,40 @@ export class ActivityModalComponent {
   constructor(private activityService: ActivityService) { }
 
   updateActivity() {
-    
+    this.activityService.updateActivity(this.selectedActivity!, this.Photo).subscribe({
+      next: (response) => {
+        this.adviceTitle = "Actividad actualizada correctamente!!!";
+      },
+      error: (error: any) => {
+        console.log(error)
+
+        this.adviceTitle = "Ha habido un error en la actualización de la actividad";
+
+        this.activitiesChange.emit();
+      },
+      complete: () => {
+        this.activitiesChange.emit();
+        this.openAdviceModal();
+
+      }
+    })
+  }
+
+  openAdviceModal() {
+    const modalElement = document.getElementById('successModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  openConfirmationModal(actionType: 'delete' | 'update') {
+    this.actionType = actionType;
+    const modalElement = document.getElementById('confirmationModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 
   deleteActivity() {
@@ -69,7 +107,7 @@ export class ActivityModalComponent {
   }
 
   deleteSuccessModal() {
-    const modalElement = document.getElementById('successModal');
+    const modalElement = document.getElementById('successDelete');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
@@ -84,5 +122,5 @@ export class ActivityModalComponent {
     }
   }
 
-  
+
 }

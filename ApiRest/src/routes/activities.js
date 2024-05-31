@@ -12,7 +12,7 @@ router.get("/:id", authMiddleware, validatorGetActivity, getActivity);
 
 router.post("/", authMiddleware, checkRol(["Monitor", "Administrador"]), uploadMiddleware.single("Photo"), postActivity);
 
-router.put("/:id", authMiddleware, validatorGetActivity, validatorCreateActivity, updateActivity);
+router.put("/:id", authMiddleware, uploadMiddleware.single("Photo"), updateActivity);
 
 router.delete("/:id", authMiddleware, validatorGetActivity, deleteActivity);
 
