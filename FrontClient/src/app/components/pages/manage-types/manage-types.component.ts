@@ -32,4 +32,20 @@ export class ManageTypesComponent implements OnInit {
     })
   }
 
+  onTypeClick(type: typeDTO): void {
+    this.selectedType = type;
+    const modalElement = document.getElementById('typeModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  addTypeModal() {
+    const modalElement = document.getElementById('addTypeModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
 }
