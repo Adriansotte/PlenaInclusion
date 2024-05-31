@@ -1,23 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { loginUserDTO } from 'src/app/models/user/loginUserDTO';
 import { environments } from 'src/environments/environments';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+  url: string = environments.baseUrl;
 
-  url: string = environments.baseUrl
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   loginUser(user: loginUserDTO): Observable<any> {
     const formData = new FormData();
     formData.append('Email', user.Email);
     formData.append('Pass', user.Pass);
-    return this.http.post<any>(`${this.url}/api/auth/login`, formData);
+    return this.http.post<any>(`${this.url}/api/auth/login`, formData).pipe(
+      tap(response => {
+        const userRole = response.data.user.Rol;
+        this.authService.setRole(userRole);
+      })
+    );
   }
-
 }

@@ -4,15 +4,15 @@ const { getAllActivities, postActivity, getActivity, deleteActivity, updateActiv
 const { validatorCreateActivity, validatorGetActivity } = require("../valdiators/activities");
 const { authMiddleware } = require("../middlewares/session");
 const { checkRol } = require("../middlewares/rol");
-
+const uploadMiddleware = require("../utils/handleStorage");
 
 router.get("/", authMiddleware, getAllActivities);
 
 router.get("/:id", authMiddleware, validatorGetActivity, getActivity);
 
-router.post("/", authMiddleware, checkRol(['Monitor', 'Administrador']), validatorCreateActivity, postActivity);
+router.post("/", authMiddleware, checkRol(["Monitor", "Administrador"]), uploadMiddleware.single("Photo"), postActivity);
 
-router.put("/:id", authMiddleware, validatorGetActivity, validatorCreateActivity, updateActivity);
+router.put("/:id", authMiddleware, uploadMiddleware.single("Photo"), updateActivity);
 
 router.delete("/:id", authMiddleware, validatorGetActivity, deleteActivity);
 

@@ -28,7 +28,6 @@ export class RegisterService {
     formData.append('BirthDay', user.BirthDay);
 
     if (file) {
-      console.log(file)
       formData.append('Photo', file);
     }
 

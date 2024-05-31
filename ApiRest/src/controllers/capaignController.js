@@ -1,6 +1,7 @@
 const CampaignModel = require("../models/campaignModel");
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
+const ScheduleModel = require("../models/scheduleModel")
 
 async function getAllCampaigns(req, res) {
     try {
@@ -56,6 +57,13 @@ const updateCampaign = async (req, res) => {
 const deleteCampaign = async (req, res) => {
     try {
         const { id } = req.params;
+
+        const campaignInSchedule = await ScheduleModel.findOne({
+            where: { ID_Campaign: id }
+        });
+        if (campaignInSchedule) {
+            return res.status(404).json({ error: "CAMPAIGN_IN_SCHEDULE" });
+        }
         const campaign = await CampaignModel.destroy({
             where: { ID_campaign: id }
         });

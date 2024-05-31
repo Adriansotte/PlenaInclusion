@@ -1,10 +1,10 @@
 const ActivityModel = require("../models/activityModel");
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
+const ScheduleModel = require("../models/scheduleModel");
 
 const getAllActivities = async (req, res) => {
     try {
-        console.log("hola en el controlador de actividades")
         const user = req.user;
         const activities = await ActivityModel.findAll();
         res.json(activities);
@@ -28,9 +28,19 @@ const getActivity = async (req, res) => {
 
 const postActivity = async (req, res) => {
     try {
-        const body = matchedData(req);
-        const data = await ActivityModel.create(body);
-        res.send({ data });
+        const formData = req.body;
+        const file = req.file;
+        if (file) {
+            formData.Photo = file.filename;
+        }
+        const activityData = {
+            Name: formData.Name,
+            Description: formData.Description,
+            Photo: `http://${process.env.DATABASEIP}:${process.env.PORT}/${formData.Photo}`,
+        }
+        const data = await ActivityModel.create(activityData);
+        res.status(201).json({ activityData });
+
     } catch (e) {
         handleHttpError(res, 'ERROR_POST_ACTIVITY')
     }
@@ -39,17 +49,25 @@ const postActivity = async (req, res) => {
 const updateActivity = async (req, res) => {
     try {
         const { id } = req.params;
-        const body = matchedData(req, { onlyValidData: true });
+        const formData = req.body;
+        const file = req.file;
+
+        if (file) {
+            formData.Photo = `http://${process.env.DATABASEIP}:${process.env.PORT}/${file.filename}`;
+        }
+
         const activityBeforeUpdate = await ActivityModel.findByPk(id);
-        console.log(activityBeforeUpdate)
         if (!activityBeforeUpdate) {
             return res.status(404).send({ error: "Activity not found" });
         }
-        await ActivityModel.update(body, {
+
+        await ActivityModel.update(formData, {
             where: { ID_activity: id }
         });
-        const activityrAfterUpdate = await ActivityModel.findByPk(id);
-        return res.send({ data: activityrAfterUpdate });
+
+        const activityAfterUpdate = await ActivityModel.findByPk(id);
+
+        return res.send({ data: activityAfterUpdate });
     } catch (error) {
         console.error('Error al actualizar la actividad:', error);
         handleHttpError(res, 'ERROR_UPDATE_ACTIVITY');
@@ -58,18 +76,25 @@ const updateActivity = async (req, res) => {
 
 const deleteActivity = async (req, res) => {
     try {
+
         const { id } = req.params;
+        const activity = await ScheduleModel.findOne({
+            where: { ID_Activity: id }
+        });
+        if (activity) {
+            return res.status(404).json({ error: "ACTIVITY_IN_SCHEDULE" });
+        }
         const user = await ActivityModel.destroy({
             where: { ID_activity: id }
         });
         if (user === 1) {
-            res.json({ message: "Activity deleted successfully" });
+            return res.json({ message: "Activity deleted successfully" });
         } else {
-            res.status(404).json({ error: "Activity not found" });
+            return res.status(404).json({ error: "Activity not found" });
         }
     } catch (error) {
         console.error('Error al eliminar la actividad:', error);
-        handleHttpError(res, "ERROR_DELETE_USER");
+        return handleHttpError(res, "ERROR_DELETE_ACTIVITY");
     }
 };
 

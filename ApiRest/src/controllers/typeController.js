@@ -1,6 +1,7 @@
 const TypeModel = require("../models/typeModel");
 const { matchedData } = require("express-validator");
 const { handleHttpError } = require('../utils/handleError');
+const ScheduleModel = require("../models/scheduleModel");
 
 const getAllTypes = async (req, res) => {
     try {
@@ -55,6 +56,12 @@ const updateType = async (req, res) => {
 const deleteType = async (req, res) => {
     try {
         const { id } = req.params;
+        const typeExist = await ScheduleModel.findOne({
+            where: { ID_type: id }
+        });
+        if (typeExist) {
+            return res.status(404).json({ error: "TYPE_IN_SCHEDULE" });
+        }
         const type = await TypeModel.destroy({
             where: { ID_type: id }
         });

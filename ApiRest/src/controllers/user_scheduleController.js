@@ -2,6 +2,7 @@ const User_ScheduleModel = require('../models/user_scheduleModel');
 const UserModel = require('../models/userModel');
 const ScheduleModel = require("../models/scheduleModel");
 const ActivityModel = require("../models/activityModel");
+const CampaignModel = require("../models/campaignModel");
 const TypeModel = require("../models/typeModel");
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
@@ -14,7 +15,8 @@ const getAllUser_Schedules = async (req, res) => {
                     model: ScheduleModel,
                     include: [
                         { model: ActivityModel },
-                        { model: TypeModel }
+                        { model: TypeModel },
+                        { model: CampaignModel }
                     ]
                 },
                 { model: UserModel }
@@ -37,7 +39,9 @@ const getUserSchedule = async (req, res) => {
                     model: ScheduleModel,
                     include: [
                         { model: ActivityModel },
-                        { model: TypeModel }
+                        { model: TypeModel },
+                        { model: CampaignModel }
+
                     ]
                 },
                 { model: UserModel }
@@ -61,7 +65,8 @@ const getUsersByScheduleId = async (req, res) => {
                     model: ScheduleModel,
                     include: [
                         { model: ActivityModel },
-                        { model: TypeModel }
+                        { model: TypeModel },
+                        { model: CampaignModel }
                     ]
                 },
                 { model: UserModel }
@@ -90,16 +95,13 @@ const getSchedulesByUserId = async (req, res) => {
                     model: ScheduleModel,
                     include: [
                         { model: ActivityModel },
-                        { model: TypeModel }
+                        { model: TypeModel },
+                        { model: CampaignModel }
                     ]
                 },
                 { model: UserModel }
             ]
         });
-
-        if (user_Schedules.length === 0) {
-            return res.status(404).json({ error: 'No se encontraron horarios para el usuario especificado' });
-        }
 
         res.json(user_Schedules);
     } catch (error) {
@@ -167,6 +169,24 @@ const deleteUserSchedule = async (req, res) => {
     }
 };
 
+const deleteByUserAndSchedule = async (req, res) => {
+    try {
+        const { userId, scheduleId } = req.params;
+
+        await User_ScheduleModel.destroy({
+            where: {
+                UserIDUser: userId,
+                ScheduleIDSchedule: scheduleId
+            }
+        });
+
+        return res.json({ message: 'Registros eliminados correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar registros:', error);
+        return res.status(500).json({ error: 'Error al eliminar registros' });
+    }
+};
+
 module.exports = {
     getAllUser_Schedules: getAllUser_Schedules,
     postUser_Schedule: postUser_Schedule,
@@ -174,5 +194,6 @@ module.exports = {
     getUsersByScheduleId: getUsersByScheduleId,
     getSchedulesByUserId: getSchedulesByUserId,
     deleteUserSchedule: deleteUserSchedule,
-    updateUserSchedule: updateUserSchedule
+    updateUserSchedule: updateUserSchedule,
+    deleteByUserAndSchedule: deleteByUserAndSchedule
 };

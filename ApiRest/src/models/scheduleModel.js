@@ -15,6 +15,11 @@ const ScheduleModel = db.define('Schedule', {
         type: DataTypes.UUID,
         allowNull: false
     },
+    ID_Campaign: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        onDelete: 'CASCADE'
+    },
     Address: {
         type: DataTypes.STRING,
         allowNull: false
@@ -32,7 +37,7 @@ const ScheduleModel = db.define('Schedule', {
         allowNull: false
     },
     Frequency: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('Puntual', 'Semanal'),
         allowNull: false
     },
     StartDate: {
@@ -42,6 +47,13 @@ const ScheduleModel = db.define('Schedule', {
     FinishDate: {
         type: DataTypes.DATEONLY,
         allowNull: false
+    },
+    Capacity: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    Attendance: {
+        type: DataTypes.INTEGER,
     },
 }, {
     freezeTableName: true,
@@ -56,5 +68,3 @@ const ScheduleModel = db.define('Schedule', {
 })();
 
 module.exports = ScheduleModel;
-
-

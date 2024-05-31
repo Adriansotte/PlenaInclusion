@@ -1,6 +1,7 @@
 const ScheduleModel = require('../models/scheduleModel');
 const ActivityModel = require('../models/activityModel');
 const TypeModel = require('../models/typeModel');
+const CampaignModel = require('../models/campaignModel');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
 
@@ -9,7 +10,8 @@ async function getAllSchedules(req, res) {
         const schedules = await ScheduleModel.findAll({
             include: [
                 { model: ActivityModel },
-                { model: TypeModel }
+                { model: TypeModel },
+                { model: CampaignModel }
             ]
         });
         res.json(schedules);
@@ -26,7 +28,8 @@ const getSchedule = async (req, res) => {
         const schedule = await ScheduleModel.findByPk(id, {
             include: [
                 { model: ActivityModel },
-                { model: TypeModel }
+                { model: TypeModel },
+                { model: CampaignModel }
             ]
         });
         res.json(schedule);
@@ -83,10 +86,47 @@ const deleteSchedule = async (req, res) => {
     }
 };
 
+const incrementAttendance = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const schedule = await ScheduleModel.findByPk(id);
+        if (!schedule) {
+            return res.status(404).json({ error: "Schedule not found" });
+        }
+        schedule.Attendance = (schedule.Attendance || 0) + 1;
+        await schedule.save();
+        res.json({ data: schedule });
+    } catch (error) {
+        console.error('Error al incrementar la asistencia:', error);
+        handleHttpError(res, 'ERROR_INCREMENT_ATTENDANCE');
+    }
+};
+
+const decrementAttendance = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const schedule = await ScheduleModel.findByPk(id);
+        if (!schedule) {
+            return res.status(404).json({ error: "Schedule not found" });
+        }
+        if (schedule.Attendance > 0) {
+            schedule.Attendance = schedule.Attendance - 1;
+            await schedule.save();
+            res.json({ data: schedule });
+        } else {
+            res.status(400).json({ error: "Attendance cannot be less than 0" });
+        }
+    } catch (error) {
+        console.error('Error al disminuir la asistencia:', error);
+        handleHttpError(res, 'ERROR_DECREMENT_ATTENDANCE');
+    }
+};
 
 module.exports = {
     getAllSchedules: getAllSchedules,
     postSchedule: postSchedule,
+    incrementAttendance: incrementAttendance,
+    decrementAttendance: decrementAttendance,
     deleteSchedule: deleteSchedule,
     updateSchedule: updateSchedule,
     getSchedule: getSchedule

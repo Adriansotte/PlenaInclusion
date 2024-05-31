@@ -1,5 +1,8 @@
-<form (ngSubmit)="submitForm()" enctype="multipart/form-data" class="needs-validation p-3" novalidate>
+<form (ngSubmit)="submitForm()" enctype="multipart/form-data" class="needs-validation" novalidate>
     <div class="row gy-3">
+        <div class="col-12">
+            <h1 class="text-primary">Inicia Sesión</h1>
+        </div>
         <div class="col-12">
             <div class="input-group">
                 <span class="input-group-text" [ngClass]="{'valid-email': isValidEmail}">
@@ -40,9 +43,19 @@
             </div>
         </div>
         <div class="col">
-            <button type="submit" class="btn btn-primary" [disabled]="!isValidEmail || !isPasswordValid">Iniciar
-                Sesión</button>
+            <button *ngIf="isValidEmail && isPasswordValid" type="submit" class="btn btn-primary">
+                Iniciar Sesión
+            </button>
+            <button *ngIf="!isValidEmail || !isPasswordValid" id="tooltipButton" type="button" class="btn btn-primary"
+                data-bs-toggle="tooltip" data-bs-placement="right" title="Rellena los Campos">
+                Iniciar Sesión
+            </button>
             <div *ngIf="loginError" class="alert alert-danger mt-2">{{ loginError }}</div>
+        </div>
+        <div class="col-12">
+            <a href="#" id="registerTooltip" (click)="goToRegister($event)">¿No tienes
+                cuenta? Haz click aqui.</a>
+
         </div>
     </div>
 </form>

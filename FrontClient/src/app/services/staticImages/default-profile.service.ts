@@ -10,12 +10,26 @@ import { environments } from 'src/environments/environments';
 export class DefaultProfileService {
 
   url: string = environments.baseUrl
-  defaultProfileImage : string = environments.defautlProfileImage
+  defaultProfileImage: string = environments.defautlProfileImage;
+  noAvtivityImage: string = environments.noActivityImage;
+  plenaInlcusionLogp: string = environments.plenaInlcusionLogo;
 
   constructor(private http: HttpClient) { }
 
   getDefaultProfileImage(): Observable<string> {
     return this.http.get<any>(`${this.url}/api/storage/${this.defaultProfileImage}`).pipe(
+      map((response: any) => response.data.url)
+    );
+  }
+
+  getNoActivityImage(): Observable<string> {
+    return this.http.get<any>(`${this.url}/api/storage/${this.noAvtivityImage}`).pipe(
+      map((response: any) => response.data.url)
+    );
+  }
+
+  getPlenaInclusionLogo(): Observable<string> {
+    return this.http.get<any>(`${this.url}/api/storage/${this.plenaInlcusionLogp}`).pipe(
       map((response: any) => response.data.url)
     );
   }

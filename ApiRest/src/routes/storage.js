@@ -3,7 +3,6 @@ const router = express.Router();
 const uploadMiddleware = require("../utils/handleStorage");
 const { createItem, getItems, getItem, deleteItem } = require("../controllers/storageController");
 const { validatorGetItem } = require("../valdiators/storages")
-// const { authMiddleware } = require("../middlewares/session")
 
 router.get("/", getItems);
 
