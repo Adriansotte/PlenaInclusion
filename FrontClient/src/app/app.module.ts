@@ -33,6 +33,9 @@ import { CampagneModalComponent } from './components/shared/campagne-modal/campa
 import { AddCampagneComponent } from './components/shared/add-campagne/add-campagne.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 import { SuccessModalComponent } from './components/shared/success-modal/success-modal.component';
+import { ManageTypesComponent } from './components/pages/manage-types/manage-types.component';
+import { TypeModalComponent } from './components/shared/type-modal/type-modal.component';
+import { AddTypeComponent } from './components/shared/add-type/add-type.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -62,7 +65,10 @@ registerLocaleData(localeEs, 'es');
     CampagneModalComponent,
     AddCampagneComponent,
     ConfirmationModalComponent,
-    SuccessModalComponent
+    SuccessModalComponent,
+    ManageTypesComponent,
+    TypeModalComponent,
+    AddTypeComponent
   ],
   imports: [
     BrowserModule,

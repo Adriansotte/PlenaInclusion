@@ -16,4 +16,17 @@ export class TypeService {
   getAllTypes(): Observable<typeDTO[]> {
     return this.http.get<typeDTO[]>(`${this.url}/api/types`);
   }
+
+  addType(type: typeDTO): Observable<any> {
+    return this.http.post<any>(`${this.url}/api/types`, type);
+  }
+
+  deleteType(idType: string): Observable<any> {
+    return this.http.delete<typeDTO>(`${this.url}/api/types/${idType}`);
+  }
+
+  updateType(type: typeDTO): Observable<any> {
+    const { ID_type, ...bodyType } = type;
+    return this.http.put<typeDTO>(`${this.url}/api/types/${ID_type}`, bodyType);
+  }
 }
