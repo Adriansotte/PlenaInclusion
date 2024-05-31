@@ -11,22 +11,16 @@ const UserModel = require('../models/userModel');
  */
 const registerController = async (req, res) => {
     try {
-        // Acceso a los datos del formulario
         const formData = req.body;
 
-        // Acceso al archivo subido
         const file = req.file;
 
-        // Verifica si se ha enviado un archivo
         if (file) {
-            // Si hay un archivo, agrega su nombre al objeto formData
             formData.Photo = file.filename;
         }
 
-        // Encripta la contraseña
         const Pass = await encrypt(formData.Pass);
 
-        // Crea el objeto de datos del usuario
         const userData = {
             DNI: formData.DNI,
             Rol: formData.Rol,
@@ -42,16 +36,12 @@ const registerController = async (req, res) => {
             BirthDay: formData.BirthDay
         };
 
-        // Crea el usuario en la base de datos
         const newUser = await UserModel.create(userData);
 
-        // Oculta la contraseña antes de enviarla en la respuesta
         newUser.set('Pass', undefined, { strict: false });
 
-        // Genera un token de sesión para el usuario
         const token = await tokenSign(newUser);
 
-        // Envía la respuesta con el token y los datos del usuario
         res.status(201).json({ token, user: newUser });
     } catch (error) {
         console.error("Error al registrar usuario:", error);
@@ -67,16 +57,13 @@ const registerController = async (req, res) => {
 const loginController = async (req, res) => {
     try {
         const formData = req.body;
-        console.log('Form Data:', formData);
-
-        // Verifica que los datos validados no estén vacíos
         if (!formData.Email || !formData.Pass) {
             handleHttpError(res, "VALIDATION_ERROR", 400);
             return;
         }
 
         const user = await UserModel.findOne({ where: { Email: formData.Email } });
-        console.log('User:', user); // Depuración: Verifica que el usuario se encuentra
+        console.log('User:', user);
 
         if (!user) {
             handleHttpError(res, "USER_NOT_FOUND", 404);
@@ -84,8 +71,7 @@ const loginController = async (req, res) => {
         }
 
         const hashPassword = user.Pass;
-        const check = await compare(formData.Pass, hashPassword); // Usa formData en lugar de req.body directamente
-        console.log('Password Check:', check); // Depuración: Verifica el resultado de la comparación de contraseñas
+        const check = await compare(formData.Pass, hashPassword);
 
         if (!check) {
             handleHttpError(res, "INVALID_PASSWORD", 401);
@@ -103,5 +89,19 @@ const loginController = async (req, res) => {
         handleHttpError(res, "ERROR_LOGGIN_USER");
     }
 };
+
+const loginFromGoogle = async (req, res) => {
+    try {
+        const body = matchedData(req);
+        const data = UserModel.findOne({
+            where: { Email: body.Email }
+        })
+        if (data) {
+
+        }
+    } catch (error) {
+
+    }
+}
 
 module.exports = { loginController, registerController }

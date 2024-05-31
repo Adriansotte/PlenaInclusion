@@ -1,3 +1,4 @@
+import { AUTO_STYLE } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { environments } from 'src/environments/environments';
 
@@ -24,7 +25,7 @@ export class GoogleAuthBtnComponent implements OnInit {
         theme: 'filled_blue',
         size: 'large',
         shape: 'rectangle',
-        width: 350
+        width: AUTO_STYLE
       }
     );
   }
@@ -46,8 +47,4 @@ export class GoogleAuthBtnComponent implements OnInit {
     }
   }
 
-  // handleCredentialResponse(response: any) {
-  //   console.log('Encoded JWT ID token: ' + response.credential);
-  //   // Aquí puedes manejar la respuesta del token, por ejemplo, enviarlo a tu backend para verificarlo
-  // }
 }
