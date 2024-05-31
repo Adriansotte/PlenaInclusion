@@ -67,16 +67,25 @@
     </div>
 </div>
 
-
-<div class="row">
-    <div *ngIf="filteredSchedules.length === 0" class="col-12 text-center">
-        <app-no-activity-found></app-no-activity-found>
+<div class="text-center" *ngIf="loading == true; else schedules">
+    <div class="spinner-border text-center" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
     </div>
-    <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let userSchedule of filteredSchedules">
-        <app-user-schedule-card [userSchedule]="userSchedule"
-            (userScehduleClicked)="onUserScehduleClicked($event)"></app-user-schedule-card>
-    </div>
+    <h1 class="text-primary">Cargando Actividades</h1>
 </div>
+<ng-template #schedules>
+    <div class="row">
+        <div *ngIf="filteredSchedules.length === 0" class="col-12 text-center">
+            <app-no-activity-found></app-no-activity-found>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let userSchedule of filteredSchedules">
+            <app-user-schedule-card [userSchedule]="userSchedule"
+                (userScehduleClicked)="onUserScehduleClicked($event)"></app-user-schedule-card>
+        </div>
+    </div>
+
+</ng-template>
+
 
 <app-user-schedule-modal [userSchedule]="selectedUserSchedule"
     (scheduleChange)="handleScheduleChange()"></app-user-schedule-modal>

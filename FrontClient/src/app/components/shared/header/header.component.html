@@ -1,7 +1,7 @@
 <nav class="navbar navbar-dark bg-primary fixed-top custom-navbar-height py-2">
     <div class="container-fluid">
         <div class="col-auto">
-            <img src="http://localhost:3000/file-1716147884401.png" alt="Logo" class="ms-5" style="height: 60px;">
+            <img src={{plenaInclusionLogo}} alt="Logo" class="ms-5" style="height: 60px;">
         </div>
         <div class="col d-flex justify-content-center align-items-center d-none d-md-flex">
             <button *ngIf="role != null" class="btn btn-warning mx-2" type="button"
@@ -20,13 +20,36 @@
         </div>
         <div class="offcanvas offcanvas-end bg-success-subtle" tabindex="-1" id="offcanvasDarkNavbar"
             aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Panel de Control</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
+            <div class="offcanvas-header bg-primary d-flex justify-content-between" style="height: 80px;">
+                <div class="col-auto">
+                    <img src={{plenaInclusionLogo}} alt="Logo" class="" style="height: 60px;">
+
+                </div>
+                <div class="col-auto">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Panel de Control</h5>
+
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+
+                </div>
             </div>
             <div class="offcanvas-body">
-                <p>hola</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-action" data-bs-dismiss="offcanvas"
+                        (click)="navigateToManageA()">
+                        Gestión de Actividades
+                    </li>
+                    <li class="list-group-item list-group-item-action" data-bs-dismiss="offcanvas"
+                        (click)="navigateToManageC()">
+                        Gestión de Campañas
+                    </li>
+                    <li class="list-group-item list-group-item-action" data-bs-dismiss="offcanvas"
+                        (click)="navigateToManageT()">
+                        Gestión de Tipos de Actividades
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

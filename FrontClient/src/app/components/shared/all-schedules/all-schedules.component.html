@@ -1,6 +1,7 @@
 <div class="row justify-content-center my-3">
     <div class="col-auto">
         <h1 class="text-primary shadow p-3 bg-body-tertiary rounded">Actividades Disponibles</h1>
+
     </div>
 </div>
 <div class="row mb-3 g-2">
@@ -87,17 +88,27 @@
     </div>
 </div>
 
-<div class="row" *ngIf="filteredSchedules && filteredSchedules.length > 0; else noSchedules">
-    <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let schedule of filteredSchedules">
-        <app-schedule-card [schedule]="schedule" [isUserRegistered]="isUserRegistered(schedule?.ID_Schedule)"
-            (scheduleClicked)="onScheduleClicked($event)"></app-schedule-card>
+<div class="text-center" *ngIf="loading == true; else schedules">
+    <div class="spinner-border text-center" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
     </div>
+    <h1 class="text-primary">Cargando Actividades</h1>
 </div>
-<div class="row justify-content-center text-center">
-    <ng-template #noSchedules>
-        <app-no-activity-found></app-no-activity-found>
-    </ng-template>
-</div>
+
+<ng-template #schedules>
+
+    <div class="row" *ngIf="filteredSchedules && filteredSchedules.length > 0; else noSchedules">
+        <div class="col-12 col-md-6 col-lg-4 p-2" *ngFor="let schedule of filteredSchedules">
+            <app-schedule-card [schedule]="schedule" [isUserRegistered]="isUserRegistered(schedule?.ID_Schedule)"
+                (scheduleClicked)="onScheduleClicked($event)"></app-schedule-card>
+        </div>
+    </div>
+    <div class="row justify-content-center text-center">
+        <ng-template #noSchedules>
+            <app-no-activity-found></app-no-activity-found>
+        </ng-template>
+    </div>
+</ng-template>
 
 
 

@@ -29,6 +29,8 @@ export class AllSchedulesComponent implements OnInit {
   showRegistered: boolean = false;
   showNotRegistered: boolean = false;
 
+  loading: boolean = true;
+
   constructor(private allSchedulesService: AllSchedulesService,
     private userScheduleService: UserScheduleService,
     private typeService: TypeService) { }
@@ -60,6 +62,9 @@ export class AllSchedulesComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error fetching schedules:', error);
+      },
+      complete: () => {
+        this.loading = false;
       }
     });
   }

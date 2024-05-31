@@ -25,6 +25,8 @@ export class UserSchedulesComponent implements OnInit {
   showNotRegistered: boolean = false;
   selectedUserSchedule: userScheduleDTO | null = null;
 
+  loading: boolean = true;
+
   constructor(private userScheduleService: UserScheduleService,
     private typeService: TypeService) { }
 
@@ -42,11 +44,14 @@ export class UserSchedulesComponent implements OnInit {
     this.userScheduleService.listSchedulesByUser(sessionStorage.getItem('ID_User')).subscribe({
       next: (data: userScheduleDTO[]) => {
         this.userSchedules = data;
-        this.applyFilter(); // Apply initial filter
+        this.applyFilter();
         console.log(data);
       },
       error: (error: any) => {
         console.error("Error al conseguir las actividades del usuario:", error);
+      },
+      complete: () => {
+        this.loading = false;
       }
     });
   }

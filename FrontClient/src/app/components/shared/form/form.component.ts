@@ -143,7 +143,6 @@ export class FormComponent implements OnInit {
     console.log('El valor del campo de entrada ha cambiado:', value);
   }
 
-  // Función que valida el nombre y actualiza isNameEntered
   isValidName(value: string): boolean {
     const regex = /^[a-zA-Z\s]+$/;
     const isValid = regex.test(value.trim());
@@ -151,8 +150,6 @@ export class FormComponent implements OnInit {
     return isValid;
   }
 
-
-  // Función que valida el primer apellido y actualiza isSurname1Entered
   isValidSurname1(value: string): boolean {
     const regex = /^[a-zA-Z\s]+$/;
     const isValid = regex.test(value.trim());
@@ -160,7 +157,6 @@ export class FormComponent implements OnInit {
     return isValid;
   }
 
-  // Función que valida el segundo apellido y actualiza isSurname2Entered
   isValidSurname2(value: string): boolean {
     const regex = /^[a-zA-Z\s]+$/;
     const isValid = regex.test(value.trim());
@@ -173,8 +169,6 @@ export class FormComponent implements OnInit {
     return regex.test(value.trim());
   }
 
-
-
   onEmailChange(value: string) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]/;
     if (emailRegex.test(value)) {
@@ -184,8 +178,6 @@ export class FormComponent implements OnInit {
     }
   }
 
-
-  // Función para validar la contraseña y actualizar isPasswordValid
   isValidPassword(value: string): void {
     this.isPasswordValid = value.length >= 5 && value.length <= 20;
   }
@@ -195,18 +187,15 @@ export class FormComponent implements OnInit {
     this.confirmPassValid = this.passwordsMatch && this.user.ConfirmPass !== '';
   }
 
-
   isValidInputAdress(value: string): boolean {
     const regex = /^[a-zA-Z0-9\s]+$/;
     this.isValidAdress = regex.test(value.trim());
     return this.isValidAdress;
   }
 
-  // Función que se llama cuando se cambia el valor de la dirección
   onAddressInputChange(value: string): void {
     this.isValidInputAdress(value);
   }
-
 
   isValidInputPhone(value: string): boolean {
     const regex = /^[0-9]{9}$/;
@@ -214,7 +203,6 @@ export class FormComponent implements OnInit {
     return this.isValidPhone;
   }
 
-  // Función que se llama cuando se cambia el valor del teléfono
   onPhoneInputChange(value: string): void {
     this.isValidInputPhone(value);
   }
