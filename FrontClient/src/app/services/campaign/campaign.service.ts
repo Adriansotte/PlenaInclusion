@@ -25,4 +25,9 @@ export class CampaignService {
     return this.http.delete<CampaignDTO>(`${this.url}/api/campaigns/${idCampaign}`);
   }
 
+  updateCampaign(campaign: CampaignDTO) {
+    const { ID_Campaign, ...campaignBody } = campaign;
+    return this.http.put<CampaignDTO>(`${this.url}/api/campaigns/${ID_Campaign}`, campaignBody);
+  }
+
 }

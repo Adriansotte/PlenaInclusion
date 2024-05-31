@@ -38,6 +38,21 @@ export class CampagneModalComponent {
     })
   }
 
+  updateCampagne() {
+    this.campaignService.updateCampaign(this.selectedCampaign!).subscribe({
+      next: response => {
+        this.adviceTitle = "Campaña actualizada correctamente!!!";
+      },
+      error: (error: any) => {
+        console.log(error)
+      },
+      complete: () => {
+        this.campaignsChange.emit();
+        this.openAdviceModal();
+      }
+    })
+  }
+
   openConfirmationModal() {
     const modalElement = document.getElementById('confirmationModal');
     if (modalElement) {
