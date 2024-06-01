@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { registerUserDTO } from 'src/app/models/user/createUserDTO';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { RegisterService } from 'src/app/services/register/register.service';
 import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
 
@@ -31,7 +32,9 @@ export class FormComponent implements OnInit {
 
   constructor(private registerService: RegisterService,
     private defaultProfileService: DefaultProfileService,
-    private router: Router) { }
+    private router: Router,
+    private authService: AuthService,
+  ) { }
 
 
   ngOnInit(): void {
@@ -75,14 +78,12 @@ export class FormComponent implements OnInit {
   submitForm(): void {
     this.registerService.registerUser(this.user, this.Photo).subscribe({
       next: (response) => {
+        console.log(response)
         if (response && response.token && response.user) {
-          sessionStorage.setItem('token', response.data.token);
-          sessionStorage.setItem('ID_User', response.data.user.ID_user);
-          sessionStorage.setItem('Email', response.data.user.Email);
-          sessionStorage.setItem('Name', response.data.user.Name);
-          sessionStorage.setItem('Surname_1', response.data.user.Surname_1);
-          sessionStorage.setItem('Surname_2', response.data.user.Surname_2);
-          sessionStorage.setItem('Rol', response.data.user.Rol);
+          sessionStorage.setItem('token', response.token);
+          sessionStorage.setItem("user", JSON.stringify(response.user));
+
+          this.authService.setRole(response.user.Rol);
         }
       },
       error: (error) => {
@@ -136,11 +137,6 @@ export class FormComponent implements OnInit {
     } else {
       this.isValidDate = true;
     }
-  }
-
-
-  onInputChange(value: string) {
-    console.log('El valor del campo de entrada ha cambiado:', value);
   }
 
   isValidName(value: string): boolean {

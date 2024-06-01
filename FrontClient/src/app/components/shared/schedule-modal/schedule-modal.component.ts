@@ -24,7 +24,7 @@ export class ScheduleModalComponent {
   ) { }
   deleteForSchedule() {
     if (this.schedule) {
-      const userId = sessionStorage.getItem('ID_User');
+      const userId = JSON.parse(sessionStorage.getItem("user")!).ID_User;
       if (userId) {
         const scheduleId = this.schedule.ID_Schedule;
         this.deleteRegistation();
@@ -39,7 +39,7 @@ export class ScheduleModalComponent {
 
   registerForSchedule() {
     if (this.schedule) {
-      const userId = sessionStorage.getItem('ID_User');
+      const userId = JSON.parse(sessionStorage.getItem("user")!).ID_User;
       if (userId) {
         const scheduleId = this.schedule.ID_Schedule;
         this.calcularFechas();
@@ -83,7 +83,7 @@ export class ScheduleModalComponent {
 
 
   deleteRegistation(): void {
-    const userid = sessionStorage.getItem("ID_User");
+    const userid = JSON.parse(sessionStorage.getItem("user")!).ID_User;
     this.userScheduleService.deleteRegistation(userid!, this.schedule?.ID_Schedule!).subscribe({
       next: response => {
         console.log('Borrado exitoso', response);

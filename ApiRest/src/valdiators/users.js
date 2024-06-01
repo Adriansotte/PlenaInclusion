@@ -4,9 +4,9 @@ const validateResults = require("../utils/handleValidator");
 const validatorCreateUser = [
     check("DNI").exists().notEmpty().isString(),
     check("Rol").exists().notEmpty().isIn(['Nominal', 'Monitor', 'Administrador']),
-    check("Name").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
-    check("Surname_1").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
-    check("Surname_2").exists().notEmpty().isString().isLength({ min: 3, max: 99 }),
+    check("Name").exists().notEmpty().isString().isLength({ min: 1, max: 99 }),
+    check("Surname_1").exists().notEmpty().isString().isLength({ min: 1, max: 99 }),
+    check("Surname_2").exists().notEmpty().isString().isLength({ min: 1, max: 99 }),
     check("Email").exists().notEmpty().isEmail(),
     check("Pass").exists().notEmpty().isString(),
     check("Photo").optional().isString(),
