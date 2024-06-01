@@ -41,13 +41,14 @@ export class UserSchedulesComponent implements OnInit {
   }
 
   handleUserSchedules(): void {
-    this.userScheduleService.listSchedulesByUser(sessionStorage.getItem('ID_User')).subscribe({
+    this.userScheduleService.listSchedulesByUser(JSON.parse(sessionStorage.getItem("user")!).ID_User).subscribe({
       next: (data: userScheduleDTO[]) => {
         this.userSchedules = data;
         this.applyFilter();
         console.log(data);
       },
       error: (error: any) => {
+        this.loading = false;
         console.error("Error al conseguir las actividades del usuario:", error);
       },
       complete: () => {

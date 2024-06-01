@@ -1,5 +1,7 @@
 import { AUTO_STYLE } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginService } from 'src/app/services/login/login.service';
 import { environments } from 'src/environments/environments';
 
@@ -14,7 +16,10 @@ export class GoogleAuthBtnComponent implements OnInit {
 
   client_id: string = environments.client_id;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     google.accounts.id.initialize({
@@ -50,9 +55,16 @@ export class GoogleAuthBtnComponent implements OnInit {
       this.loginService.googleLogin(payload).subscribe({
         next: (response: any) => {
           console.log(response)
+          sessionStorage.setItem("user", JSON.stringify(response.user));
+          sessionStorage.setItem("token", response.token);
+          this.authService.setRole(response.data.user.Rol);
+
         },
         error: (error: any) => {
           console.log(error)
+        },
+        complete: () => {
+          this.router.navigate(['home']);
         }
       })
     }

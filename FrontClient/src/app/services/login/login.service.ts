@@ -27,19 +27,26 @@ export class LoginService {
   }
 
   googleLogin(user: any) {
+    const generateRandomNineDigitNumber = () => {
+      const min = 100000000;
+      const max = 999999999;
+      return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
+    };
+
     const body = {
+      DNI: generateRandomNineDigitNumber(),
       Email: user.email,
       Name: user.given_name,
       Surname_1: user.family_name,
       Photo: user.picture,
       Rol: 'Nominal'
-    }
+    };
+
     return this.http.post<any>(`${this.url}/api/auth/googleLogin`, body).pipe(
       tap(response => {
         const userRole = response.user.Rol;
-        this.authService.setRole(userRole)
+        this.authService.setRole(userRole);
       })
-    )
-
+    );
   }
 }

@@ -70,7 +70,7 @@ export class AllSchedulesComponent implements OnInit {
   }
 
   handleUserSchedules(): void {
-    this.userScheduleService.listSchedulesByUser(sessionStorage.getItem('ID_User')).subscribe({
+    this.userScheduleService.listSchedulesByUser(JSON.parse(sessionStorage.getItem("user")!).ID_User).subscribe({
       next: (data: userScheduleDTO[]) => {
         this.userSchedules = data;
       },
