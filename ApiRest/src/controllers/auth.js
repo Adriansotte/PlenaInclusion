@@ -29,7 +29,7 @@ const registerController = async (req, res) => {
             Surname_2: formData.Surname_2,
             Email: formData.Email,
             Pass: Pass,
-            Photo: `${process.env.DATABASEIP}:${process.env.PORT}/${formData.Photo}`,
+            Photo: `http://${process.env.DATABASEIP}:${process.env.PORT}/${formData.Photo}`,
             DNI_tutor: formData.DNI_tutor,
             Adress: formData.Adress,
             Phone: formData.Phone,
@@ -63,7 +63,6 @@ const loginController = async (req, res) => {
         }
 
         const user = await UserModel.findOne({ where: { Email: formData.Email } });
-        console.log('User:', user);
 
         if (!user) {
             handleHttpError(res, "USER_NOT_FOUND", 404);
@@ -92,16 +91,35 @@ const loginController = async (req, res) => {
 
 const loginFromGoogle = async (req, res) => {
     try {
-        const body = matchedData(req);
-        const data = UserModel.findOne({
+        const body = req.body;
+        // Revisar aqui los datos del body
+        console.log(body);
+
+        const data = await UserModel.findOne({
             where: { Email: body.Email }
-        })
+        });
+
         if (data) {
-
+            const returningData = {
+                token: await tokenSign(data),
+                user: data
+            };
+            return res.send(returningData);
         }
+
+        const newUser = await UserModel.create(body);
+        console.log(newUser)
+
+        const token = await tokenSign(newUser);
+        console.log(token)
+
+        return res.status(201).json({ token, user: newUser.dataValues });
+
     } catch (error) {
-
+        console.log(error);
+        handleHttpError(res, "ERROR_LOGGING_USER");
     }
-}
+};
 
-module.exports = { loginController, registerController }
+
+module.exports = { loginController, registerController, loginFromGoogle }

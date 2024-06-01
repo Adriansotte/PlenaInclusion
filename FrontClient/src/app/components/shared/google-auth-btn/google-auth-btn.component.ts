@@ -1,5 +1,6 @@
 import { AUTO_STYLE } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/services/login/login.service';
 import { environments } from 'src/environments/environments';
 
 declare var google: any;
@@ -10,7 +11,10 @@ declare var google: any;
   styleUrls: ['./google-auth-btn.component.css']
 })
 export class GoogleAuthBtnComponent implements OnInit {
+
   client_id: string = environments.client_id;
+
+  constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
     google.accounts.id.initialize({
@@ -43,7 +47,14 @@ export class GoogleAuthBtnComponent implements OnInit {
   handleLoggin(credential: any) {
     if (credential) {
       const payload = this.decodeToken(credential);
-      console.log(payload);
+      this.loginService.googleLogin(payload).subscribe({
+        next: (response: any) => {
+          console.log(response)
+        },
+        error: (error: any) => {
+          console.log(error)
+        }
+      })
     }
   }
 

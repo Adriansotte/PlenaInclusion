@@ -25,4 +25,21 @@ export class LoginService {
       })
     );
   }
+
+  googleLogin(user: any) {
+    const body = {
+      Email: user.email,
+      Name: user.given_name,
+      Surname_1: user.family_name,
+      Photo: user.picture,
+      Rol: 'Nominal'
+    }
+    return this.http.post<any>(`${this.url}/api/auth/googleLogin`, body).pipe(
+      tap(response => {
+        const userRole = response.user.Rol;
+        this.authService.setRole(userRole)
+      })
+    )
+
+  }
 }

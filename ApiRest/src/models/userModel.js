@@ -10,7 +10,7 @@ const UserModel = db.define('User', {
     },
     DNI: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     Rol: {
@@ -27,7 +27,7 @@ const UserModel = db.define('User', {
     },
     Surname_2: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     Email: {
         type: DataTypes.STRING,
@@ -36,7 +36,7 @@ const UserModel = db.define('User', {
     },
     Pass: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         // No se puede enviar como valor en un select, para más seguridad
         select: false
     },
@@ -49,15 +49,15 @@ const UserModel = db.define('User', {
     },
     Adress: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     Phone: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     BirthDay: {
         type: DataTypes.DATE,
-        allowNull: true // Ajusta esto según tus requerimientos
+        allowNull: true
     }
 }, {
     freezeTableName: true,

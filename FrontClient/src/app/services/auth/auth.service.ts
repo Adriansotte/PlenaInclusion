@@ -23,4 +23,5 @@ export class AuthService {
   getRole(): string | null {
     return sessionStorage.getItem('Rol');
   }
+
 }
