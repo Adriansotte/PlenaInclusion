@@ -54,10 +54,9 @@ export class GoogleAuthBtnComponent implements OnInit {
       const payload = this.decodeToken(credential);
       this.loginService.googleLogin(payload).subscribe({
         next: (response: any) => {
-          console.log(response)
           sessionStorage.setItem("user", JSON.stringify(response.user));
           sessionStorage.setItem("token", response.token);
-          this.authService.setRole(response.data.user.Rol);
+          this.authService.setRole(response.user.Rol);
 
         },
         error: (error: any) => {
