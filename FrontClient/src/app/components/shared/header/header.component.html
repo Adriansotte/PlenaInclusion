@@ -10,7 +10,8 @@
                 (click)="navigateToUserSchedules()">Mis Actividades</button>
             <button *ngIf="role == 'Monitor' || role == 'Administrador'" class="btn btn-warning mx-2" type="button">Ver
                 Usuarios</button>
-            <button *ngIf="role != null" class="btn btn-danger mx-2" type="button" (click)="signOut()">Cerrar
+            <button *ngIf="role != null" class="btn btn-danger mx-2" type="button" data-bs-toggle="modal"
+                data-bs-target="#cerrarSesionModal">Cerrar
                 Sesión</button>
         </div>
         <div class="col-auto" *ngIf="role == 'Administrador'">
@@ -56,3 +57,23 @@
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="cerrarSesionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="staticBackdropLabel">Sesión</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estas seguro de cerrar sesión?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="signOut()"
+                    data-bs-toggle="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
