@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LoginService } from 'src/app/services/login/login.service';
 import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private router: Router,
-    private defaultProfileService: DefaultProfileService
+    private defaultProfileService: DefaultProfileService,
+    private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
@@ -58,5 +60,9 @@ export class HeaderComponent implements OnInit {
 
   navigateToManageT() {
     this.router.navigate(['/manageT']);
+  }
+
+  signOut() {
+    this.authService.signOut();
   }
 }

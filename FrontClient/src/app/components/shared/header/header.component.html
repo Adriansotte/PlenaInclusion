@@ -10,6 +10,8 @@
                 (click)="navigateToUserSchedules()">Mis Actividades</button>
             <button *ngIf="role == 'Monitor' || role == 'Administrador'" class="btn btn-warning mx-2" type="button">Ver
                 Usuarios</button>
+            <button *ngIf="role != null" class="btn btn-danger mx-2" type="button" (click)="signOut()">Cerrar
+                Sesión</button>
         </div>
         <div class="col-auto" *ngIf="role == 'Administrador'">
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
