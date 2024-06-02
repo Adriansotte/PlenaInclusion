@@ -3,6 +3,7 @@ import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 import { getWeeklyAttendanceDates } from '../../../../utils/getWeeklyAttendanceDates';
 import { AllSchedulesService } from 'src/app/services/schedules/listSchedules/all-schedules.service';
+import { userScheduleDTO } from 'src/app/models/userSchedule/userScheduleDTO';
 
 declare var bootstrap: any;
 
@@ -18,13 +19,42 @@ export class ScheduleModalComponent {
   @Output() scheduleChange: EventEmitter<void> = new EventEmitter<void>();
 
   fechas: string[] = [];
+  userSchedules: userScheduleDTO[] = [];
+
+  media: number = 0;
 
   constructor(private userScheduleService: UserScheduleService,
     private scheduleService: AllSchedulesService
   ) { }
+
+  getCommentsbyScheduleId() {
+    this.userScheduleService.listScheduleBySchedule(this.schedule?.ID_Schedule!).subscribe({
+      next: (response: userScheduleDTO[]) => {
+        console.log(response);
+        this.userSchedules = response.filter(userSchedule => userSchedule.Comment && userSchedule.Comment.trim().length > 0);
+        this.media = this.mediaScore();
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+  }
+
+  mediaScore() {
+    if (this.userSchedules.length > 0) {
+      const totalScore = this.userSchedules.reduce((sum, userSchedule) => sum + userSchedule.Rating, 0);
+      const averageScore = totalScore / this.userSchedules.length;
+      return averageScore;
+    } else {
+      console.log('No hay comentarios para calcular la nota media.');
+      return 0;
+    }
+  }
+
+
   deleteForSchedule() {
     if (this.schedule) {
-      const userId = JSON.parse(sessionStorage.getItem("user")!).ID_User;
+      const userId = JSON.parse(sessionStorage.getItem("user")!).ID_user;
       if (userId) {
         const scheduleId = this.schedule.ID_Schedule;
         this.deleteRegistation();
@@ -39,7 +69,7 @@ export class ScheduleModalComponent {
 
   registerForSchedule() {
     if (this.schedule) {
-      const userId = JSON.parse(sessionStorage.getItem("user")!).ID_User;
+      const userId = JSON.parse(sessionStorage.getItem("user")!).ID_user;
       if (userId) {
         const scheduleId = this.schedule.ID_Schedule;
         this.calcularFechas();
@@ -83,7 +113,7 @@ export class ScheduleModalComponent {
 
 
   deleteRegistation(): void {
-    const userid = JSON.parse(sessionStorage.getItem("user")!).ID_User;
+    const userid = JSON.parse(sessionStorage.getItem("user")!).ID_user;
     this.userScheduleService.deleteRegistation(userid!, this.schedule?.ID_Schedule!).subscribe({
       next: response => {
         console.log('Borrado exitoso', response);
@@ -140,5 +170,14 @@ export class ScheduleModalComponent {
       }
     }
     this.deleteForSchedule();
+  }
+
+  viewComments(): void {
+    this.getCommentsbyScheduleId();
+    const modalElement = document.getElementById('commentModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 }

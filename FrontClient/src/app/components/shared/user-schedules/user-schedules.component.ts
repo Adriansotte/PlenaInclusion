@@ -41,7 +41,7 @@ export class UserSchedulesComponent implements OnInit {
   }
 
   handleUserSchedules(): void {
-    this.userScheduleService.listSchedulesByUser(JSON.parse(sessionStorage.getItem("user")!).ID_User).subscribe({
+    this.userScheduleService.listSchedulesByUser(JSON.parse(sessionStorage.getItem("user")!).ID_user).subscribe({
       next: (data: userScheduleDTO[]) => {
         this.userSchedules = data;
         this.applyFilter();
