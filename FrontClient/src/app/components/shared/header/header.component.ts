@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService,
     private router: Router,
     private defaultProfileService: DefaultProfileService,
-    private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
@@ -62,7 +61,4 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/manageT']);
   }
 
-  signOut() {
-    this.authService.signOut();
-  }
 }
