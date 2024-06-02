@@ -1,9 +1,7 @@
 <div class="card bg-warning-subtle shadow-lg rounded" style="width: 18rem;">
-    <!-- Encabezado -->
     <div class="card-header text-center">
         <h4 class="mb-0">¡¡¡Bienvenido!!!</h4>
     </div>
-    <!-- Cuerpo -->
     <div class="card-body text-center">
         <img [src]="userProfile?.Photo" class="card-img-top rounded-circle mb-3"
             style="width: 100px; height: 100px; object-fit: cover;" alt="Foto de perfil">
@@ -11,13 +9,15 @@
         </h5>
         <p class="card-text mb-2"><cite>{{userProfile?.Email}}</cite></p>
     </div>
-    <!-- Pie -->
     <div class="card-footer d-flex justify-content-between">
-        <button type="button" class="btn btn-outline-success w-100 me-2">Ver Perfil</button>
+        <button type="button" class="btn btn-outline-success w-100 me-2" (click)="userProfileModal()">Ver
+            Perfil</button>
         <button type="button" class="btn btn-outline-warning w-100" data-bs-toggle="modal"
             data-bs-target="#cerrarSesionModal">Cerrar Sesión</button>
     </div>
 </div>
+
+<app-user-info-modal [selectedUser]="userProfile"></app-user-info-modal>
 
 <div class="modal fade" id="cerrarSesionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">

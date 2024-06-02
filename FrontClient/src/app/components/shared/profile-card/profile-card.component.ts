@@ -3,6 +3,8 @@ import { UserDTO } from 'src/app/models/user/userDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-profile-card',
   templateUrl: './profile-card.component.html',
@@ -10,7 +12,7 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class ProfileCardComponent implements OnInit {
 
-  userProfile: UserDTO | undefined = undefined;
+  userProfile: UserDTO | null = null;
 
   constructor(private userService: UserService,
     private authService: AuthService
@@ -21,6 +23,7 @@ export class ProfileCardComponent implements OnInit {
     this.userService.getUserById(userId).subscribe({
       next: (response: UserDTO) => {
         this.userProfile = response;
+        console.log(response)
       },
       error: (error: any) => {
         console.log(error)
@@ -30,6 +33,14 @@ export class ProfileCardComponent implements OnInit {
 
   signOut() {
     this.authService.signOut();
+  }
+
+  userProfileModal(): void {
+    const modalElement = document.getElementById('userProfileModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 
 }

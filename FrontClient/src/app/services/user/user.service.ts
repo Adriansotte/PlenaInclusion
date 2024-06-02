@@ -16,4 +16,18 @@ export class UserService {
   getUserById(userId: string): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${this.url}/api/users/${userId}`);
   }
+
+  updateUser(user: UserDTO, file: File): Observable<UserDTO> {
+    const formData = new FormData();
+    formData.append('DNI', user.DNI!);
+    formData.append('Adress', user.Adress!);
+    formData.append('DNI_tutor', user.DNI_tutor!);
+    formData.append('Phone', user.Phone!);
+    formData.append('Surname_2', user.Surname_2!);
+
+    if (file) {
+      formData.append('Photo', file);
+    }
+    return this.http.put<UserDTO>(`${this.url}/api/users/${user.ID_user}`, formData);
+  }
 }

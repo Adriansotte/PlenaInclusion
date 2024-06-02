@@ -36,15 +36,22 @@ const postUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const body = matchedData(req, { onlyValidData: true });
+        const formData = req.body;
+        const file = req.file;
+
+        if (file) {
+            formData.Photo = `http://${process.env.DATABASEIP}:${process.env.PORT}/${file.filename}`;
+        }
+
         const userBeforeUpdate = await UserModel.findByPk(id);
         if (!userBeforeUpdate) {
             return res.status(404).send({ error: "User not found" });
         }
-        await UserModel.update(body, {
+        await UserModel.update(formData, {
             where: { ID_user: id }
         });
         const userAfterUpdate = await UserModel.findByPk(id);
+        
         return res.send({ data: userAfterUpdate });
     } catch (error) {
         console.error('Error al actualizar el usuario:', error);
