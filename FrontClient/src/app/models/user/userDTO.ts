@@ -11,5 +11,5 @@ export interface UserDTO {
     DNI_tutor?: string;
     Adress?: string;
     Phone?: string;
-    BirthDay?: Date;
+    BirthDay?: string;
 }

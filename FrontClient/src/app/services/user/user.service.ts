@@ -13,6 +13,10 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  getAllUsers(): Observable<UserDTO[]> {
+    return this.http.get<UserDTO[]>(`${this.url}/api/users`);
+  }
+
   getUserById(userId: string): Observable<UserDTO> {
     return this.http.get<UserDTO>(`${this.url}/api/users/${userId}`);
   }
@@ -24,6 +28,7 @@ export class UserService {
     formData.append('DNI_tutor', user.DNI_tutor!);
     formData.append('Phone', user.Phone!);
     formData.append('Surname_2', user.Surname_2!);
+    formData.append('BirthDay', user.BirthDay!);
 
     if (file) {
       formData.append('Photo', file);

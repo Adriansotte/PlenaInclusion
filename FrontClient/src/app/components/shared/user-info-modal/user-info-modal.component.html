@@ -1,7 +1,7 @@
 <div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
     data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal-dialog modal-xl modal-dialog-centered ">
+        <div class="modal-content bg-warning-subtle">
             <div class="modal-header">
                 <h5 class="modal-title">Editar Perfil</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -67,7 +67,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-4 col-md-12" *ngIf="selectedUser.BirthDay; else loggedOutTemplate">
                             <div class="input-group">
                                 <span class="input-group-text" [ngClass]="{'valid-date': isValidDate}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -84,6 +84,24 @@
                                 </div>
                             </div>
                         </div>
+                        <ng-template #loggedOutTemplate>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-text" [ngClass]="{'valid-date': isValidDate}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-calendar-date" viewBox="0 0 16 16">
+                                            <path
+                                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
+                                        </svg>
+                                    </span>
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="floatingDateInput" name="BirthDay"
+                                            [(ngModel)]="BirthDay" placeholder="" required (change)="validateDate()">
+                                        <label for="floatingDateInput">Fecha de Nacimiento</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
 
                         <div class="col-lg-4 col-md-12">
                             <div class="form-floating">
@@ -96,8 +114,7 @@
                     <div class="row my-4">
                         <div class="col-lg-4 col-md-12">
                             <div class="input-group">
-                                <span class="input-group-text"
-                                    [ngClass]="{'valid-input': isValidName(selectedUser.Name)}">
+                                <span class="input-group-text valid-input">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-person-circle" viewBox="0 0 16 16">
                                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -236,22 +253,60 @@
                                     </svg>
                                 </span>
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="floatingDniTutorInput" name="DNI_tutor"
-                                        [(ngModel)]="selectedUser.DNI_tutor" placeholder="" required
-                                        (input)="validarDniTutor()" maxlength="9">
-                                    <label for="floatingDniTutorInput">DNI del Tutor</label>
+                                    <select class="form-control" id="floatingDniTutorInput"
+                                        [(ngModel)]="selectedUser.DNI_tutor" name="DNI_tutor" required
+                                        (change)="validarDniTutor()">
+                                        <option *ngFor="let user of allUsers" [value]="user.DNI">{{user.Name}}
+                                            {{user.Surname_1}} {{user.Surname_2}} ({{user.DNI}})</option>
+                                    </select>
+                                    <label for="floatingDniTutorInput">Seleccione un Tutor</label>
                                 </div>
-                            </div>
-                            <div *ngIf="!dniTutorValido && selectedUser.DNI_tutor">
-                                Por favor ingrese un DNI válido del tutor.
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" (click)="updateUser()">Actualizar</button>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    data-bs-target="#confirmUpdateModal">Actualizar</button>
                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="staticBackdropLabel">Confirmación de la Solicitud</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Deseas modificar el perfil?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="updateUser()" data-bs-target="#adviceModal"
+                    data-bs-toggle="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="adviceModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Aviso</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Perfil modificado correctamente
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>

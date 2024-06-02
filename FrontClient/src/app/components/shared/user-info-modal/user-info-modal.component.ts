@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserDTO } from 'src/app/models/user/userDTO';
 import { UserService } from 'src/app/services/user/user.service';
 declare var bootstrap: any;
@@ -8,11 +8,15 @@ declare var bootstrap: any;
   templateUrl: './user-info-modal.component.html',
   styleUrls: ['./user-info-modal.component.css']
 })
-export class UserInfoModalComponent {
+export class UserInfoModalComponent implements OnInit {
 
   @Input() selectedUser: UserDTO | null = null;
 
   @Output() activitiesChange: EventEmitter<UserDTO> = new EventEmitter<UserDTO>();
+
+  allUsers: UserDTO[] = [];
+
+  BirthDay: string = "";
 
   Photo: File | undefined;
   archivoInsertado: boolean = true;
@@ -24,21 +28,38 @@ export class UserInfoModalComponent {
   isDNIValid: boolean = true;
   isRolSelected: boolean = false;
   isValidDate: boolean = true;
-  isNameEntered: boolean = false;
+  isNameEntered: boolean = true;
   isSurname1Entered: boolean = false;
   isSurname2Entered: boolean = false;
   isValidEmail: boolean = true;
   isValidAdress: boolean = false;
-  isValidPhone: boolean = false;
+  isValidPhone: boolean = true;
   isPasswordValid: boolean = false;
   passwordsMatch: boolean = false;
   confirmPassValid: boolean = false;
 
   constructor(private userService: UserService) { }
 
+  ngOnInit(): void {
+    this.getAllUsers();
+  }
+
   updateUser() {
+    this.selectedUser!.BirthDay! = this.BirthDay;
     this.userService.updateUser(this.selectedUser!, this.Photo!).subscribe({
       next: (response: UserDTO) => {
+        console.log(response)
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
+  }
+
+  getAllUsers() {
+    this.userService.getAllUsers().subscribe({
+      next: (response: UserDTO[]) => {
+        this.allUsers = response;
         console.log(response)
       },
       error: (error: any) => {
@@ -85,7 +106,7 @@ export class UserInfoModalComponent {
   }
 
   validateDate() {
-    const userDate = new Date(this.selectedUser!.BirthDay!);
+    const userDate = new Date(this.BirthDay);
     const currentDate = new Date();
 
     if (userDate > currentDate) {
