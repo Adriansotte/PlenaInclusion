@@ -8,6 +8,7 @@ import { ActivityService } from 'src/app/services/activities/activity.service';
 import { CampaignService } from 'src/app/services/campaign/campaign.service';
 import { AllSchedulesService } from 'src/app/services/schedules/listSchedules/all-schedules.service';
 import { areDatesValid } from 'src/utils/dateValid';
+import { isFieldValid } from 'src/utils/fieldValid';
 
 declare var bootstrap: any;
 
@@ -85,14 +86,9 @@ export class AddScheduleComponent implements OnInit {
     })
   }
 
-  isValidInputAdress(value: string): boolean {
-    const regex = /^[a-zA-Z0-9\s]+$/;
-    this.isValidAdress = regex.test(value.trim());
-    return this.isValidAdress;
-  }
 
   onAddressInputChange(value: string): void {
-    this.isValidInputAdress(value);
+    this.isValidAdress = isFieldValid(value);
   }
 
   areDatesValid(): boolean {
@@ -125,7 +121,6 @@ export class AddScheduleComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.schedule);
     this.scheduleService.postSchedule(this.schedule).subscribe({
       next: (response: scheduleDTO) => {
         this.adviceTitle = "Horario Creado Correctamente";
@@ -133,12 +128,29 @@ export class AddScheduleComponent implements OnInit {
       error: (error: any) => {
         this.adviceTitle = "Error al Crear El Horario";
         this.openAdviceModal();
+        this.refreshItems();
       },
       complete: () => {
+        this.refreshItems()
         this.openAdviceModal();
         this.scheduleCreated.emit();
       }
     })
+  }
+
+  refreshItems() {
+    this.schedule.Address = '',
+      this.schedule.DayOfWeek = '',
+      this.schedule.StartHour = '',
+      this.schedule.FinishHour = '',
+      this.schedule.Frequency = '',
+      this.schedule.StartDate = new Date(),
+      this.schedule.FinishDate = new Date(),
+      this.schedule.Capacity = 0,
+      this.schedule.Attendance = 0,
+      this.schedule.ID_Activity = '',
+      this.schedule.ID_Type = '',
+      this.schedule.ID_Campaign = ''
   }
 
   openAdviceModal() {
