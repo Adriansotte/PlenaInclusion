@@ -3,7 +3,7 @@ import { CampaignDTO } from "../campaign/campaignDTO";
 import { typeDTO } from "../type/typeDTO";
 
 export interface scheduleDTO {
-    ID_Schedule: string,
+    ID_Schedule?: string,
     Address: string,
     DayOfWeek: string,
     StartHour: string,

@@ -8,6 +8,38 @@
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" class="needs-validation p-3 bg-secondary" novalidate>
+                    <div class="accordion" id="accordionActivities">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseAllActivities" aria-expanded="true"
+                                    aria-controls="collapseAllActivities">
+                                    Selecciona la Actividad
+                                </button>
+                            </h2>
+                            <div id="collapseAllActivities" class="accordion-collapse collapse show"
+                                aria-labelledby="headingAllActivities" data-bs-parent="#accordionActivities">
+                                <div class="accordion-body bg-warning-subtle">
+                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                                        <div class="col" *ngFor="let activity of activities"
+                                            (click)="selectActivity(activity)">
+                                            <div class="card h-100 d-flex flex-column shadow-lg bg-body-tertiary rounded"
+                                                [ngClass]="{'selected': activity.ID_activity === selectedActivityID}">
+                                                <img src="{{ activity.Photo }}" class="card-img-top img-fluid" alt="..."
+                                                    style="object-fit: cover; height: 200px;">
+                                                <div class="card-body d-flex flex-column">
+                                                    <h5 class="card-title">{{ activity.Name }}</h5>
+                                                    <p class="card-text">{{ activity.Description }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="row my-4">
                         <div class="col-4">
 
@@ -69,12 +101,14 @@
                                 </span>
                                 <div class="form-floating">
                                     <input type="date" class="form-control" id="floatingStartDateInput" name="StartDate"
-                                        [(ngModel)]="schedule.StartDate" placeholder="" required>
+                                        [(ngModel)]="schedule.StartDate" placeholder="" required
+                                        (change)="onStartDateChange()">
+
                                     <label for="floatingStartDateInput">Fecha de Inicio</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4" *ngIf="schedule.Frequency !== 'Puntual'">
                             <div class="input-group">
                                 <span class="input-group-text">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -157,6 +191,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
                     (click)="scheduleCreated.emit();">Cerrar</button>
+                <button type="button" class="btn btn-outline-danger" (click)="submitForm()">Crear</button>
                 <!-- <button *ngIf="isFormValid(); else elseBlock" type="button" class="btn btn-outline-primary"
                     data-bs-dismiss="modal" (click)="openConfirmationModal()">
                     Crear!

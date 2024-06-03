@@ -46,7 +46,7 @@ const ScheduleModel = db.define('Schedule', {
     },
     FinishDate: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: true
     },
     Capacity: {
         type: DataTypes.INTEGER,

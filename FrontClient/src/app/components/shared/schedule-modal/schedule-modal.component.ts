@@ -58,7 +58,7 @@ export class ScheduleModalComponent {
       if (userId) {
         const scheduleId = this.schedule.ID_Schedule;
         this.deleteRegistation();
-        this.decrementAttendance(scheduleId);
+        this.decrementAttendance(scheduleId!);
       } else {
         console.error('ID de usuario no encontrado en el sesionStorage');
       }
@@ -74,9 +74,9 @@ export class ScheduleModalComponent {
         const scheduleId = this.schedule.ID_Schedule;
         this.calcularFechas();
         for (const date of this.fechas) {
-          this.launchInsertion(userId, scheduleId, date)
+          this.launchInsertion(userId, scheduleId!, date)
         }
-        this.incrementAttendance(scheduleId);
+        this.incrementAttendance(scheduleId!);
 
       } else {
         console.error('ID de usuario no encontrado en el sesionStorage');

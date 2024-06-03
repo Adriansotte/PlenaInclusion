@@ -41,7 +41,8 @@ const getSchedule = async (req, res) => {
 
 const postSchedule = async (req, res) => {
     try {
-        const body = matchedData(req);
+        console.log(req.body)
+        const body = req.body;
         const data = await ScheduleModel.create(body);
         res.send({ data });
     } catch (e) {

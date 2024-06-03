@@ -21,14 +21,13 @@ export class AddScheduleComponent implements OnInit {
   @Output() scheduleCreated: EventEmitter<void> = new EventEmitter<void>();
 
   schedule: scheduleDTO = {
-    ID_Schedule: '',
     Address: '',
     DayOfWeek: '',
     StartHour: '',
     FinishHour: '',
     Frequency: '',
-    StartDate: new Date,
-    FinishDate: new Date,
+    StartDate: new Date(),
+    FinishDate: new Date(),
     Capacity: 0,
     Attendance: 0,
     ID_Activity: '',
@@ -37,10 +36,7 @@ export class AddScheduleComponent implements OnInit {
   }
 
   isValidAdress: boolean = false;
-
-
   adviceTitle: string = "";
-
   activities: activityDTO[] = [];
   campaigns: CampaignDTO[] = [];
   types: typeDTO[] = [];
@@ -48,13 +44,12 @@ export class AddScheduleComponent implements OnInit {
   constructor(private typeService: TypeService,
     private campaignService: CampaignService,
     private scheduleService: AllSchedulesService,
-    private activityService: ActivityService
-  ) { }
-
+    private activityService: ActivityService) { }
 
   ngOnInit(): void {
     this.handleTypes();
     this.handleCampaigns();
+    this.handeActivities();
   }
 
   handleTypes(): void {
@@ -104,14 +99,40 @@ export class AddScheduleComponent implements OnInit {
     return areDatesValid(this.schedule.StartDate, this.schedule.FinishDate);
   }
 
-  // Función para validar las horas
   validateHours() {
     const startHour = new Date('1970-01-01T' + this.schedule.StartHour + ':00');
     const finishHour = new Date('1970-01-01T' + this.schedule.FinishHour + ':00');
 
     if (startHour > finishHour) {
-      // Si la hora de inicio es mayor que la hora de finalización, muestra un alert
       alert('La hora de finalización no puede ser una hora pasada a la hora de inicio.');
     }
+  }
+
+  getDayOfWeek(date: Date): string {
+    const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    return daysOfWeek[date.getDay()];
+  }
+
+  onStartDateChange(): void {
+    this.schedule.DayOfWeek = this.getDayOfWeek(new Date(this.schedule.StartDate));
+  }
+
+  selectedActivityID: string = '';
+
+  selectActivity(activity: activityDTO): void {
+    this.schedule.ID_Activity = activity.ID_activity!;
+    this.selectedActivityID = activity.ID_activity!;
+  }
+
+  submitForm() {
+    console.log(this.schedule);
+    this.scheduleService.postSchedule(this.schedule).subscribe({
+      next: (response: scheduleDTO) => {
+        console.log(response)
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
   }
 }

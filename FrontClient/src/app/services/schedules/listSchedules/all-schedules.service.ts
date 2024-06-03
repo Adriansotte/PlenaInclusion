@@ -24,4 +24,25 @@ export class AllSchedulesService {
   decrementAttendace(scheduleId: string): Observable<any> {
     return this.http.post<any>(`${this.url}/api/schedules/${scheduleId}/decrement`, null)
   }
+
+  postSchedule(schedule: scheduleDTO): Observable<scheduleDTO> {
+    const formData = new FormData();
+
+    formData.append('Address', schedule.Address);
+    formData.append('DayOfWeek', schedule.DayOfWeek);
+    formData.append('StartHour', schedule.StartHour);
+    formData.append('FinishHour', schedule.FinishHour);
+    formData.append('Frequency', schedule.Frequency);
+    formData.append('StartDate', schedule.StartDate.toString());
+    if (schedule.Frequency == "Semanal") {
+      formData.append('FinishDate', schedule.FinishDate.toString());
+    }
+    formData.append('Capacity', schedule.Capacity.toString());
+    formData.append('Attendance', schedule.Attendance.toString());
+    formData.append('ID_Activity', schedule.ID_Activity);
+    formData.append('ID_Type', schedule.ID_Type);
+    formData.append('ID_Campaign', schedule.ID_Campaign!);
+
+    return this.http.post<scheduleDTO>(`${this.url}/api/schedules/`, formData)
+  }
 }
