@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserDTO } from 'src/app/models/user/userDTO';
 import { UserService } from 'src/app/services/user/user.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
@@ -9,7 +11,8 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class ManageUsersComponent implements OnInit {
 
-  users: UserDTO[] = []
+  users: UserDTO[] = [];
+  selectedUser: UserDTO | null = null;
 
   constructor(private userService: UserService) { }
 
@@ -24,4 +27,12 @@ export class ManageUsersComponent implements OnInit {
     })
   }
 
+  onUserClicked(user: UserDTO): void {
+    this.selectedUser = user;
+    const modalElement = document.getElementById('userInfoModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
 }

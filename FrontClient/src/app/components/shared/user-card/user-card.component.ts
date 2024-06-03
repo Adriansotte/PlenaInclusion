@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UserDTO } from 'src/app/models/user/userDTO';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-user-card',
@@ -7,8 +9,16 @@ import { UserDTO } from 'src/app/models/user/userDTO';
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent {
-  
+
   @Input() user: UserDTO | null = null;
+  @Output() userClicked = new EventEmitter<UserDTO>();
+
+
+  onCardClick(): void {
+    if (this.user) {
+      this.userClicked.emit(this.user);
+    }
+  }
 
 
 }
