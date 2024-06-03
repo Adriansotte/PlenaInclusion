@@ -15,7 +15,8 @@ export interface scheduleDTO {
     Attendance: number,
     ID_Activity: string,
     ID_Type: string,
-    Activity: activityDTO,
-    Type: typeDTO,
-    Campaign: CampaignDTO
+    ID_Campaign?: string,
+    Activity?: activityDTO,
+    Type?: typeDTO,
+    Campaign?: CampaignDTO
 }

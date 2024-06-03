@@ -40,6 +40,7 @@ import { GoogleAuthBtnComponent } from './components/shared/google-auth-btn/goog
 import { ViewCommentsComponent } from './components/shared/view-comments/view-comments.component';
 import { ProfileCardComponent } from './components/shared/profile-card/profile-card.component';
 import { UserInfoModalComponent } from './components/shared/user-info-modal/user-info-modal.component';
+import { AddScheduleComponent } from './components/shared/add-schedule/add-schedule.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -76,7 +77,8 @@ registerLocaleData(localeEs, 'es');
     GoogleAuthBtnComponent,
     ViewCommentsComponent,
     ProfileCardComponent,
-    UserInfoModalComponent
+    UserInfoModalComponent,
+    AddScheduleComponent
   ],
   imports: [
     BrowserModule,

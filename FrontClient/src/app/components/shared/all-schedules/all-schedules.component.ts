@@ -82,7 +82,7 @@ export class AllSchedulesComponent implements OnInit {
 
   applyFilter(): void {
     this.filteredSchedules = this.schedules.filter(schedule => {
-      const matchesName = schedule.Activity.Name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesName = schedule.Activity!.Name.toLowerCase().includes(this.searchTerm.toLowerCase());
       const scheduleStartDate = new Date(schedule.StartDate);
       const scheduleFinishDate = new Date(schedule.FinishDate);
       const startDate = this.startDate ? new Date(this.startDate) : null;
@@ -132,5 +132,13 @@ export class AllSchedulesComponent implements OnInit {
   handleScheduleChange(): void {
     this.handleUserSchedules();
     this.handleSchedules();
+  }
+
+  addScheduleModal() {
+    const modalElement = document.getElementById('addScheduleModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 }

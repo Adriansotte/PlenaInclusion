@@ -71,13 +71,13 @@ export class UserSchedulesComponent implements OnInit {
   applyFilter(): void {
     this.filteredSchedules = this.userSchedules.filter(schedule => {
       const matchesSearchTerm = this.searchTerm ?
-        schedule.Schedule.Activity.Name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
+        schedule.Schedule.Activity!.Name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
       const matchesStartDate = this.startDate ?
         new Date(schedule.AttendanceDate) >= new Date(this.startDate) : true;
       const matchesEndDate = this.endDate ?
         new Date(schedule.AttendanceDate) <= new Date(this.endDate) : true;
       const matchesType = this.selectedType ?
-        schedule.Schedule.Type.Name === this.selectedType : true;
+        schedule.Schedule!.Type!.Name === this.selectedType : true;
       const matchesFrequency = this.selectedFrequency ?
         schedule.Schedule.Frequency === this.selectedFrequency : true;
       const matchesDay = this.selectedDay ?

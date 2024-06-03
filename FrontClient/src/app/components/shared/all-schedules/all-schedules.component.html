@@ -1,7 +1,6 @@
 <div class="row justify-content-center my-3">
     <div class="col-auto">
         <h1 class="text-primary shadow p-3 bg-body-tertiary rounded">Actividades Disponibles</h1>
-
     </div>
 </div>
 <div class="row mb-3 g-2">
@@ -86,6 +85,9 @@
     <div class="col-12 col-md-3">
         <button class="btn btn-warning w-100" (click)="clearFilters()">Limpiar filtros</button>
     </div>
+    <div class="col-12 col-md-3">
+        <button class="btn btn-primary w-100" (click)="addScheduleModal()">Añadir Horario</button>
+    </div>
 </div>
 
 <div class="text-center" *ngIf="loading == true; else schedules">
@@ -110,7 +112,7 @@
     </div>
 </ng-template>
 
-
+<app-add-schedule (scheduleCreated)="handleSchedules()"></app-add-schedule>
 
 <app-schedule-modal [schedule]="selectedSchedule" [isUserRegistered]="isUserRegistered(selectedSchedule?.ID_Schedule)"
     (scheduleChange)="handleScheduleChange()"></app-schedule-modal>
