@@ -1,20 +1,19 @@
 import { AUTO_STYLE } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginService } from 'src/app/services/login/login.service';
 import { environments } from 'src/environments/environments';
-
 declare var google: any;
-
 @Component({
   selector: 'app-google-auth-btn',
   templateUrl: './google-auth-btn.component.html',
   styleUrls: ['./google-auth-btn.component.css']
 })
-export class GoogleAuthBtnComponent implements OnInit {
+export class GoogleAuthBtnComponent implements OnInit, OnDestroy {
 
   client_id: string = environments.client_id;
+  intervalId: any;
 
   constructor(private loginService: LoginService,
     private authService: AuthService,
@@ -22,12 +21,32 @@ export class GoogleAuthBtnComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadGoogleApi();
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  private loadGoogleApi(): void {
+    this.intervalId = setInterval(() => {
+      if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+        clearInterval(this.intervalId);
+        this.initializeGoogleButton();
+      }
+    }, 100);
+  }
+
+  private initializeGoogleButton(): void {
     google.accounts.id.initialize({
       client_id: this.client_id,
       callback: (response: any) => {
-        this.handleLoggin(response.credential)
+        this.handleLoggin(response.credential);
       }
     });
+
     google.accounts.id.renderButton(
       document.getElementById('google-btn'),
       {
@@ -37,6 +56,8 @@ export class GoogleAuthBtnComponent implements OnInit {
         width: AUTO_STYLE
       }
     );
+
+    google.accounts.id.disableAutoSelect();
   }
 
   private decodeToken(token: string) {
@@ -57,15 +78,14 @@ export class GoogleAuthBtnComponent implements OnInit {
           sessionStorage.setItem("user", JSON.stringify(response.user));
           sessionStorage.setItem("token", response.token);
           this.authService.setRole(response.user.Rol);
-
         },
         error: (error: any) => {
-          console.log(error)
+          console.log(error);
         },
         complete: () => {
           this.router.navigate(['home']);
         }
-      })
+      });
     }
   }
 
