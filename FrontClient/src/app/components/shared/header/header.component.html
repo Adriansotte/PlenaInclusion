@@ -5,6 +5,8 @@
         </div>
         <div class="col d-flex justify-content-center align-items-center d-none d-md-flex">
             <button *ngIf="role != null" class="btn btn-warning mx-2" type="button"
+                (click)="navigateToListHome()">Inicio</button>
+            <button *ngIf="role != null" class="btn btn-warning mx-2" type="button"
                 (click)="navigateToListSchedules()">Ver Actividades</button>
             <button *ngIf="role != null" class="btn btn-warning mx-2" type="button"
                 (click)="navigateToUserSchedules()">Mis Actividades</button>

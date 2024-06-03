@@ -18,6 +18,8 @@ export class ScheduleModalComponent {
   @Input() isUserRegistered: boolean = false;
   @Output() scheduleChange: EventEmitter<void> = new EventEmitter<void>();
 
+  role: string | null = sessionStorage.getItem("Rol");
+
   fechas: string[] = [];
   userSchedules: userScheduleDTO[] = [];
 
@@ -27,6 +29,7 @@ export class ScheduleModalComponent {
   constructor(private userScheduleService: UserScheduleService,
     private scheduleService: AllSchedulesService
   ) { }
+  
 
   getCommentsbyScheduleId() {
     this.userScheduleService.listScheduleBySchedule(this.schedule?.ID_Schedule!).subscribe({
@@ -188,7 +191,7 @@ export class ScheduleModalComponent {
         this.adviceTitle = "Horario borrado corectamente"
       },
       error: () => {
-        this.adviceTitle = "Existen usuarios asignados a este horario"
+        this.adviceTitle = "Existen usuarios asignados a este horario, de momento no se puede borrar."
         this.openAdviceModal();
       },
       complete: () => {

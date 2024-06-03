@@ -86,7 +86,7 @@
         <button class="btn btn-warning w-100" (click)="clearFilters()">Limpiar filtros</button>
     </div>
     <div class="col-12 col-md-3">
-        <button class="btn btn-primary w-100" (click)="addScheduleModal()">Añadir Horario</button>
+        <button class="btn btn-primary w-100" (click)="addScheduleModal()" *ngIf="role == 'Monitor' || role == 'Administrador'">Añadir Horario</button>
     </div>
 </div>
 

@@ -38,7 +38,6 @@ export class HeaderComponent implements OnInit {
     this.authService.role$.subscribe(role => {
       this.role = role;
     });
-
   }
 
   navigateToListSchedules() {
@@ -47,6 +46,10 @@ export class HeaderComponent implements OnInit {
 
   navigateToUserSchedules() {
     this.router.navigate(['/userSchedules']);
+  }
+
+  navigateToListHome() {
+    this.router.navigate(['/home']);
   }
 
   navigateToManageA() {

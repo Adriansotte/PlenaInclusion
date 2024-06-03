@@ -76,7 +76,6 @@ const updateActivity = async (req, res) => {
 
 const deleteActivity = async (req, res) => {
     try {
-
         const { id } = req.params;
         const activity = await ScheduleModel.findOne({
             where: { ID_Activity: id }

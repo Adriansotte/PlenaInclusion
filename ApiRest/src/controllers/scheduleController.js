@@ -4,6 +4,7 @@ const TypeModel = require('../models/typeModel');
 const CampaignModel = require('../models/campaignModel');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
+const User_ScheduleModel = require("../models/user_scheduleModel")
 
 async function getAllSchedules(req, res) {
     try {
@@ -73,6 +74,15 @@ const updateSchedule = async (req, res) => {
 const deleteSchedule = async (req, res) => {
     try {
         const { id } = req.params;
+
+        const userScheduleAsociated = await User_ScheduleModel.findOne({
+            where: { ScheduleIDSchedule: id }
+        })
+
+        if (userScheduleAsociated) {
+            return res.status(404).json({ error: "SCHEDULE_ASOCIATED" });
+        }
+
         const schedule = await ScheduleModel.destroy({
             where: { ID_schedule: id }
         });

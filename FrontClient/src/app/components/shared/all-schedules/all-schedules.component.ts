@@ -31,6 +31,9 @@ export class AllSchedulesComponent implements OnInit {
 
   loading: boolean = true;
 
+  role: string | null = sessionStorage.getItem("Rol");
+
+
   constructor(private allSchedulesService: AllSchedulesService,
     private userScheduleService: UserScheduleService,
     private typeService: TypeService) { }
@@ -57,7 +60,6 @@ export class AllSchedulesComponent implements OnInit {
     this.allSchedulesService.listAllSchedules().subscribe({
       next: (data: scheduleDTO[]) => {
         this.schedules = data;
-        console.log(data)
         this.applyFilter();
       },
       error: (error: any) => {
