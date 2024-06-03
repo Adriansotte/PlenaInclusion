@@ -7,6 +7,7 @@ import { TypeService } from 'src/app/services/type/type.service';
 import { ActivityService } from 'src/app/services/activities/activity.service';
 import { CampaignService } from 'src/app/services/campaign/campaign.service';
 import { AllSchedulesService } from 'src/app/services/schedules/listSchedules/all-schedules.service';
+import { areDatesValid } from 'src/utils/dateValid';
 
 declare var bootstrap: any;
 
@@ -35,6 +36,9 @@ export class AddScheduleComponent implements OnInit {
     ID_Campaign: ''
   }
 
+  isValidAdress: boolean = false;
+
+
   adviceTitle: string = "";
 
   activities: activityDTO[] = [];
@@ -49,6 +53,8 @@ export class AddScheduleComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.handleTypes();
+    this.handleCampaigns();
   }
 
   handleTypes(): void {
@@ -82,5 +88,30 @@ export class AddScheduleComponent implements OnInit {
         console.log(error)
       }
     })
+  }
+
+  isValidInputAdress(value: string): boolean {
+    const regex = /^[a-zA-Z0-9\s]+$/;
+    this.isValidAdress = regex.test(value.trim());
+    return this.isValidAdress;
+  }
+
+  onAddressInputChange(value: string): void {
+    this.isValidInputAdress(value);
+  }
+
+  areDatesValid(): boolean {
+    return areDatesValid(this.schedule.StartDate, this.schedule.FinishDate);
+  }
+
+  // Función para validar las horas
+  validateHours() {
+    const startHour = new Date('1970-01-01T' + this.schedule.StartHour + ':00');
+    const finishHour = new Date('1970-01-01T' + this.schedule.FinishHour + ':00');
+
+    if (startHour > finishHour) {
+      // Si la hora de inicio es mayor que la hora de finalización, muestra un alert
+      alert('La hora de finalización no puede ser una hora pasada a la hora de inicio.');
+    }
   }
 }

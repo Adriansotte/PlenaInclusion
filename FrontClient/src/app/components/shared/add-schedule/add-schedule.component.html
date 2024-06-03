@@ -1,67 +1,162 @@
 <div class="modal fade" id="addScheduleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
     data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
         <div class="modal-content bg-warning-subtle">
             <div class="modal-header">
-                <h5 class="modal-title">Crear Horaio de Actividad</h5>
+                <h5 class="modal-title">Crear Horario de Actividad</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" class="needs-validation p-3 bg-secondary" novalidate>
-                    <!-- <div class="row my-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <span class="input-group-text" [ngClass]="{'valid-input': isFieldValid(type.Name)}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-alphabet-uppercase" viewBox="0 0 16 16">
-                                        <path
-                                            d="M1.226 10.88H0l2.056-6.26h1.42l2.047 6.26h-1.29l-.48-1.61H1.707l-.48 1.61ZM2.76 5.818h-.054l-.75 2.532H3.51zm3.217 5.062V4.62h2.56c1.09 0 1.808.582 1.808 1.54 0 .762-.444 1.22-1.05 1.372v.055c.736.074 1.365.587 1.365 1.528 0 1.119-.89 1.766-2.133 1.766zM7.18 5.55v1.675h.8c.812 0 1.171-.308 1.171-.853 0-.51-.328-.822-.898-.822zm0 2.537V9.95h.903c.951 0 1.342-.312 1.342-.909 0-.591-.382-.954-1.095-.954zm5.089-.711v.775c0 1.156.49 1.803 1.347 1.803.705 0 1.163-.454 1.212-1.096H16v.12C15.942 10.173 14.95 11 13.607 11c-1.648 0-2.573-1.073-2.573-2.849v-.78c0-1.775.934-2.871 2.573-2.871 1.347 0 2.34.849 2.393 2.087v.115h-1.172c-.05-.665-.516-1.156-1.212-1.156-.849 0-1.347.67-1.347 1.83" />
-                                    </svg>
-                                </span>
-                                <div class="form-floating col-5">
-                                    <input type="text" class="form-control" id="CampaignName" name="CampaignName"
-                                        [(ngModel)]="type.Name" placeholder="" required maxlength="40"
-                                        #nombreCampo="ngModel">
-                                    <label for="Nombre">Nombre del Tipo</label>
-                                </div>
-                            </div>
-                            <div *ngIf="nombreCampo.invalid && nombreCampo.touched" class="text-danger">
-                                El campo Nombre del tipo es obligatorio y debe tener un máximo de 40 caracteres.
+                    <div class="row my-4">
+                        <div class="col-4">
+
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingCampaign" [(ngModel)]="schedule.ID_Campaign"
+                                    name="campaign" required>
+                                    <option *ngFor="let campaign of campaigns" [value]="campaign.ID_Campaign">{{
+                                        campaign.Name
+                                        }}</option>
+                                </select>
+                                <label for="floatingCampaign">Seleccionar Campaña</label>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-4">
 
-                    <div class="row my-4">
-                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingType" [(ngModel)]="schedule.ID_Type" name="type"
+                                    required>
+                                    <option *ngFor="let type of types" [value]="type.ID_type">{{ type.Name }}</option>
+                                </select>
+                                <label for="floatingType">Seleccionar Tipo</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingFrequency" [(ngModel)]="schedule.Frequency"
+                                    name="frequency" required>
+                                    <option value="Puntual">Puntual</option>
+                                    <option value="Semanal">Semanal</option>
+                                </select>
+                                <label for="floatingFrequency">Frecuencia</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
                             <div class="input-group">
-                                <span class="input-group-text"
-                                    [ngClass]="{'valid-input': isFieldValid(type.Description)}">
+                                <span class="input-group-text" [ngClass]="{'valid-input': isValidAdress}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-book" viewBox="0 0 16 16">
+                                        class="bi bi-house-fill" viewBox="0 0 16 16">
                                         <path
-                                            d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783" />
+                                            d="M8 3.293l-6 6V14a1 1 0 0 0 1 1h4v-4h2v4h4a1 1 0 0 0 1-1V9.293l-6-6zM7.5 1.207l-7 7A.5.5 0 0 0 1 9h2v6h10V9h2a.5.5 0 0 0 .5-.707l-7-7a.5.5 0 0 0-.707 0z" />
                                     </svg>
                                 </span>
                                 <div class="form-floating">
-                                    <textarea class="form-control" id="floatingDescriptionInput" name="Description"
-                                        [(ngModel)]="type.Description" placeholder="" required maxlength="70"
-                                        style="height: 100px" #descripcionCampo="ngModel"></textarea>
-                                    <label for="floatingDescriptionInput">Descripción</label>
+                                    <input type="text" class="form-control" id="floatingAddressInput" name="Address"
+                                        [(ngModel)]="schedule.Address" placeholder="Dirección" required maxlength="50"
+                                        (input)="onAddressInputChange(schedule.Address)">
+                                    <label for="floatingAddressInput">Dirección</label>
                                 </div>
                             </div>
-                            <div *ngIf="descripcionCampo.invalid && descripcionCampo.touched" class="text-danger">
-                                El campo Descripción es obligatorio y debe tener un máximo de 70 caracteres.
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-calendar-date" viewBox="0 0 16 16">
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
+                                    </svg>
+                                </span>
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="floatingStartDateInput" name="StartDate"
+                                        [(ngModel)]="schedule.StartDate" placeholder="" required>
+                                    <label for="floatingStartDateInput">Fecha de Inicio</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-calendar-date" viewBox="0 0 16 16">
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
+                                    </svg>
+                                </span>
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="floatingFinishDateInput"
+                                        name="FinishDate" [(ngModel)]="schedule.FinishDate" placeholder="" required>
+                                    <label for="floatingFinishDateInput">Fecha de Finalización</label>
+                                </div>
+                            </div>
+                            <div *ngIf="!areDatesValid()" class="text-danger">
+                                La fecha de inicio debe ser anterior a la fecha de finalización.
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 1a7 7 0 0 1 7 7 7 7 0 0 1-7 7 7 7 0 0 1-7-7 7 7 0 0 1 7-7zm-.5 11.5a.5.5 0 0 0 .5-.5V8H9a.5.5 0 0 0 0-1H7a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5z" />
+                                        </svg>
+                                    </span>
+                                    <div class="form-floating">
+                                        <input type="time" class="form-control" id="floatingStartHour" name="StartHour"
+                                            [(ngModel)]="schedule.StartHour" placeholder="" required
+                                            (change)="validateHours()">
+
+                                        <label for="floatingStartHour">Hora de Inicio</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 1a7 7 0 0 1 7 7 7 7 0 0 1-7 7 7 7 0 0 1-7-7 7 7 0 0 1 7-7zm-.5 11.5a.5.5 0 0 0 .5-.5V8H9a.5.5 0 0 0 0-1H7a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5z" />
+                                        </svg>
+                                    </span>
+                                    <div class="form-floating">
+                                        <input type="time" class="form-control" id="floatingFinishHour"
+                                            name="FinishHour" [(ngModel)]="schedule.FinishHour" placeholder="" required
+                                            (change)="validateHours()">
+                                        <label for="floatingFinishHour">Hora de Finalización</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Campo de Capacidad -->
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-people" viewBox="0 0 16 16">
+                                        <path
+                                            d="M7.5 7.5A1.5 1.5 0 1 0 6 9a1.5 1.5 0 0 0 1.5-1.5zm1.5 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM1 9a5 5 0 0 1 10 0v4H1V9z" />
+                                        <path fill-rule="evenodd"
+                                            d="M0 4a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm12-1a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3z" />
+                                    </svg>
+                                </span>
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="floatingCapacity" name="Capacity"
+                                        [(ngModel)]="schedule.Capacity" placeholder="" required>
+                                    <label for="floatingCapacity">Capacidad</label>
+                                </div>
                             </div>
                         </div>
 
-                    </div> -->
+                    </div>
 
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
                     (click)="scheduleCreated.emit();">Cerrar</button>
-
                 <!-- <button *ngIf="isFormValid(); else elseBlock" type="button" class="btn btn-outline-primary"
                     data-bs-dismiss="modal" (click)="openConfirmationModal()">
                     Crear!
