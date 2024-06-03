@@ -52,6 +52,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  navigateToUserList() {
+    this.router.navigate(['/manageU']);
+  }
+
   navigateToManageA() {
     this.router.navigate(['/manageA']);
   }

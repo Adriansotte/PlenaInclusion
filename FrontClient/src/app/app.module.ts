@@ -41,6 +41,8 @@ import { ViewCommentsComponent } from './components/shared/view-comments/view-co
 import { ProfileCardComponent } from './components/shared/profile-card/profile-card.component';
 import { UserInfoModalComponent } from './components/shared/user-info-modal/user-info-modal.component';
 import { AddScheduleComponent } from './components/shared/add-schedule/add-schedule.component';
+import { ManageUsersComponent } from './components/pages/manage-users/manage-users.component';
+import { UserCardComponent } from './components/shared/user-card/user-card.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -78,7 +80,9 @@ registerLocaleData(localeEs, 'es');
     ViewCommentsComponent,
     ProfileCardComponent,
     UserInfoModalComponent,
-    AddScheduleComponent
+    AddScheduleComponent,
+    ManageUsersComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule,

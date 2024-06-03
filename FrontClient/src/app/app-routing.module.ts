@@ -11,6 +11,7 @@ import { UserSchedulesComponent } from './components/shared/user-schedules/user-
 import { ManageActivitiesComponent } from './components/pages/manage-activities/manage-activities.component';
 import { ManageCampagneComponent } from './components/pages/manage-campagne/manage-campagne.component';
 import { ManageTypesComponent } from './components/pages/manage-types/manage-types.component';
+import { ManageUsersComponent } from './components/pages/manage-users/manage-users.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,11 @@ const routes: Routes = [
   {
     path: "manageT",
     component: ManageTypesComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: "manageU",
+    component: ManageUsersComponent,
     canActivate: [authGuard]
   },
   {
