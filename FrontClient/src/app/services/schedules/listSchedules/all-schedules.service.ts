@@ -45,4 +45,8 @@ export class AllSchedulesService {
 
     return this.http.post<scheduleDTO>(`${this.url}/api/schedules`, formData)
   }
+
+  deleteSchedule(idSchedule: string) {
+    return this.http.delete<scheduleDTO>(`${this.url}/api/schedules/${idSchedule}`);
+  }
 }

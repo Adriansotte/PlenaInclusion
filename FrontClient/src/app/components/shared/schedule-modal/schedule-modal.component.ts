@@ -22,6 +22,7 @@ export class ScheduleModalComponent {
   userSchedules: userScheduleDTO[] = [];
 
   media: number = 0;
+  adviceTitle: string = "";
 
   constructor(private userScheduleService: UserScheduleService,
     private scheduleService: AllSchedulesService
@@ -175,6 +176,30 @@ export class ScheduleModalComponent {
   viewComments(): void {
     this.getCommentsbyScheduleId();
     const modalElement = document.getElementById('commentModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  deleteSchedule(): void {
+    this.scheduleService.deleteSchedule(this.schedule?.ID_Schedule!).subscribe({
+      next: () => {
+        this.adviceTitle = "Horario borrado corectamente"
+      },
+      error: () => {
+        this.adviceTitle = "Existen usuarios asignados a este horario"
+        this.openAdviceModal();
+      },
+      complete: () => {
+        this.openAdviceModal();
+        this.scheduleChange.emit();
+      }
+    })
+  }
+
+  openAdviceModal() {
+    const modalElement = document.getElementById('adviceScheduleEliminationModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
