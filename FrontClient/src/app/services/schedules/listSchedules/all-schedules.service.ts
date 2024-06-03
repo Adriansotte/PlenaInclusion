@@ -43,6 +43,6 @@ export class AllSchedulesService {
     formData.append('ID_Type', schedule.ID_Type);
     formData.append('ID_Campaign', schedule.ID_Campaign!);
 
-    return this.http.post<scheduleDTO>(`${this.url}/api/schedules/`, formData)
+    return this.http.post<scheduleDTO>(`${this.url}/api/schedules`, formData)
   }
 }

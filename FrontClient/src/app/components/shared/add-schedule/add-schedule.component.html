@@ -27,7 +27,7 @@
                                                 [ngClass]="{'selected': activity.ID_activity === selectedActivityID}">
                                                 <img src="{{ activity.Photo }}" class="card-img-top img-fluid" alt="..."
                                                     style="object-fit: cover; height: 200px;">
-                                                <div class="card-body d-flex flex-column">
+                                                <div class="card-body d-flex flex-column bg-success-subtle">
                                                     <h5 class="card-title">{{ activity.Name }}</h5>
                                                     <p class="card-text">{{ activity.Description }}</p>
                                                 </div>
@@ -54,7 +54,6 @@
                             </div>
                         </div>
                         <div class="col-4">
-
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingType" [(ngModel)]="schedule.ID_Type" name="type"
                                     required>
@@ -75,7 +74,7 @@
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="input-group">
-                                <span class="input-group-text" [ngClass]="{'valid-input': isValidAdress}">
+                                <span class="input-group-text bg-success-subtle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-house-fill" viewBox="0 0 16 16">
                                         <path
@@ -92,7 +91,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="input-group">
-                                <span class="input-group-text">
+                                <span class="input-group-text bg-success-subtle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-calendar-date" viewBox="0 0 16 16">
                                         <path
@@ -110,7 +109,7 @@
                         </div>
                         <div class="col-lg-4" *ngIf="schedule.Frequency !== 'Puntual'">
                             <div class="input-group">
-                                <span class="input-group-text">
+                                <span class="input-group-text bg-success-subtle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-calendar-date" viewBox="0 0 16 16">
                                         <path
@@ -130,7 +129,7 @@
                         <div class="row my-4">
                             <div class="col-lg-4">
                                 <div class="input-group">
-                                    <span class="input-group-text">
+                                    <span class="input-group-text bg-success-subtle">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
                                             <path
@@ -148,7 +147,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="input-group">
-                                    <span class="input-group-text">
+                                    <span class="input-group-text bg-success-subtle">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
                                             <path
@@ -167,7 +166,7 @@
                         <!-- Campo de Capacidad -->
                         <div class="col-lg-4">
                             <div class="input-group">
-                                <span class="input-group-text">
+                                <span class="input-group-text bg-success-subtle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-people" viewBox="0 0 16 16">
                                         <path
@@ -178,11 +177,15 @@
                                 </span>
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="floatingCapacity" name="Capacity"
-                                        [(ngModel)]="schedule.Capacity" placeholder="" required>
+                                        [(ngModel)]="schedule.Capacity" placeholder="" min="0" max="100">
                                     <label for="floatingCapacity">Capacidad</label>
                                 </div>
                             </div>
+                            <div *ngIf="schedule.Capacity < 0 || schedule.Capacity > 100" class="text-danger">
+                                La capacidad debe estar entre 0 y 100.
+                            </div>
                         </div>
+
 
                     </div>
 
@@ -190,17 +193,53 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
-                    (click)="scheduleCreated.emit();">Cerrar</button>
-                <button type="button" class="btn btn-outline-danger" (click)="submitForm()">Crear</button>
-                <!-- <button *ngIf="isFormValid(); else elseBlock" type="button" class="btn btn-outline-primary"
-                    data-bs-dismiss="modal" (click)="openConfirmationModal()">
+                    (click)="scheduleCreated.emit();">
+                    Cerrar
+                </button>
+                <button *ngIf="isFormValid()" type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"
+                    data-bs-toggle="modal" data-bs-target="#confirmationCreation">
                     Crear!
                 </button>
-                <ng-template #elseBlock>
-                    <button type="button" class="btn btn-outline-warning">
-                        Rellena los Campos
-                    </button>
-                </ng-template> -->
+                <button *ngIf="!isFormValid()" type="button" class="btn btn-outline-warning">
+                    Rellena los Campos restantes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmationCreation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="staticBackdropLabel">Confirmación de la Solicitud</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estas seguro de crear el el horario?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="submitForm()" data-bs-dismiss="modal"
+                    data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="advicePopUp" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Aviso</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{adviceTitle}}
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>

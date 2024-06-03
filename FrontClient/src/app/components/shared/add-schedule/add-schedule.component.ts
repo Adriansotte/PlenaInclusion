@@ -128,11 +128,45 @@ export class AddScheduleComponent implements OnInit {
     console.log(this.schedule);
     this.scheduleService.postSchedule(this.schedule).subscribe({
       next: (response: scheduleDTO) => {
-        console.log(response)
+        this.adviceTitle = "Horario Creado Correctamente";
       },
       error: (error: any) => {
-        console.log(error)
+        this.adviceTitle = "Error al Crear El Horario";
+        this.openAdviceModal();
+      },
+      complete: () => {
+        this.openAdviceModal();
+        this.scheduleCreated.emit();
       }
     })
   }
+
+  openAdviceModal() {
+    const modalElement = document.getElementById('advicePopUp');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  isFormValid(): boolean {
+    const isAddressValid = this.isValidAdress;
+    const areHoursValid = this.schedule.StartHour !== '' && this.schedule.FinishHour !== '';
+    let areDatesValid = this.areDatesValid();
+    if (this.schedule.Frequency == "Puntual") {
+      this.schedule.FinishDate = this.schedule.StartDate;
+      areDatesValid = true;
+    }
+    const areRequiredFieldsFilled = this.schedule.ID_Activity !== '' &&
+      this.schedule.ID_Type !== '' &&
+      this.schedule.ID_Campaign !== '' &&
+      this.schedule.Frequency !== '' &&
+      this.schedule.Address !== '' &&
+      this.schedule.StartDate !== null &&
+      this.schedule.FinishDate !== null &&
+      this.schedule.Capacity > 0;
+
+    return isAddressValid && areHoursValid && areDatesValid && areRequiredFieldsFilled;
+  }
+
 }
