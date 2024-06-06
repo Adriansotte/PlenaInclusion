@@ -2,7 +2,8 @@ const { handleHttpError } = require("../utils/handleError")
 const { verifyToken } = require("../utils/handleJwt")
 const UserModel = require('../models/userModel');
 
-
+// Middleware para comprobar si la peitción posee un token de sesion
+// valido.
 const authMiddleware = async (req, res, next) => {
     try {
         if (!req.headers.authorization) {
@@ -29,3 +30,4 @@ const authMiddleware = async (req, res, next) => {
 }
 
 module.exports = { authMiddleware };
+

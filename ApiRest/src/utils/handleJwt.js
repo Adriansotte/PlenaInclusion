@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 /**
- * 
+ * Metodo el cual genera un Token con duraciondde 2 horas
  * @param {*} user 
  */
 const tokenSign = async (user) => {
@@ -20,7 +20,7 @@ const tokenSign = async (user) => {
 };
 
 /**
- * 
+ *  metodo que recibe un token y verifica la validez del mismo
  * @param {*} tokenJwt 
  * @returns 
  */
@@ -33,3 +33,4 @@ const verifyToken = async (tokenJwt) => {
 }
 
 module.exports = { verifyToken, tokenSign }
+

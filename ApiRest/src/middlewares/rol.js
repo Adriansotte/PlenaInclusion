@@ -1,6 +1,5 @@
 const { handleHttpError } = require("../utils/handleError")
 
-
 /**
  * Array con los roles permitidos
  * @param {*} rol 

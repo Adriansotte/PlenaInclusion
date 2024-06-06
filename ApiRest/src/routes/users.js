@@ -4,15 +4,21 @@ const { getAllUsers, getUser, postUser, updateUser, deleteUser } = require("../c
 const { validatorCreateUser, validatorGetUser } = require("../valdiators/users")
 const { authMiddleware } = require("../middlewares/session");
 const uploadMiddleware = require("../utils/handleStorage");
+const { checkRol } = require("../middlewares/rol");
 
-router.get("/", authMiddleware, getAllUsers);
+// Ruta para listar todos los usuarios
+router.get("/", authMiddleware, checkRol(['Monitor', 'Administrador']), getAllUsers);
 
-router.get("/:id", authMiddleware, validatorGetUser, getUser);
+// Ruta para recoger un usuario mediante su id
+router.get("/:id", authMiddleware, checkRol(['Monitor', 'Administrador']), validatorGetUser, getUser);
 
-router.post("/", authMiddleware, validatorCreateUser, postUser);
+// Ruta para crear un usuario
+router.post("/", authMiddleware, checkRol(['Monitor', 'Administrador']), validatorCreateUser, postUser);
 
-router.put("/:id", authMiddleware, uploadMiddleware.single("Photo"), updateUser);
+// Ruta para modificar un usuario
+router.put("/:id", authMiddleware, checkRol(['Monitor', 'Administrador']), uploadMiddleware.single("Photo"), updateUser);
 
-router.delete("/:id", authMiddleware, validatorGetUser, deleteUser);
+// Ruta para eliminar un usuario.
+router.delete("/:id", authMiddleware, checkRol(['Monitor', 'Administrador']), validatorGetUser, deleteUser);
 
 module.exports = router;

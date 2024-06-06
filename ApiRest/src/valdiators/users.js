@@ -1,6 +1,7 @@
 const { check } = require("express-validator");
 const validateResults = require("../utils/handleValidator");
 
+// Middleware validador de los datos recibidos al servidor.
 const validatorCreateUser = [
     check("DNI").exists().notEmpty().isString(),
     check("Rol").exists().notEmpty().isIn(['Nominal', 'Monitor', 'Administrador']),
@@ -26,6 +27,7 @@ const validatorCreateUser = [
     }
 ];
 
+// Metodo el cual se encarga de comprobar que el parametro enviado es un UUID
 const validatorGetUser = [
     check("id").exists().notEmpty().isUUID(),
     (req, res, next) => {

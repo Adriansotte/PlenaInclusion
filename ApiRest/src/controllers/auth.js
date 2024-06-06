@@ -44,7 +44,6 @@ const registerController = async (req, res) => {
 
         res.status(201).json({ token, user: newUser });
     } catch (error) {
-        console.error("Error al registrar usuario:", error);
         handleHttpError(res, "ERROR_REGISTER_USER");
     }
 };
