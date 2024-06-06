@@ -5,3 +5,4 @@ export interface CampaignDTO {
     StartDate: Date,
     FinishDate: Date,
 }
+
