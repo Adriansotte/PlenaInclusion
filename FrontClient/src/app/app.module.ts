@@ -44,6 +44,7 @@ import { AddScheduleComponent } from './components/shared/add-schedule/add-sched
 import { ManageUsersComponent } from './components/pages/manage-users/manage-users.component';
 import { UserCardComponent } from './components/shared/user-card/user-card.component';
 import { ProfileInfoModalComponent } from './components/shared/profile-info-modal/profile-info-modal.component';
+import { TimeFormatPipe } from './pipes/time-format.pipe';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -84,7 +85,8 @@ registerLocaleData(localeEs, 'es');
     AddScheduleComponent,
     ManageUsersComponent,
     UserCardComponent,
-    ProfileInfoModalComponent
+    ProfileInfoModalComponent,
+    TimeFormatPipe
   ],
   imports: [
     BrowserModule,
