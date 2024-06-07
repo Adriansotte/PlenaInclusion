@@ -137,17 +137,34 @@ const sendMail = require('../utils/mailer');
 const sendInformationSchedule = async (req, res) => {
     try {
         const { user } = req;
-        console.log(user.dataValues)
+        const { name, adress, time, dates } = req.body;
+
+        if (!name || !dates || !Array.isArray(dates) || dates.length === 0) {
+            return res.status(400).send({ message: 'Invalid request body' });
+        }
+
+        const htmlContent = `
+            <h1>Gracias por apuntarte a esta actividad!!!</h1>
+            <p>Nombre de la actividad: ${name}</p>
+            <p>Debes acudir a la dirección: ${adress}</p>
+            <p>A la hora: ${time}</p>
+            <p>Fechas:</p>
+            <ul>
+                ${dates.map(date => `<li>${date}</li>`).join('')}
+            </ul>
+        `;
+
         await sendMail({
             from: "noReply_PlenaInclusionAragon@gmail.com",
             to: user.dataValues.Email,
             subject: "Recordatorio Actividades",
-            text: "FUNCIONAAAAAAAA",
-            html: `<h5>Este mensaje fue enviado desde nodejs</h5>`
+            text: `Nombre del Schedule: ${name}\nFechas: ${dates.join(', ')}`,
+            html: htmlContent
         });
+
         res.status(200).send({ message: 'Correo enviado exitosamente' });
     } catch (error) {
-        console.log(error)
+        console.log(error);
         handleHttpError(res, 'ERROR_SENDING_MAIL');
     }
 };
