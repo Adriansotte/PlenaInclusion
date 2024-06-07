@@ -5,6 +5,11 @@
         </div>
     </div>
     <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary mb-3" (click)="navigateToRegister()">Registrar Usuario</button>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12 col-md-6 col-lg-3 p-2" *ngFor="let user of users">
             <app-user-card [user]="user" (userClicked)="onUserClicked($event)"></app-user-card>
         </div>

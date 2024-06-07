@@ -96,7 +96,7 @@ export class FormComponent implements OnInit {
   }
 
   navigateToHome(): void {
-    this.router.navigate(['home'])
+    this.router.navigate(['manageU'])
   }
 
 

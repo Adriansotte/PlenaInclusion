@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserDTO } from 'src/app/models/user/userDTO';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -14,7 +15,9 @@ export class ManageUsersComponent implements OnInit {
   users: UserDTO[] = [];
   selectedUser: UserDTO | null = null;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe({
@@ -25,6 +28,10 @@ export class ManageUsersComponent implements OnInit {
 
       }
     })
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 
   onUserClicked(user: UserDTO): void {

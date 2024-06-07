@@ -53,9 +53,9 @@
             <div *ngIf="loginError" class="alert alert-danger mt-2">{{ loginError }}</div>
         </div>
         <div class="col-12">
-            <a href="#" id="registerTooltip" (click)="goToRegister($event)">¿No tienes
-                cuenta? Haz click aqui.</a>
-
+            <p class="text-primary" id="registerTooltip">¿No tienes
+                cuenta? Contacta con un monitor para que te ayude a crear una.</p>
+            <p class="text-primary" id="registerTooltip">Tambien puedes iniciar Sesión con tu cuenta de Google</p>
         </div>
         <div class="col-12">
             <app-google-auth-btn></app-google-auth-btn>

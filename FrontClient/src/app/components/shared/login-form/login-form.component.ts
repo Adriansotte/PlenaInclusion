@@ -51,11 +51,6 @@ export class LoginFormComponent implements AfterViewInit {
     }
   }
 
-  goToRegister(event: Event) {
-    event.preventDefault();
-    this.router.navigate(['/register']);
-  }
-
   onEmailChange(value: string) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(value) && value.split('.').pop() === 'com') {
