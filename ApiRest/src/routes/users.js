@@ -10,7 +10,7 @@ const { checkRol } = require("../middlewares/rol");
 router.get("/", authMiddleware, checkRol(['Monitor', 'Administrador']), getAllUsers);
 
 // Ruta para recoger un usuario mediante su id
-router.get("/:id", authMiddleware, checkRol(['Monitor', 'Administrador']), validatorGetUser, getUser);
+router.get("/:id", authMiddleware, checkRol(['Nominal','Monitor', 'Administrador']), validatorGetUser, getUser);
 
 // Ruta para crear un usuario
 router.post("/", authMiddleware, checkRol(['Monitor', 'Administrador']), validatorCreateUser, postUser);

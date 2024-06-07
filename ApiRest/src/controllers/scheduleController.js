@@ -42,7 +42,6 @@ const getSchedule = async (req, res) => {
 
 const postSchedule = async (req, res) => {
     try {
-        console.log(req.body)
         const body = req.body;
         const data = await ScheduleModel.create(body);
         res.send({ data });
@@ -133,6 +132,26 @@ const decrementAttendance = async (req, res) => {
     }
 };
 
+const sendMail = require('../utils/mailer');
+
+const sendInformationSchedule = async (req, res) => {
+    try {
+        const { user } = req;
+        console.log(user.dataValues)
+        await sendMail({
+            from: "noReply_PlenaInclusionAragon@gmail.com",
+            to: user.dataValues.Email,
+            subject: "Recordatorio Actividades",
+            text: "FUNCIONAAAAAAAA",
+            html: `<h5>Este mensaje fue enviado desde nodejs</h5>`
+        });
+        res.status(200).send({ message: 'Correo enviado exitosamente' });
+    } catch (error) {
+        console.log(error)
+        handleHttpError(res, 'ERROR_SENDING_MAIL');
+    }
+};
+
 module.exports = {
     getAllSchedules: getAllSchedules,
     postSchedule: postSchedule,
@@ -140,5 +159,6 @@ module.exports = {
     decrementAttendance: decrementAttendance,
     deleteSchedule: deleteSchedule,
     updateSchedule: updateSchedule,
-    getSchedule: getSchedule
+    getSchedule: getSchedule,
+    sendInformationSchedule: sendInformationSchedule
 };
