@@ -164,8 +164,9 @@
                                     </svg>
                                 </span>
                                 <div class="form-floating">
-                                    <input type="tel" class="form-control bg-success-subtle" id="floatingPhoneInput" name="Phone"
-                                        [ngModel]="selectedUser.Phone" placeholder="" required maxlength="10" readonly>
+                                    <input type="tel" class="form-control bg-success-subtle" id="floatingPhoneInput"
+                                        name="Phone" [ngModel]="selectedUser.Phone" placeholder="" required
+                                        maxlength="10" readonly>
                                     <label for="floatingPhoneInput">Teléfono</label>
                                 </div>
                             </div>
@@ -185,9 +186,9 @@
                                     </svg>
                                 </span>
                                 <div class="form-floating">
-                                    <input type="text" class="form-control bg-success-subtle" id="floatingAddressInput" name="Address"
-                                        [ngModel]="selectedUser.DNI_tutor" placeholder="Dirección" required
-                                        maxlength="50" readonly>
+                                    <input type="text" class="form-control bg-success-subtle" id="floatingAddressInput"
+                                        name="Address" [ngModel]="selectedUser.DNI_tutor" placeholder="Dirección"
+                                        required maxlength="50" readonly>
                                     <label for="floatingDniTutorInput">Tutor</label>
                                 </div>
                             </div>
@@ -196,7 +197,47 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" data-bs-toggle="modal"
+                    data-bs-target="#confirmationDeleteModal">Eliminar Usuario</button>
                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmationDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="staticBackdropLabel">Confirmación de la Eliminación</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estas seguro de borrar el usuario, se borrará todo rastro del usuario en la plaicación?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="deleteUser()"
+                    data-bs-toggle="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="adviceConfirmation" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Aviso</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Usuario borrado correctamente!!!
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
             </div>
         </div>
     </div>
