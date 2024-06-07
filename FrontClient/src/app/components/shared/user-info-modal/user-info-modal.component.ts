@@ -60,10 +60,8 @@ export class UserInfoModalComponent implements OnInit {
     this.userService.getAllUsers().subscribe({
       next: (response: UserDTO[]) => {
         this.allUsers = response;
-        console.log(response)
       },
       error: (error: any) => {
-        console.log(error)
       }
     })
   }

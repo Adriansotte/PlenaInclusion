@@ -26,6 +26,9 @@
                 <input class="form-control" type="file" id="Photo" name="Photo" (change)="onFileSelected($event)"
                     accept="image/*">
             </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
+            </div>
             <div *ngIf="!archivoInsertado" class="text-center">
                 Por favor seleccione una foto.
             </div>
@@ -53,6 +56,9 @@
             <div *ngIf="!isDNIValid && user.DNI.length > 0" class="text-danger mt-2">
                 El DNI debe tener exactamente 9 caracteres.
             </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
+            </div>
         </div>
 
         <div class="col-lg-4 col-md-12">
@@ -70,6 +76,9 @@
                     <label for="floatingDateInput">Fecha de Nacimiento</label>
                 </div>
             </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
+            </div>
         </div>
 
         <div class="col-lg-4 col-md-12">
@@ -81,13 +90,13 @@
                     <option value="Administrador">Administrador</option>
                 </select>
                 <label for="Rol" class="ms-2">Rol:</label>
-                <div *ngIf="!isRolSelected && user.Rol" class="text-danger mt-2">
-                    Por favor selecciona al menos un rol.
+                <div class="mt-3">
+                    <footer class="blockquote-footer">Campo Obligatorio</footer>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row my-4">
+    <div class="row">
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
                 <span class="input-group-text" [ngClass]="{'valid-input': isValidName(user.Name)}">
@@ -103,6 +112,9 @@
                         placeholder="" required maxlength="30">
                     <label for="floatingNameInput">Nombre</label>
                 </div>
+            </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
             </div>
         </div>
 
@@ -122,6 +134,9 @@
                     <label for="floatingSurname1Input">Primer Apellido</label>
                 </div>
             </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
+            </div>
         </div>
 
         <div class="col-lg-4 col-md-12">
@@ -140,6 +155,9 @@
                     <label for="floatingSurname2Input">Segundo Apellido</label>
                 </div>
             </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
+            </div>
         </div>
 
     </div>
@@ -157,10 +175,11 @@
                     <input type="email" class="form-control" id="floatingEmailInput" name="Email"
                         [(ngModel)]="user.Email" placeholder="" required (ngModelChange)="onEmailChange($event)">
                     <label for="floatingEmailInput">Correo Electrónico</label>
-                    <div class="invalid-feedback">
-                        Por favor ingrese un correo electrónico válido.
-                    </div>
+
                 </div>
+            </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
             </div>
         </div>
         <div class="col-auto d-flex align-items-center">
@@ -190,6 +209,9 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
+            </div>
         </div>
 
 
@@ -211,6 +233,9 @@
             </div>
             <div *ngIf="!passwordsMatch && user.ConfirmPass" class="text-danger mt-2">
                 La contraseña no es igual.
+            </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
             </div>
         </div>
 
@@ -238,6 +263,9 @@
                     <label for="floatingAddressInput">Dirección</label>
                 </div>
             </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
+            </div>
         </div>
 
 
@@ -256,6 +284,9 @@
                     <label for="floatingPhoneInput">Teléfono</label>
                 </div>
             </div>
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo Obligatorio</footer>
+            </div>
             <div *ngIf="!isValidPhone && user.Phone" class="text-danger mt-2">
                 Por favor ingrese un número de teléfono válido.
             </div>
@@ -265,7 +296,7 @@
     <div class="row my-4">
         <div class="col-lg-4 col-md-12">
             <div class="input-group">
-                <span class="input-group-text" [ngClass]="{'valid-input': dniTutorValido}">
+                <span class="input-group-text">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-check-fill" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -274,13 +305,16 @@
                     </svg>
                 </span>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingDniTutorInput" name="DNI_tutor"
-                        [(ngModel)]="user.DNI_tutor" placeholder="" required (input)="validarDniTutor()" maxlength="9">
-                    <label for="floatingDniTutorInput">DNI del Tutor</label>
+                    <select class="form-control" id="floatingDniTutorInput" [(ngModel)]="user.DNI_tutor"
+                        name="DNI_tutor" required (change)="validarDniTutor()">
+                        <option *ngFor="let user of allUsers" [value]="user.DNI">{{user.Name}}
+                            {{user.Surname_1}} {{user.Surname_2}} ({{user.DNI}})</option>
+                    </select>
+                    <label for="floatingDniTutorInput">Seleccione un Tutor</label>
                 </div>
             </div>
-            <div *ngIf="!dniTutorValido && user.DNI_tutor">
-                Por favor ingrese un DNI válido del tutor.
+            <div class="mt-3">
+                <footer class="blockquote-footer">Campo no Obligatorio</footer>
             </div>
         </div>
 
@@ -290,7 +324,7 @@
     </div>
     <div class="row justify-content-around">
         <div class="col-12 col-md-3">
-            <button class="btn btn-outline-danger w-100">Cancelar</button>
+            <button class="btn btn-outline-warning w-100" (click)="navigateToHome()">Volver</button>
         </div>
 
         <!-- Componente HTML -->
