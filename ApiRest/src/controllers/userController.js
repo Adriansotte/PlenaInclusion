@@ -1,4 +1,5 @@
 const UserModel = require('../models/userModel');
+const User_ScheduleModel = require('../models/user_scheduleModel');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
 
@@ -51,7 +52,7 @@ const updateUser = async (req, res) => {
             where: { ID_user: id }
         });
         const userAfterUpdate = await UserModel.findByPk(id);
-        
+
         return res.send({ data: userAfterUpdate });
     } catch (error) {
         console.error('Error al actualizar el usuario:', error);
@@ -62,6 +63,11 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
+
+        await User_ScheduleModel.destroy({
+            where: { UserIDUser: id }
+        });
+
         const user = await UserModel.destroy({
             where: { ID_user: id }
         });

@@ -35,4 +35,8 @@ export class UserService {
     }
     return this.http.put<UserDTO>(`${this.url}/api/users/${user.ID_user}`, formData);
   }
+
+  deleteUser(userId: string): Observable<UserDTO> {
+    return this.http.delete<UserDTO>(`${this.url}/api/users/${userId}`);
+  }
 }
