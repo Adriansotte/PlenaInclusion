@@ -49,4 +49,16 @@ export class AllSchedulesService {
   deleteSchedule(idSchedule: string) {
     return this.http.delete<scheduleDTO>(`${this.url}/api/schedules/${idSchedule}`);
   }
+
+  sendRecorderEmail(scheduleName: string, scheduleTime: string, scheduleAdress: string, scheduleDay: string, dates: string[]): Observable<any> {
+    const body = {
+      name: scheduleName,
+      adress: scheduleAdress,
+      day: scheduleDay,
+      time: scheduleTime,
+      dates: dates
+    }
+    return this.http.post<scheduleDTO>(`${this.url}/api/schedules/sendEmail`, body);
+
+  }
 }

@@ -29,7 +29,7 @@ export class ScheduleModalComponent {
   constructor(private userScheduleService: UserScheduleService,
     private scheduleService: AllSchedulesService
   ) { }
-  
+
 
   getCommentsbyScheduleId() {
     this.userScheduleService.listScheduleBySchedule(this.schedule?.ID_Schedule!).subscribe({
@@ -54,6 +54,8 @@ export class ScheduleModalComponent {
       return 0;
     }
   }
+
+
 
 
   deleteForSchedule() {
@@ -81,7 +83,7 @@ export class ScheduleModalComponent {
           this.launchInsertion(userId, scheduleId!, date)
         }
         this.incrementAttendance(scheduleId!);
-
+        this.sendEmail();
       } else {
         console.error('ID de usuario no encontrado en el sesionStorage');
       }
@@ -90,6 +92,17 @@ export class ScheduleModalComponent {
     }
     this.fechas = [];
 
+  }
+
+  sendEmail() {
+    this.scheduleService.sendRecorderEmail(this.schedule?.Activity?.Name!, this.schedule?.StartHour!, this.schedule?.Address!, this.schedule?.DayOfWeek!, this.fechas).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
   }
 
   incrementAttendance(scheduleId: string): void {

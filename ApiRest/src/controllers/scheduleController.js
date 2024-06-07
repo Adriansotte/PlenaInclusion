@@ -107,7 +107,6 @@ const incrementAttendance = async (req, res) => {
         await schedule.save();
         res.json({ data: schedule });
     } catch (error) {
-        console.error('Error al incrementar la asistencia:', error);
         handleHttpError(res, 'ERROR_INCREMENT_ATTENDANCE');
     }
 };
@@ -127,7 +126,6 @@ const decrementAttendance = async (req, res) => {
             res.status(400).json({ error: "Attendance cannot be less than 0" });
         }
     } catch (error) {
-        console.error('Error al disminuir la asistencia:', error);
         handleHttpError(res, 'ERROR_DECREMENT_ATTENDANCE');
     }
 };
@@ -137,7 +135,7 @@ const sendMail = require('../utils/mailer');
 const sendInformationSchedule = async (req, res) => {
     try {
         const { user } = req;
-        const { name, adress, time, dates } = req.body;
+        const { name, adress, time, dates, day } = req.body;
 
         if (!name || !dates || !Array.isArray(dates) || dates.length === 0) {
             return res.status(400).send({ message: 'Invalid request body' });
@@ -148,6 +146,7 @@ const sendInformationSchedule = async (req, res) => {
             <p>Nombre de la actividad: ${name}</p>
             <p>Debes acudir a la dirección: ${adress}</p>
             <p>A la hora: ${time}</p>
+            <p>Los dias: ${day}</p>
             <p>Fechas:</p>
             <ul>
                 ${dates.map(date => `<li>${date}</li>`).join('')}
