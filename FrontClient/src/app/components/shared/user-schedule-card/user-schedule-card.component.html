@@ -14,8 +14,8 @@
             <div class="col-md-8">
                 <p class="card-text">{{ userSchedule?.Schedule?.Activity?.Description }}</p>
                 <p class="card-text"><strong>Ubicación:</strong> {{ userSchedule?.Schedule?.Address }}</p>
-                <p class="card-text"><strong>Horario:</strong> {{ userSchedule?.Schedule?.StartHour }} - {{
-                    userSchedule?.Schedule?.FinishHour }}</p>
+                <p class="card-text"><strong>Horario:</strong> {{ userSchedule?.Schedule?.StartHour ! |  timeFormat }} -{{
+                    userSchedule?.Schedule?.FinishHour! |  timeFormat }}</p>
                 <p class="card-text"><strong>Campaña:</strong> {{ userSchedule?.Schedule?.Campaign?.Name }}</p>
                 <p class="card-text"><strong>Participantes:</strong> {{ userSchedule?.Schedule?.Attendance }}</p>
             </div>

@@ -110,7 +110,7 @@
                             </span>
                             <div class="form-floating col-5">
                                 <input type="text" class="form-control"
-                                    value="{{ schedule?.StartHour }} - {{ schedule?.FinishHour }}" readonly
+                                    value="{{ schedule?.StartHour! |  timeFormat}} - {{ schedule?.FinishHour! |  timeFormat }}" readonly
                                     placeholder="">
                                 <label>Horario</label>
                             </div>
