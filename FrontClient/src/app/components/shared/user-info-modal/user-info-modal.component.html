@@ -68,28 +68,27 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-12" *ngIf="selectedUser.BirthDay; else loggedOutTemplate">
-                            <div class="input-group">
-                                <span class="input-group-text" [ngClass]="{'valid-date': isValidDate}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-calendar-date" viewBox="0 0 16 16">
-                                        <path
-                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
-                                    </svg>
-                                </span>
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="floatingDateInput" name="BirthDay"
-                                        value="{{selectedUser.BirthDay |
-                                            date: 'longDate' }}" required readonly>
-                                    <label for="floatingDateInput">Fecha de Nacimiento</label>
+                        <div class="col-lg-4 col-md-12">
+                            <div *ngIf="selectedUser.BirthDay; else loggedOutTemplate">
+                                <div class="input-group">
+                                    <span class="input-group-text" [ngClass]="{'valid-date': isValidDate}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-calendar-date" viewBox="0 0 16 16">
+                                            <path
+                                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1.5 1a.5.5 0 0 1 .5.5V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h3V5.5a.5.5 0 0 1 1 0V6h.5A.5.5 0 0 1 16 6.5v2.5h-1V7H1v2H0V6.5a.5.5 0 0 1 .5-.5H1.5zM1 12v1h14v-1H1z" />
+                                        </svg>
+                                    </span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingDateInput" name="BirthDay"
+                                            value="{{ selectedUser.BirthDay | date: 'longDate' }}" required readonly>
+                                        <label for="floatingDateInput">Fecha de Nacimiento</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <footer class="blockquote-footer">Campo no editable</footer>
                                 </div>
                             </div>
-                            <div class="mt-3">
-                                <footer class="blockquote-footer">Campo no Editable</footer>
-                            </div>
-                        </div>
-                        <ng-template #loggedOutTemplate>
-                            <div class="col-lg-4 col-md-12">
+                            <ng-template #loggedOutTemplate>
                                 <div class="input-group">
                                     <span class="input-group-text" [ngClass]="{'valid-date': isValidDate}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -104,12 +103,12 @@
                                         <label for="floatingDateInput">Fecha de Nacimiento</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="mt-3">
-                                <footer class="blockquote-footer">Campo Editable, solo es editable la primera vez.
-                                </footer>
-                            </div>
-                        </ng-template>
+                                <div class="mt-3">
+                                    <footer class="blockquote-footer">Campo editable</footer>
+                                </div>
+                            </ng-template>
+                        </div>
+
 
                         <div class="col-lg-4 col-md-12">
                             <div class="form-floating">
@@ -165,8 +164,7 @@
 
                         <div class="col-lg-4 col-md-12">
                             <div class="input-group">
-                                <span class="input-group-text"
-                                    [ngClass]="{'valid-input': isValidSurname2(selectedUser!.Surname_2!)}">
+                                <span class="input-group-text" [ngClass]="{'valid-input': true}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                                         <path
@@ -175,8 +173,7 @@
                                 </span>
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="floatingSurname2Input" name="Surname_2"
-                                        [(ngModel)]="selectedUser.Surname_2" placeholder="" required maxlength="30"
-                                        (input)="isValidSurname2(selectedUser.Surname_2!)">
+                                        [(ngModel)]="selectedUser.Surname_2" placeholder="" required maxlength="30">
                                     <label for="floatingSurname2Input">Segundo Apellido</label>
                                 </div>
                             </div>
@@ -185,8 +182,6 @@
                             </div>
                         </div>
 
-                    </div>
-                    <div class="row my-1">
                         <div class="col-lg-4 col-md-12">
                             <div class="input-group">
                                 <span class="input-group-text" [ngClass]="{'valid-email': isValidEmail}">
@@ -199,7 +194,7 @@
                                 <div class="form-floating">
                                     <input type="email" class="form-control" id="floatingEmailInput" name="Email"
                                         [(ngModel)]="selectedUser.Email" placeholder="" required
-                                        (ngModelChange)="onEmailChange($event)" readonly>
+                                        (ngModelChange)="onEmailChange($event)" z readonly>
                                     <label for="floatingEmailInput">Correo Electrónico</label>
                                     <div class="invalid-feedback">
                                         Por favor ingrese un correo electrónico válido.
@@ -215,6 +210,8 @@
                                 Con el formato ejemplo&#64;correo.com
                             </span>
                         </div>
+                    </div>
+                    <div class="row my-1">
 
                     </div>
 
@@ -283,7 +280,7 @@
                                         [(ngModel)]="selectedUser.DNI_tutor" name="DNI_tutor" required
                                         (change)="validarDniTutor()">
                                         <option *ngFor="let user of allUsers" [value]="user.DNI">{{user.Name}}
-                                            {{user.Surname_1}} {{user.Surname_2}} ({{user.DNI}})</option>
+                                            {{user.Surname_1}} ({{user.DNI}})</option>
                                     </select>
                                     <label for="floatingDniTutorInput">Seleccione un Tutor</label>
                                 </div>
