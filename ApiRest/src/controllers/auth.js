@@ -29,7 +29,7 @@ const registerController = async (req, res) => {
             Surname_2: formData.Surname_2,
             Email: formData.Email,
             Pass: Pass,
-            Photo: `http://${process.env.DATABASEIP}:${process.env.PORT}/${formData.Photo}`,
+            Photo: `${process.env.PUBLIC_URL}/${formData.Photo}`,
             DNI_tutor: formData.DNI_tutor,
             Adress: formData.Adress,
             Phone: formData.Phone,

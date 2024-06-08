@@ -48,7 +48,7 @@ const postActivity = async (req, res) => {
         const activityData = {
             Name: formData.Name,
             Description: formData.Description,
-            Photo: `http://${process.env.DATABASEIP}:${process.env.PORT}/${formData.Photo}`,
+            Photo: `${process.env.PUBLIC_URL}/${formData.Photo}`,
         }
         const data = await ActivityModel.create(activityData);
         res.status(201).json({ activityData });
@@ -71,7 +71,7 @@ const updateActivity = async (req, res) => {
         const file = req.file;
 
         if (file) {
-            formData.Photo = `http://${process.env.DATABASEIP}:${process.env.PORT}/${file.filename}`;
+            formData.Photo = `${process.env.PUBLIC_URL}/${file.filename}`;
         }
 
         const activityBeforeUpdate = await ActivityModel.findByPk(id);
