@@ -10,13 +10,13 @@ const { checkRol } = require("../middlewares/rol");
 router.get("/", authMiddleware, checkRol(['Monitor', 'Administrador']), getAllUsers);
 
 // Ruta para recoger un usuario mediante su id
-router.get("/:id", authMiddleware, checkRol(['Nominal','Monitor', 'Administrador']), validatorGetUser, getUser);
+router.get("/:id", authMiddleware, checkRol(['Nominal', 'Monitor', 'Administrador']), validatorGetUser, getUser);
 
 // Ruta para crear un usuario
 router.post("/", authMiddleware, checkRol(['Monitor', 'Administrador']), validatorCreateUser, postUser);
 
 // Ruta para modificar un usuario
-router.put("/:id", authMiddleware, checkRol(['Monitor', 'Administrador']), uploadMiddleware.single("Photo"), updateUser);
+router.put("/:id", authMiddleware, checkRol(['Nominal', 'Monitor', 'Administrador']), uploadMiddleware.single("Photo"), updateUser);
 
 // Ruta para eliminar un usuario.
 router.delete("/:id", authMiddleware, checkRol(['Monitor', 'Administrador']), validatorGetUser, deleteUser);

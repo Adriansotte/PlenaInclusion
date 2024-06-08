@@ -10,15 +10,10 @@
                 <div *ngIf="selectedUser" class="row">
                     <div class="row justify-content-center p-2">
 
-                        <div *ngIf="imagenMostrada"
-                            class="col-auto vh-25 d-flex justify-content-center align-items-center">
-                            <img [src]="imagenMostrada" alt="Imagen seleccionada" class="img-fluid rounded shadow-lg"
+
+                        <div class="col-auto vh-25 d-flex justify-content-center align-items-center">
+                            <img src={{selectedUser.Photo}} alt="Imagen de usuario" class="img-fluid rounded shadow-lg"
                                 style="max-height: 150px;">
-                        </div>
-                        <div *ngIf="!imagenMostrada"
-                            class="col-auto vh-25 d-flex justify-content-center align-items-center">
-                            <img src={{selectedUser.Photo}} alt="Imagen predeterminada"
-                                class="img-fluid rounded shadow-lg" style="max-height: 150px;">
                         </div>
 
                     </div>

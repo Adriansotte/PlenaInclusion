@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
         const filename = `file-${Date.now()}.${ext}`;
         const fileData = {
             filename: filename,
-            url: `${process.env.PUBLIC_URL}/${filename}`
+            url: `http://localhost:3000/${filename}`
         };
         await StorageModel.create(fileData);
         cb(null, filename);

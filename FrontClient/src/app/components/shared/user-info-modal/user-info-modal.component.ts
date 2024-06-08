@@ -21,7 +21,7 @@ export class UserInfoModalComponent implements OnInit {
   Photo: File | undefined;
   archivoInsertado: boolean = true;
   archivoInsertadoValid: boolean = true;
-  imagenMostrada: any;
+  imagenMostrada: boolean = false;
 
   adviceTitle: string = "";
 
@@ -85,7 +85,7 @@ export class UserInfoModalComponent implements OnInit {
       reader.readAsDataURL(file);
     } else {
       this.archivoInsertadoValid = false;
-      this.imagenMostrada = null;
+      this.imagenMostrada = false;
       if (this.selectedUser) {
         this.selectedUser.Photo = '';
       }

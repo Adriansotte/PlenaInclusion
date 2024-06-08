@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
   getLogo(): void {
     this.defaultProfileService.getPlenaInclusionLogo().subscribe({
       next: (imageUrl: string) => {
+        console.log(imageUrl)
         this.plenaInclusionLogo = imageUrl;
       },
       error: (error: any) => {
