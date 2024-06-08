@@ -24,7 +24,7 @@ export class LoginFormComponent implements AfterViewInit {
 
   constructor(
     private loginService: LoginService,
-    private authService: AuthService,  // Inyecta AuthService
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -33,14 +33,8 @@ export class LoginFormComponent implements AfterViewInit {
       this.loginService.loginUser(this.user).subscribe({
         next: response => {
           sessionStorage.setItem('token', response.data.token);
-          sessionStorage.setItem('ID_User', response.data.user.ID_user);
-          sessionStorage.setItem('Email', response.data.user.Email);
-          sessionStorage.setItem('Name', response.data.user.Name);
-          sessionStorage.setItem('Surname_1', response.data.user.Surname_1);
-          sessionStorage.setItem('Surname_2', response.data.user.Surname_2);
-          sessionStorage.setItem('Rol', response.data.user.Rol);
+          sessionStorage.setItem("user", JSON.stringify(response.data.user));
 
-          // Establece el rol en AuthService
           this.authService.setRole(response.data.user.Rol);
         },
         error: error => {
@@ -55,11 +49,6 @@ export class LoginFormComponent implements AfterViewInit {
         }
       });
     }
-  }
-
-  goToRegister(event: Event) {
-    event.preventDefault();
-    this.router.navigate(['/register']);
   }
 
   onEmailChange(value: string) {

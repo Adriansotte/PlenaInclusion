@@ -1,9 +1,9 @@
-footer {
-    background-color: #343a40;
-    /* Color de fondo oscuro */
-}
-
 footer a {
     text-decoration: none;
     /* Sin subrayado para enlaces */
+}
+
+footer .list-unstyled li {
+    margin-bottom: 10px;
+    /* Ajusta el valor según la separación deseada */
 }

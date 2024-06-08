@@ -4,6 +4,7 @@ const TypeModel = require('../models/typeModel');
 const CampaignModel = require('../models/campaignModel');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
+const User_ScheduleModel = require("../models/user_scheduleModel")
 
 async function getAllSchedules(req, res) {
     try {
@@ -41,7 +42,7 @@ const getSchedule = async (req, res) => {
 
 const postSchedule = async (req, res) => {
     try {
-        const body = matchedData(req);
+        const body = req.body;
         const data = await ScheduleModel.create(body);
         res.send({ data });
     } catch (e) {
@@ -72,6 +73,15 @@ const updateSchedule = async (req, res) => {
 const deleteSchedule = async (req, res) => {
     try {
         const { id } = req.params;
+
+        const userScheduleAsociated = await User_ScheduleModel.findOne({
+            where: { ScheduleIDSchedule: id }
+        })
+
+        if (userScheduleAsociated) {
+            return res.status(404).json({ error: "SCHEDULE_ASOCIATED" });
+        }
+
         const schedule = await ScheduleModel.destroy({
             where: { ID_schedule: id }
         });
@@ -97,7 +107,6 @@ const incrementAttendance = async (req, res) => {
         await schedule.save();
         res.json({ data: schedule });
     } catch (error) {
-        console.error('Error al incrementar la asistencia:', error);
         handleHttpError(res, 'ERROR_INCREMENT_ATTENDANCE');
     }
 };
@@ -117,8 +126,45 @@ const decrementAttendance = async (req, res) => {
             res.status(400).json({ error: "Attendance cannot be less than 0" });
         }
     } catch (error) {
-        console.error('Error al disminuir la asistencia:', error);
         handleHttpError(res, 'ERROR_DECREMENT_ATTENDANCE');
+    }
+};
+
+const sendMail = require('../utils/mailer');
+
+const sendInformationSchedule = async (req, res) => {
+    try {
+        const { user } = req;
+        const { name, adress, time, dates, day } = req.body;
+
+        if (!name || !dates || !Array.isArray(dates) || dates.length === 0) {
+            return res.status(400).send({ message: 'Invalid request body' });
+        }
+
+        const htmlContent = `
+            <h1>Gracias por apuntarte a esta actividad!!!</h1>
+            <p>Nombre de la actividad: ${name}</p>
+            <p>Debes acudir a la dirección: ${adress}</p>
+            <p>A la hora: ${time}</p>
+            <p>Los dias: ${day}</p>
+            <p>Fechas:</p>
+            <ul>
+                ${dates.map(date => `<li>${date}</li>`).join('')}
+            </ul>
+        `;
+
+        await sendMail({
+            from: "noReply_PlenaInclusionAragon@gmail.com",
+            to: user.dataValues.Email,
+            subject: "Recordatorio Actividades",
+            text: `Nombre del Schedule: ${name}\nFechas: ${dates.join(', ')}`,
+            html: htmlContent
+        });
+
+        res.status(200).send({ message: 'Correo enviado exitosamente' });
+    } catch (error) {
+        console.log(error);
+        handleHttpError(res, 'ERROR_SENDING_MAIL');
     }
 };
 
@@ -129,5 +175,6 @@ module.exports = {
     decrementAttendance: decrementAttendance,
     deleteSchedule: deleteSchedule,
     updateSchedule: updateSchedule,
-    getSchedule: getSchedule
+    getSchedule: getSchedule,
+    sendInformationSchedule: sendInformationSchedule
 };

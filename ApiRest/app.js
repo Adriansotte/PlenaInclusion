@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const defineRelations = require("./src/models/relations");
-const multer = require("multer"); // Importa multer
+const multer = require("multer");
 
+// Inicializamos la aplicación con express
 const app = express();
 
 // Conexion a la base de datos

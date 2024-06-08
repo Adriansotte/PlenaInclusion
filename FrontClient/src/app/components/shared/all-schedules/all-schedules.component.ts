@@ -31,6 +31,9 @@ export class AllSchedulesComponent implements OnInit {
 
   loading: boolean = true;
 
+  role: string | null = sessionStorage.getItem("Rol");
+
+
   constructor(private allSchedulesService: AllSchedulesService,
     private userScheduleService: UserScheduleService,
     private typeService: TypeService) { }
@@ -57,7 +60,6 @@ export class AllSchedulesComponent implements OnInit {
     this.allSchedulesService.listAllSchedules().subscribe({
       next: (data: scheduleDTO[]) => {
         this.schedules = data;
-        console.log(data)
         this.applyFilter();
       },
       error: (error: any) => {
@@ -70,7 +72,7 @@ export class AllSchedulesComponent implements OnInit {
   }
 
   handleUserSchedules(): void {
-    this.userScheduleService.listSchedulesByUser(sessionStorage.getItem('ID_User')).subscribe({
+    this.userScheduleService.listSchedulesByUser(JSON.parse(sessionStorage.getItem("user")!).ID_user).subscribe({
       next: (data: userScheduleDTO[]) => {
         this.userSchedules = data;
       },
@@ -82,7 +84,7 @@ export class AllSchedulesComponent implements OnInit {
 
   applyFilter(): void {
     this.filteredSchedules = this.schedules.filter(schedule => {
-      const matchesName = schedule.Activity.Name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesName = schedule.Activity!.Name.toLowerCase().includes(this.searchTerm.toLowerCase());
       const scheduleStartDate = new Date(schedule.StartDate);
       const scheduleFinishDate = new Date(schedule.FinishDate);
       const startDate = this.startDate ? new Date(this.startDate) : null;
@@ -132,5 +134,13 @@ export class AllSchedulesComponent implements OnInit {
   handleScheduleChange(): void {
     this.handleUserSchedules();
     this.handleSchedules();
+  }
+
+  addScheduleModal() {
+    const modalElement = document.getElementById('addScheduleModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 }

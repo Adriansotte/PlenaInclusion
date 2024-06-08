@@ -1,4 +1,5 @@
 const UserModel = require('../models/userModel');
+const User_ScheduleModel = require('../models/user_scheduleModel');
 const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
 
@@ -36,15 +37,22 @@ const postUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const body = matchedData(req, { onlyValidData: true });
+        const formData = req.body;
+        const file = req.file;
+
+        if (file) {
+            formData.Photo = `${process.env.PUBLIC_URL}:${process.env.PORT}/${file.filename}`;
+        }
+
         const userBeforeUpdate = await UserModel.findByPk(id);
         if (!userBeforeUpdate) {
             return res.status(404).send({ error: "User not found" });
         }
-        await UserModel.update(body, {
+        await UserModel.update(formData, {
             where: { ID_user: id }
         });
         const userAfterUpdate = await UserModel.findByPk(id);
+
         return res.send({ data: userAfterUpdate });
     } catch (error) {
         console.error('Error al actualizar el usuario:', error);
@@ -55,6 +63,11 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
+
+        await User_ScheduleModel.destroy({
+            where: { UserIDUser: id }
+        });
+
         const user = await UserModel.destroy({
             where: { ID_user: id }
         });

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environments } from 'src/environments/environments';
+import { userScheduleDTO } from 'src/app/models/userSchedule/userScheduleDTO';
 
 
 @Injectable({
@@ -24,6 +25,10 @@ export class UserScheduleService {
 
   listSchedulesByUser(userId: string | null) {
     return this.http.get<any>(`${this.url}/api/userSchedules/users/${userId}/schedules`);
+  }
+
+  listScheduleBySchedule(scheduleId: string | null): Observable<userScheduleDTO[]> {
+    return this.http.get<userScheduleDTO[]>(`${this.url}/api/userSchedules/schedules/${scheduleId}/users`);
   }
 
   deleteRegistation(userId: string, scheduleId: string): Observable<any> {

@@ -1,4 +1,7 @@
+declare var google: any;
+
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -8,7 +11,7 @@ export class AuthService {
   private roleSubject = new BehaviorSubject<string | null>(null);
   role$ = this.roleSubject.asObservable();
 
-  constructor() {
+  constructor(private router: Router) {
     const storedRole = sessionStorage.getItem('Rol');
     if (storedRole) {
       this.roleSubject.next(storedRole);
@@ -23,4 +26,12 @@ export class AuthService {
   getRole(): string | null {
     return sessionStorage.getItem('Rol');
   }
+
+  signOut() {
+    google.accounts.id.disableAutoSelect();
+    sessionStorage.clear();
+    this.roleSubject.next(null);
+    this.router.navigate(['/']);
+  }
+
 }

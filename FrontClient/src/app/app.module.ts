@@ -36,6 +36,15 @@ import { SuccessModalComponent } from './components/shared/success-modal/success
 import { ManageTypesComponent } from './components/pages/manage-types/manage-types.component';
 import { TypeModalComponent } from './components/shared/type-modal/type-modal.component';
 import { AddTypeComponent } from './components/shared/add-type/add-type.component';
+import { GoogleAuthBtnComponent } from './components/shared/google-auth-btn/google-auth-btn.component';
+import { ViewCommentsComponent } from './components/shared/view-comments/view-comments.component';
+import { ProfileCardComponent } from './components/shared/profile-card/profile-card.component';
+import { UserInfoModalComponent } from './components/shared/user-info-modal/user-info-modal.component';
+import { AddScheduleComponent } from './components/shared/add-schedule/add-schedule.component';
+import { ManageUsersComponent } from './components/pages/manage-users/manage-users.component';
+import { UserCardComponent } from './components/shared/user-card/user-card.component';
+import { ProfileInfoModalComponent } from './components/shared/profile-info-modal/profile-info-modal.component';
+import { TimeFormatPipe } from './pipes/time-format.pipe';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -68,7 +77,16 @@ registerLocaleData(localeEs, 'es');
     SuccessModalComponent,
     ManageTypesComponent,
     TypeModalComponent,
-    AddTypeComponent
+    AddTypeComponent,
+    GoogleAuthBtnComponent,
+    ViewCommentsComponent,
+    ProfileCardComponent,
+    UserInfoModalComponent,
+    AddScheduleComponent,
+    ManageUsersComponent,
+    UserCardComponent,
+    ProfileInfoModalComponent,
+    TimeFormatPipe
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { NgModel } from '@angular/forms';
 import { activityDTO } from 'src/app/models/activity/activityDTO';
 import { ActivityService } from 'src/app/services/activities/activity.service';
 import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
+import { isFieldValid } from 'src/utils/fieldValid';
 
 @Component({
   selector: 'app-add-activity',
@@ -85,10 +86,8 @@ export class AddActivityComponent implements OnInit {
   }
 
   isFieldValid(value: string): boolean {
-    const regex = /^[a-zA-Z0-9\s.,:]+$/;
-    const isValid = regex.test(value.trim());
-    this.isNameEntered = value.trim() !== '' && isValid;
-    return isValid;
+    return isFieldValid(value);
+
   }
 
   isAllFieldsValid(): boolean | null {

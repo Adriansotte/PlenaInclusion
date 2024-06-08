@@ -1,3 +1,11 @@
+/**
+ * Funcion cuya utilidad es calcular los dias de asistencia entre una fecha de inicio
+ * y una fecha final, semanalmente se calculan todos los dias que tiene que asistir
+ * un usuario a una actividad, contando desde el dia en el que se apunta.
+ * @param startDate 
+ * @param endDate 
+ * @returns 
+ */
 export function getWeeklyAttendanceDates(startDate: Date, endDate: Date): string[] {
     const dates: string[] = [];
     let currentDate = new Date(startDate);

@@ -13,11 +13,18 @@ export class DefaultProfileService {
   defaultProfileImage: string = environments.defautlProfileImage;
   noAvtivityImage: string = environments.noActivityImage;
   plenaInlcusionLogp: string = environments.plenaInlcusionLogo;
+  plenaInlcusionLogoToast: string = environments.plenaInclusionToast;
 
   constructor(private http: HttpClient) { }
 
   getDefaultProfileImage(): Observable<string> {
     return this.http.get<any>(`${this.url}/api/storage/${this.defaultProfileImage}`).pipe(
+      map((response: any) => response.data.url)
+    );
+  }
+
+  getDefaultPlenaInclusionLogoImage(): Observable<string> {
+    return this.http.get<any>(`${this.url}/api/storage/${this.plenaInlcusionLogoToast}`).pipe(
       map((response: any) => response.data.url)
     );
   }

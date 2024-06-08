@@ -3,17 +3,25 @@ const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
 const ScheduleModel = require("../models/scheduleModel");
 
+/**
+ * Metodo que devuelve todos las actividades de la base de datos.
+ * @param {*} req 
+ * @param {*} res 
+ */
 const getAllActivities = async (req, res) => {
     try {
-        const user = req.user;
         const activities = await ActivityModel.findAll();
         res.json(activities);
     } catch (error) {
-        console.error('Error al obtener todos los actividades:', error);
-        res.status(500).json({ error: 'Error al obtener todos los actividades' });
+        handleHttpError(res, "ERROR_GET_ACTIVITIES")
     }
 }
 
+/**
+ * Metodo que devuelve una actividad por su identificador
+ * @param {*} req 
+ * @param {*} res 
+ */
 const getActivity = async (req, res) => {
     try {
         req = matchedData(req);
@@ -21,11 +29,15 @@ const getActivity = async (req, res) => {
         const activity = await ActivityModel.findByPk(id);
         res.json(activity);
     } catch (error) {
-        console.error('Error al obtener la actividad:', error);
         handleHttpError(res, "ERROR_GET_ACTIVITIES")
     }
 }
 
+/**
+ * Metodo que crea una nueva actividad en la base de datos
+ * @param {*} req 
+ * @param {*} res 
+ */
 const postActivity = async (req, res) => {
     try {
         const formData = req.body;
@@ -36,7 +48,7 @@ const postActivity = async (req, res) => {
         const activityData = {
             Name: formData.Name,
             Description: formData.Description,
-            Photo: `http://${process.env.DATABASEIP}:${process.env.PORT}/${formData.Photo}`,
+            Photo: `${process.env.PUBLIC_URL}/${formData.Photo}`,
         }
         const data = await ActivityModel.create(activityData);
         res.status(201).json({ activityData });
@@ -46,6 +58,12 @@ const postActivity = async (req, res) => {
     }
 }
 
+/**
+ * Método que actualiza una actividad dado su identificador.
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const updateActivity = async (req, res) => {
     try {
         const { id } = req.params;
@@ -53,7 +71,7 @@ const updateActivity = async (req, res) => {
         const file = req.file;
 
         if (file) {
-            formData.Photo = `http://${process.env.DATABASEIP}:${process.env.PORT}/${file.filename}`;
+            formData.Photo = `${process.env.PUBLIC_URL}/${file.filename}`;
         }
 
         const activityBeforeUpdate = await ActivityModel.findByPk(id);
@@ -69,14 +87,18 @@ const updateActivity = async (req, res) => {
 
         return res.send({ data: activityAfterUpdate });
     } catch (error) {
-        console.error('Error al actualizar la actividad:', error);
         handleHttpError(res, 'ERROR_UPDATE_ACTIVITY');
     }
 };
 
+/**
+ * Metodo que elimina una actividad dado su identificador.
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const deleteActivity = async (req, res) => {
     try {
-
         const { id } = req.params;
         const activity = await ScheduleModel.findOne({
             where: { ID_Activity: id }
@@ -93,7 +115,6 @@ const deleteActivity = async (req, res) => {
             return res.status(404).json({ error: "Activity not found" });
         }
     } catch (error) {
-        console.error('Error al eliminar la actividad:', error);
         return handleHttpError(res, "ERROR_DELETE_ACTIVITY");
     }
 };

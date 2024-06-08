@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getAllActivities, postActivity, getActivity, deleteActivity, updateActivity } = require("../controllers/activityController");
-const { validatorCreateActivity, validatorGetActivity } = require("../valdiators/activities");
+const { validatorGetActivity } = require("../valdiators/activities");
 const { authMiddleware } = require("../middlewares/session");
 const { checkRol } = require("../middlewares/rol");
 const uploadMiddleware = require("../utils/handleStorage");

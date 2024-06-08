@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LoginService } from 'src/app/services/login/login.service';
 import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private router: Router,
-    private defaultProfileService: DefaultProfileService
+    private defaultProfileService: DefaultProfileService,
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
   getLogo(): void {
     this.defaultProfileService.getPlenaInclusionLogo().subscribe({
       next: (imageUrl: string) => {
+        console.log(imageUrl)
         this.plenaInclusionLogo = imageUrl;
       },
       error: (error: any) => {
@@ -37,7 +39,6 @@ export class HeaderComponent implements OnInit {
     this.authService.role$.subscribe(role => {
       this.role = role;
     });
-
   }
 
   navigateToListSchedules() {
@@ -46,6 +47,14 @@ export class HeaderComponent implements OnInit {
 
   navigateToUserSchedules() {
     this.router.navigate(['/userSchedules']);
+  }
+
+  navigateToListHome() {
+    this.router.navigate(['/home']);
+  }
+
+  navigateToUserList() {
+    this.router.navigate(['/manageU']);
   }
 
   navigateToManageA() {
@@ -59,4 +68,5 @@ export class HeaderComponent implements OnInit {
   navigateToManageT() {
     this.router.navigate(['/manageT']);
   }
+
 }

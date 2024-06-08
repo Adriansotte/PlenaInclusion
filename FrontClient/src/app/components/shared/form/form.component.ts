@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { registerUserDTO } from 'src/app/models/user/createUserDTO';
+import { UserDTO } from 'src/app/models/user/userDTO';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { RegisterService } from 'src/app/services/register/register.service';
 import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-form',
@@ -29,12 +32,17 @@ export class FormComponent implements OnInit {
 
   defaultProfileImageUrl: string = "";
 
+  allUsers: UserDTO[] = [];
+
   constructor(private registerService: RegisterService,
     private defaultProfileService: DefaultProfileService,
-    private router: Router) { }
+    private router: Router,
+    private authService: AuthService,
+    private userService: UserService
+  ) { }
 
 
-  ngOnInit(): void {
+  getImage(): void {
     this.defaultProfileService.getDefaultProfileImage().subscribe({
       next: (imageUrl: string) => {
         this.defaultProfileImageUrl = imageUrl;
@@ -43,6 +51,21 @@ export class FormComponent implements OnInit {
         console.error('Error al obtener la imagen predeterminada:', error);
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.getImage();
+    this.getAllUsers();
+  }
+
+  getAllUsers() {
+    this.userService.getAllUsers().subscribe({
+      next: (response: UserDTO[]) => {
+        this.allUsers = response;
+      },
+      error: (error: any) => {
+      }
+    })
   }
 
   archivoInsertado: boolean = false;
@@ -75,15 +98,7 @@ export class FormComponent implements OnInit {
   submitForm(): void {
     this.registerService.registerUser(this.user, this.Photo).subscribe({
       next: (response) => {
-        if (response && response.token && response.user) {
-          sessionStorage.setItem('token', response.data.token);
-          sessionStorage.setItem('ID_User', response.data.user.ID_user);
-          sessionStorage.setItem('Email', response.data.user.Email);
-          sessionStorage.setItem('Name', response.data.user.Name);
-          sessionStorage.setItem('Surname_1', response.data.user.Surname_1);
-          sessionStorage.setItem('Surname_2', response.data.user.Surname_2);
-          sessionStorage.setItem('Rol', response.data.user.Rol);
-        }
+
       },
       error: (error) => {
         console.error('Error en el registro', error);
@@ -95,7 +110,7 @@ export class FormComponent implements OnInit {
   }
 
   navigateToHome(): void {
-    this.router.navigate(['home'])
+    this.router.navigate(['manageU'])
   }
 
 
@@ -136,11 +151,6 @@ export class FormComponent implements OnInit {
     } else {
       this.isValidDate = true;
     }
-  }
-
-
-  onInputChange(value: string) {
-    console.log('El valor del campo de entrada ha cambiado:', value);
   }
 
   isValidName(value: string): boolean {
