@@ -41,8 +41,12 @@ export class LoginService {
       Email: user.email,
       Name: user.given_name,
       Surname_1: user.family_name,
+      Surname_2: '',
       Photo: user.picture,
-      Rol: 'Nominal'
+      Rol: 'Nominal',
+      Adress: '',
+      Phone: '',
+      DNI_tutor: ''
     };
 
     return this.http.post<any>(`${this.url}/api/auth/googleLogin`, body).pipe(

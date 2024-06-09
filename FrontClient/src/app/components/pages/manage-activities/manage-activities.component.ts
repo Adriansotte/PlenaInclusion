@@ -12,7 +12,10 @@ declare var bootstrap: any;
 export class ManageActivitiesComponent implements OnInit {
 
   activities: activityDTO[] = [];
+  filteredActivities: activityDTO[] = [];
   selectedActivity: activityDTO | null = null;
+  searchTerm: string = '';
+  loading: boolean = true;
 
   constructor(private activityService: ActivityService) { }
 
@@ -21,13 +24,16 @@ export class ManageActivitiesComponent implements OnInit {
   }
 
   handleActivities(): void {
+    this.loading = true;
     this.activityService.listAllActivities().subscribe({
       next: (data: activityDTO[]) => {
         this.activities = data;
-        console.log(data);
+        this.filteredActivities = data;
+        this.loading = false;
       },
       error: (error: any) => {
         console.error('Error fetching activities', error);
+        this.loading = false;
       }
     });
   }
@@ -41,11 +47,18 @@ export class ManageActivitiesComponent implements OnInit {
     }
   }
 
-  addActivityModal() {
+  addActivityModal(): void {
     const modalElement = document.getElementById('addActivityModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
     }
+  }
+
+  applyFilter(): void {
+    const searchTermLower = this.searchTerm.toLowerCase();
+    this.filteredActivities = this.activities.filter(activity =>
+      activity.Name.toLowerCase().includes(searchTermLower)
+    );
   }
 }

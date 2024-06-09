@@ -7,7 +7,7 @@ const uploadMiddleware = require("../utils/handleStorage");
 const { checkRol } = require("../middlewares/rol");
 
 // Ruta para listar todos los usuarios
-router.get("/", authMiddleware, checkRol(['Monitor', 'Administrador']), getAllUsers);
+router.get("/", authMiddleware, checkRol(['Nominal', 'Monitor', 'Administrador']), getAllUsers);
 
 // Ruta para recoger un usuario mediante su id
 router.get("/:id", authMiddleware, checkRol(['Nominal', 'Monitor', 'Administrador']), validatorGetUser, getUser);
