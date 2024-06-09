@@ -12,24 +12,32 @@ declare var bootstrap: any;
 export class ManageCampagneComponent implements OnInit {
 
   campaigns: CampaignDTO[] = [];
+  filteredCampaigns: CampaignDTO[] = [];
   selectedCampaign: CampaignDTO | null = null;
+  searchTerm: string = '';
+  loading: boolean = true;
 
-  constructor(private campaignService: CampaignService) {
-  }
+
+  constructor(private campaignService: CampaignService) { }
+
   ngOnInit(): void {
+    this.loading = true;
     this.handleCampaigns();
+    this.loading = false;
+
   }
 
   handleCampaigns(): void {
     this.campaignService.listAllCampaigns().subscribe({
       next: (response: CampaignDTO[]) => {
         this.campaigns = response;
+        this.filteredCampaigns = response;
         console.log(response);
       },
       error: (error: any) => {
         console.error('Error en recogiendo las campañas', error);
       }
-    })
+    });
   }
 
   onCampaignClick(campaign: CampaignDTO): void {
@@ -41,11 +49,18 @@ export class ManageCampagneComponent implements OnInit {
     }
   }
 
-  addCampaignModal() {
+  addCampaignModal(): void {
     const modalElement = document.getElementById('addCampaignModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
     }
-  }  
+  }
+
+  applyFilter(): void {
+    const searchTermLower = this.searchTerm.toLowerCase();
+    this.filteredCampaigns = this.campaigns.filter(campaign =>
+      campaign.Name.toLowerCase().includes(searchTermLower)
+    );
+  }
 }
