@@ -17,23 +17,23 @@ export class ManageActivitiesComponent implements OnInit {
   searchTerm: string = '';
   loading: boolean = true;
 
-
   constructor(private activityService: ActivityService) { }
 
   ngOnInit(): void {
-    this.loading = true;
     this.handleActivities();
-    this.loading = false;
   }
 
   handleActivities(): void {
+    this.loading = true;
     this.activityService.listAllActivities().subscribe({
       next: (data: activityDTO[]) => {
         this.activities = data;
         this.filteredActivities = data;
+        this.loading = false;
       },
       error: (error: any) => {
         console.error('Error fetching activities', error);
+        this.loading = false;
       }
     });
   }

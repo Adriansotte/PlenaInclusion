@@ -12,7 +12,10 @@ declare var bootstrap: any;
 export class ManageTypesComponent implements OnInit {
 
   types: typeDTO[] = [];
+  filteredTypes: typeDTO[] = [];
   selectedType: typeDTO | null = null;
+  searchTerm: string = '';
+  loading: boolean = true;
 
   constructor(private typeService: TypeService) { }
 
@@ -21,15 +24,18 @@ export class ManageTypesComponent implements OnInit {
   }
 
   handleTypes(): void {
+    this.loading = true;
     this.typeService.getAllTypes().subscribe({
       next: (response: typeDTO[]) => {
         this.types = response;
-        console.log(response);
+        this.filteredTypes = response;
+        this.loading = false;
       },
       error: (error: any) => {
         console.error('Error en recogiendo los tipos', error);
+        this.loading = false;
       }
-    })
+    });
   }
 
   onTypeClick(type: typeDTO): void {
@@ -41,11 +47,18 @@ export class ManageTypesComponent implements OnInit {
     }
   }
 
-  addTypeModal() {
+  addTypeModal(): void {
     const modalElement = document.getElementById('addTypeModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
     }
+  }
+
+  applyFilter(): void {
+    const searchTermLower = this.searchTerm.toLowerCase();
+    this.filteredTypes = this.types.filter(type =>
+      type.Name.toLowerCase().includes(searchTermLower)
+    );
   }
 }

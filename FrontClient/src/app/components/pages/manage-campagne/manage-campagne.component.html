@@ -20,28 +20,28 @@
                             </svg>
                         </span>
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="activityName"
-                                placeholder="Buscar actividades..." [(ngModel)]="searchTerm" (input)="applyFilter()">
-                            <label for="activityName">Buscar</label>
+                            <input type="text" class="form-control" id="campaignName" placeholder="Buscar campañas..."
+                                [(ngModel)]="searchTerm" (input)="applyFilter()">
+                            <label for="campaignName">Buscar</label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center" *ngIf="loading == true; else campaignsBlock">
+
+            <div class="text-center" *ngIf="loading; else campaignsBlock">
                 <div class="spinner-border text-center" style="width: 3rem; height: 3rem;" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <h1 class="text-primary">Cargando Campañas</h1>
             </div>
             <ng-template #campaignsBlock>
-
                 <div class="table-responsive rounded rounded-4 shadow"
-                    *ngIf="filteredCampaigns && filteredCampaigns.length > 0 && loading == false ; else noCampaigns">
+                    *ngIf="filteredCampaigns && filteredCampaigns.length > 0 && !loading; else noCampaigns">
                     <table class="table table-hover table-striped rounded m-0">
-                        <thead class="table-secondary">
+                        <thead class="table-primary">
                             <tr>
                                 <th scope="col" class="text-center">Nombre</th>
-                                <th scope="col">Descripcion</th>
+                                <th scope="col">Descripción</th>
                                 <th scope="col">Fecha de Inicio</th>
                                 <th scope="col">Fecha de Fin</th>
                             </tr>
@@ -62,11 +62,9 @@
                     </div>
                 </ng-template>
             </ng-template>
-
         </div>
     </div>
 </div>
 
 <app-campagne-modal [selectedCampaign]="selectedCampaign" (campaignsChange)="handleCampaigns()"></app-campagne-modal>
-
 <app-add-campagne (campaignCreated)="handleCampaigns()"></app-add-campagne>

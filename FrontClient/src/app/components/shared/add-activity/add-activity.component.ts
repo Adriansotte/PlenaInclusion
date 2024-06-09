@@ -68,7 +68,6 @@ export class AddActivityComponent implements OnInit {
     if (this.isAllFieldsValid()) {
       this.activityService.addActivity(this.activity, this.Photo).subscribe({
         next: (response) => {
-          console.log(response);
         },
         error: (error) => {
           console.error('Error en la inserción de la actividad', error);
@@ -77,6 +76,7 @@ export class AddActivityComponent implements OnInit {
           this.activity.Description = "";
           this.activity.Name = "";
           this.Photo = undefined;
+          this.imagenMostrada = null;
           this.activityCreated.emit();
         }
       });

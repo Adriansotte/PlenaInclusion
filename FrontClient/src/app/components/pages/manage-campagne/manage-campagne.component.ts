@@ -17,25 +17,23 @@ export class ManageCampagneComponent implements OnInit {
   searchTerm: string = '';
   loading: boolean = true;
 
-
   constructor(private campaignService: CampaignService) { }
 
   ngOnInit(): void {
-    this.loading = true;
     this.handleCampaigns();
-    this.loading = false;
-
   }
 
   handleCampaigns(): void {
+    this.loading = true;
     this.campaignService.listAllCampaigns().subscribe({
       next: (response: CampaignDTO[]) => {
         this.campaigns = response;
         this.filteredCampaigns = response;
-        console.log(response);
+        this.loading = false;
       },
       error: (error: any) => {
-        console.error('Error en recogiendo las campañas', error);
+        console.error('Error recogiendo las campañas', error);
+        this.loading = false;
       }
     });
   }
