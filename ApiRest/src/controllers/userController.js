@@ -41,7 +41,7 @@ const updateUser = async (req, res) => {
         const file = req.file;
 
         if (file) {
-            formData.Photo = `${process.env.PUBLIC_URL}:${process.env.PORT}/${file.filename}`;
+            formData.Photo = `${process.env.PUBLIC_URL}/${file.filename}`;
         }
 
         const userBeforeUpdate = await UserModel.findByPk(id);
