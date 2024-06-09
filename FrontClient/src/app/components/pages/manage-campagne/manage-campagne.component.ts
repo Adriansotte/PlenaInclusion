@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CampaignDTO } from 'src/app/models/campaign/campaignDTO';
 import { CampaignService } from 'src/app/services/campaign/campaign.service';
+import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
 
 declare var bootstrap: any;
 
@@ -17,10 +18,37 @@ export class ManageCampagneComponent implements OnInit {
   searchTerm: string = '';
   loading: boolean = true;
 
-  constructor(private campaignService: CampaignService) { }
+  plenaInlcusionLogo: string = "";
+
+  constructor(private campaignService: CampaignService,
+    private defaultProfileService: DefaultProfileService
+  ) { }
 
   ngOnInit(): void {
     this.handleCampaigns();
+    this.getLogo();
+  }
+
+  getLogo(): void {
+    this.defaultProfileService.getDefaultPlenaInclusionLogoImage().subscribe({
+      next: (imageUrl: string) => {
+        this.plenaInlcusionLogo = imageUrl;
+      },
+      error: (error: any) => {
+        console.error('Error al obtener la imagen predeterminada:', error);
+      },
+      complete: () => {
+        this.showInitialToast()
+      }
+    });
+  }
+
+  showInitialToast() {
+    const toastLiveExample = document.getElementById('liveToast')
+    const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
+      autohide: false
+    })
+    toastBootstrap.show()
   }
 
   handleCampaigns(): void {

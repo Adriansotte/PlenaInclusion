@@ -3,6 +3,7 @@ import { scheduleDTO } from 'src/app/models/schedule/scheduleDTO';
 import { typeDTO } from 'src/app/models/type/typeDTO';
 import { userScheduleDTO } from 'src/app/models/userSchedule/userScheduleDTO';
 import { AllSchedulesService } from 'src/app/services/schedules/listSchedules/all-schedules.service';
+import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
 import { TypeService } from 'src/app/services/type/type.service';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 
@@ -32,17 +33,42 @@ export class AllSchedulesComponent implements OnInit {
   loading: boolean = true;
 
   role: string | null = sessionStorage.getItem("Rol");
-
+  plenaInlcusionLogo: string = "";
 
   constructor(private allSchedulesService: AllSchedulesService,
     private userScheduleService: UserScheduleService,
-    private typeService: TypeService) { }
+    private typeService: TypeService,
+    private defaultProfileService: DefaultProfileService
+  ) { }
 
   ngOnInit(): void {
     this.startDate = new Date().toISOString().split('T')[0];
     this.handleUserSchedules();
     this.handleSchedules();
     this.handleTypes();
+    this.getLogo();
+  }
+
+  getLogo(): void {
+    this.defaultProfileService.getDefaultPlenaInclusionLogoImage().subscribe({
+      next: (imageUrl: string) => {
+        this.plenaInlcusionLogo = imageUrl;
+      },
+      error: (error: any) => {
+        console.error('Error al obtener la imagen predeterminada:', error);
+      },
+      complete: () => {
+        this.showInitialToast()
+      }
+    });
+  }
+
+  showInitialToast() {
+    const toastLiveExample = document.getElementById('liveToast')
+    const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
+      autohide: false
+    })
+    toastBootstrap.show()
   }
 
   handleTypes(): void {

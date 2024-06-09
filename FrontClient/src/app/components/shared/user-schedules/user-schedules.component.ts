@@ -3,6 +3,7 @@ import { userScheduleDTO } from 'src/app/models/userSchedule/userScheduleDTO';
 import { UserScheduleService } from 'src/app/services/userSchedule/user-schedule.service';
 import { TypeService } from 'src/app/services/type/type.service';
 import { typeDTO } from 'src/app/models/type/typeDTO';
+import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
 
 declare var bootstrap: any;
 
@@ -26,9 +27,12 @@ export class UserSchedulesComponent implements OnInit {
   selectedUserSchedule: userScheduleDTO | null = null;
 
   loading: boolean = true;
+  plenaInlcusionLogo: string = "";
 
   constructor(private userScheduleService: UserScheduleService,
-    private typeService: TypeService) { }
+    private typeService: TypeService,
+    private defaultProfileService: DefaultProfileService
+  ) { }
 
   ngOnInit(): void {
     const today = new Date();
@@ -38,6 +42,29 @@ export class UserSchedulesComponent implements OnInit {
 
     this.handleUserSchedules();
     this.loadTypes();
+    this.getLogo();
+  }
+
+  getLogo(): void {
+    this.defaultProfileService.getDefaultPlenaInclusionLogoImage().subscribe({
+      next: (imageUrl: string) => {
+        this.plenaInlcusionLogo = imageUrl;
+      },
+      error: (error: any) => {
+        console.error('Error al obtener la imagen predeterminada:', error);
+      },
+      complete: () => {
+        this.showInitialToast()
+      }
+    });
+  }
+
+  showInitialToast() {
+    const toastLiveExample = document.getElementById('liveToast')
+    const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
+      autohide: false
+    })
+    toastBootstrap.show()
   }
 
   handleUserSchedules(): void {
