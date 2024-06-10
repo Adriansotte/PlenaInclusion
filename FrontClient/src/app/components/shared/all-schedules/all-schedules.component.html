@@ -1,6 +1,4 @@
 <div class="container" style="min-height: 100vh;">
-
-
     <div class="row justify-content-center my-3">
         <div class="col-auto">
             <h1 class="text-primary shadow p-3 bg-body-tertiary rounded">Actividades Disponibles</h1>
@@ -116,6 +114,24 @@
             </ng-template>
         </div>
     </ng-template>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-warning-subtle">
+                <img src={{plenaInlcusionLogo}} class="rounded me-2" alt="..." style="height: 20px;">
+                <strong class="me-auto">Plena Inclusión Aragón</strong>
+                <small>Justo ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                En esta página puedes ver la información de todas las actividades disponibles en estos momentos.
+                Además
+                <hr>
+                Si seleccionas una, podrás ver más información sobre ellas, comentarios e incluso apuntarte!!!
+                <hr>
+                Puedes buscar una actividad en concreto utilizando los filtros
+            </div>
+        </div>
+    </div>
 
     <app-add-schedule (scheduleCreated)="handleSchedules()"></app-add-schedule>
 

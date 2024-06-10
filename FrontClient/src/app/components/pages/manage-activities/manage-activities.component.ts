@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { activityDTO } from 'src/app/models/activity/activityDTO';
 import { ActivityService } from 'src/app/services/activities/activity.service';
+import { DefaultProfileService } from 'src/app/services/staticImages/default-profile.service';
 
 declare var bootstrap: any;
 
@@ -17,10 +18,37 @@ export class ManageActivitiesComponent implements OnInit {
   searchTerm: string = '';
   loading: boolean = true;
 
-  constructor(private activityService: ActivityService) { }
+  plenaInlcusionLogo: string = "";
+
+  constructor(private activityService: ActivityService,
+    private defaultProfileService: DefaultProfileService
+  ) { }
 
   ngOnInit(): void {
     this.handleActivities();
+    this.getLogo();
+  }
+
+  getLogo(): void {
+    this.defaultProfileService.getDefaultPlenaInclusionLogoImage().subscribe({
+      next: (imageUrl: string) => {
+        this.plenaInlcusionLogo = imageUrl;
+      },
+      error: (error: any) => {
+        console.error('Error al obtener la imagen predeterminada:', error);
+      },
+      complete: () => {
+        this.showInitialToast()
+      }
+    });
+  }
+
+  showInitialToast() {
+    const toastLiveExample = document.getElementById('liveToast')
+    const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
+      autohide: false
+    })
+    toastBootstrap.show()
   }
 
   handleActivities(): void {

@@ -102,9 +102,6 @@ export class FormComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error en el registro', error);
-      },
-      complete: () => {
-        this.navigateToHome();
       }
     });
   }
