@@ -55,6 +55,8 @@ export class ManageUsersComponent implements OnInit {
     this.userService.getAllUsers().subscribe({
       next: (response: UserDTO[]) => {
         this.users = response;
+        console.log(this.users)
+
       },
       error: () => {
       }

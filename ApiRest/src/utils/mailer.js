@@ -9,7 +9,7 @@ const sendMail = async ({ from, to, subject, text, html }) => {
             port: 465,
             secure: true,
             auth: {
-                user: process.env.EMAIL_USER, // Asegúrate de tener esta variable de entorno configurada
+                user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
             }
         });

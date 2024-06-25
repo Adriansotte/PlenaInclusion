@@ -13,7 +13,6 @@ export class UserCardComponent {
   @Input() user: UserDTO | null = null;
   @Output() userClicked = new EventEmitter<UserDTO>();
 
-
   onCardClick(): void {
     if (this.user) {
       this.userClicked.emit(this.user);
