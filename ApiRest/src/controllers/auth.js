@@ -88,6 +88,12 @@ const loginController = async (req, res) => {
     }
 };
 
+/**
+ * Método que gestiona el registro mediante Google
+ * @param {} req 
+ * @param {*} res 
+ * @returns 
+ */
 const loginFromGoogle = async (req, res) => {
     try {
         const body = req.body;
@@ -119,6 +125,5 @@ const loginFromGoogle = async (req, res) => {
         handleHttpError(res, "ERROR_LOGGING_USER");
     }
 };
-
 
 module.exports = { loginController, registerController, loginFromGoogle }

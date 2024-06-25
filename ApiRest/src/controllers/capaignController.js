@@ -3,6 +3,7 @@ const { handleHttpError } = require('../utils/handleError');
 const { matchedData } = require("express-validator");
 const ScheduleModel = require("../models/scheduleModel")
 
+
 async function getAllCampaigns(req, res) {
     try {
         const campaign = await CampaignModel.findAll();
